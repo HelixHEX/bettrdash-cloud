@@ -195,7 +195,7 @@ const GenerateKey = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const generateToken = async () => {
-    await axios.post(`${API_URL}/api/generate-key`).then((res) => {
+    await axios.post(`${API_URL}/settings/generate-key`).then((res) => {
       if (res.data.success) {
         queryClient.invalidateQueries(["api_key"]);
         onClose();

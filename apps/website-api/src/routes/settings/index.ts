@@ -50,7 +50,7 @@ router.post("/generate-key", async (req, res) => {
 });
 
 //api key settings
-router.get("/settings", async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.session!.user!.id },
@@ -70,7 +70,7 @@ router.get("/settings", async (req, res) => {
 });
 
 //update api key settings
-router.post("/settings/update", async (req, res) => {
+router.post("/update", async (req, res) => {
   const { show_inactive_projects } = req.body.settings;
   console.log(show_inactive_projects)
   try {

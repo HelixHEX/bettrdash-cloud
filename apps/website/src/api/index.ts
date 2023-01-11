@@ -57,12 +57,12 @@ export const projectApi = async (id: string) => {
 };
 
 export const apiKeyAPI = async () => {
-  const res = await axios.get(`${API_URL}/api-settings/key`);
+  const res = await axios.get(`${API_URL}/settings/key`);
   return res.data;
 };
 
 export const apiSettingsApi = async () => {
-  const res = await axios.get(`${API_URL}/api-settings/settings`);
+  const res = await axios.get(`${API_URL}/settings/all`);
   return res.data;
 };
 

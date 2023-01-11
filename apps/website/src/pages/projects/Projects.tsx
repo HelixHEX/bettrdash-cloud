@@ -62,7 +62,7 @@ const Projects = () => {
   }
 
   if (projectsStatus === "error") {
-    return <Text>An error has occurred</Text>;
+    return <Text>Something went wrong</Text>;
   }
 
   if (projectsData.message) {

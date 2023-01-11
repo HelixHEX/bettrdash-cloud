@@ -29,7 +29,7 @@ const Websites = () => {
 
   if (isLoading) return <Loading />;
 
-  if (isError) return <Text>An error has occurred</Text>;
+  if (isError) return <Text>Something went wrong</Text>;
 
   const websites = projectData.websites as WebsiteProps[];
   const project = projectData.project as ProjectProps;

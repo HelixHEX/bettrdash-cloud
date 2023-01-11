@@ -42,7 +42,7 @@ const Project = () => {
   }
 
   if (projectStatus === "error") {
-    return <Text>An error has occurred</Text>;
+    return <Text>Something went wrong</Text>;
   }
 
   if (projectData.message) {

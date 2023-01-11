@@ -12,7 +12,7 @@ router.get("/all", async (req: express.Request, res: express.Response) => {
     res.status(200).json({ success: true, websites });
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: "An error has occurred" });
+    res.status(200).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -41,7 +41,7 @@ router.get(
       console.log(e);
       res
         .status(200)
-        .json({ success: false, message: "An error has occurred" });
+        .json({ success: false, message: "Something went wrong" });
     }
   }
 );
@@ -91,7 +91,7 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: "An error has occurred" });
+    res.status(200).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -161,7 +161,7 @@ router.post("/update", async (req: express.Request, res: express.Response) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: "An error has occurred" });
+    res.status(200).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -197,7 +197,7 @@ router.post("/delete", async (req: express.Request, res: express.Response) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: "An error has occurred" });
+    res.status(200).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -231,7 +231,7 @@ router.post("/migrate", async (_req, res: express.Response) => {
     res.json({ success: true });
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: "An error has occurred" });
+    res.status(200).json({ success: false, message: "Something went wrong" });
   }
 });
 

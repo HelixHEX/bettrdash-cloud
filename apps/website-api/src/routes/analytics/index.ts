@@ -41,7 +41,7 @@ router.get("/all", async (req: express.Request, res: express.Response) => {
     res.status(200).json({ success: true, websites: stats, allWebsites });
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: "An error has occurred" });
+    res.status(200).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -82,7 +82,7 @@ router.post("/track", async (req: express.Request, res: express.Response) => {
               } else {
                 res
                   .status(200)
-                  .json({ success: false, message: "An error has occurred" });
+                  .json({ success: false, message: "Something went wrong" });
               }
             });
         } else {
@@ -97,7 +97,7 @@ router.post("/track", async (req: express.Request, res: express.Response) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: "An error has occurred" });
+    res.status(200).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -125,14 +125,14 @@ router.post("/remove", async (req: express.Request, res: express.Response) => {
               } else {
                 res
                   .status(200)
-                  .json({ success: false, message: "An error has occurred" });
+                  .json({ success: false, message: "Something went wrong" });
               }
             })
             .catch((e) => {
               console.log(e);
               res
                 .status(200)
-                .json({ success: false, message: "An error has occurred" });
+                .json({ success: false, message: "Something went wrong" });
             });
         } else {
           res.status(200).json({
@@ -146,7 +146,7 @@ router.post("/remove", async (req: express.Request, res: express.Response) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: "An error has occurred" });
+    res.status(200).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -162,7 +162,7 @@ router.get('/website/:id/sources', async (req: express.Request, res: express.Res
             if (response.status === 200) {
               res.status(200).json({ success: true, sources: response.data, websiteUrl: website.url })
             } else {
-              res.status(200).json({ success: false, message: 'An error has occurred' })
+              res.status(200).json({ success: false, message: 'Something went wrong' })
             }
           })
         } else {
@@ -176,7 +176,7 @@ router.get('/website/:id/sources', async (req: express.Request, res: express.Res
     }
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: 'An error has occurred' })
+    res.status(200).json({ success: false, message: 'Something went wrong' })
   }
 })
 
@@ -193,7 +193,7 @@ router.get('/website/:id/aggregate', async (req: express.Request, res: express.R
               res.status(200).json({ success: true, aggregate: response.data, websiteUrl: website.url })
             } else {
               console.log(response)
-              res.status(200).json({ success: false, message: 'An error has occurred' })
+              res.status(200).json({ success: false, message: 'Something went wrong' })
             }
           })
         } else {
@@ -207,7 +207,7 @@ router.get('/website/:id/aggregate', async (req: express.Request, res: express.R
     }
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: 'An error has occurred' })
+    res.status(200).json({ success: false, message: 'Something went wrong' })
   }
 })
 
@@ -223,7 +223,7 @@ router.get('/website/:id/top-pages', async (req: express.Request, res: express.R
             if (response.status === 200) {
               res.status(200).json({ success: true, topPages: response.data, websiteUrl: website.url })
             } else {
-              res.status(200).json({ success: false, message: 'An error has occurred' })
+              res.status(200).json({ success: false, message: 'Something went wrong' })
             }
           })
         } else {
@@ -237,7 +237,7 @@ router.get('/website/:id/top-pages', async (req: express.Request, res: express.R
     }
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: 'An error has occurred' })
+    res.status(200).json({ success: false, message: 'Something went wrong' })
   }
 })
 

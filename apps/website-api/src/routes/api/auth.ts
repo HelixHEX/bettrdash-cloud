@@ -17,7 +17,7 @@ router.get("/key", async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(500).json({ success: false, message: "An error has occurred" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -45,7 +45,7 @@ router.post("/generate-key", async (req, res) => {
     res.status(200).json({ success: true, apiKey: apiKey.key });
   } catch (e) {
     console.log(e);
-    res.status(500).json({ success: false, message: "An error has occurred" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -65,7 +65,7 @@ router.get("/settings", async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(500).json({ success: false, message: "An error has occurred" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -87,7 +87,7 @@ router.post("/settings/update", async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(500).json({ success: false, message: "An error has occurred" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 }); 
 

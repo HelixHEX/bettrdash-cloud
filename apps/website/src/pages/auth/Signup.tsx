@@ -15,13 +15,16 @@ import {
   Icon,
   useToast,
   HStack,
-  Link
+  Link,
 } from "@chakra-ui/react";
 import axios from "axios";
-import {Link as RouterLink} from 'react-router-dom'
-import { useState } from "react";
-import { API_URL } from "../../api/constants";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { API_URL, CHECKOUT_URL } from "../../api/constants";
 import { ColorModeSwitcher } from "../../components/ColorModeSwitcher";
+import { useCustomSearchParams } from "../../utils/customSearchParams";
+
+declare const window: any;
 
 axios.defaults.withCredentials = false;
 
@@ -54,6 +57,8 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [repassword, setRePassword] = useState("");
   const toast = useToast();
+  const [search] = useCustomSearchParams();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -82,7 +87,11 @@ const Signup = () => {
         })
         .then((res) => {
           if (res.data.success) {
-            window.location.href = "/";
+            if (search && search.plan) {
+              if (search.plan === "growth") {
+                window.LemonSqueezy.Url.Open(CHECKOUT_URL);
+              }
+            }
           } else {
             toast({
               title: "Error",
@@ -94,9 +103,10 @@ const Signup = () => {
           }
         })
         .catch((e) => {
+          console.log(e);
           toast({
             title: "Error",
-            description: "An error has occurred",
+            description: "Something went wrong",
             status: "error",
             duration: 5000,
             isClosable: true,
@@ -259,9 +269,14 @@ const Signup = () => {
                     type="password"
                   />
                 </Stack>
-                <HStack mt={5} color='gray.800'>
+                <HStack mt={5} color="gray.800">
                   <Text>Already a user?</Text>
-                  <Link as={RouterLink} bgClip='text' bgGradient={"linear(to-r, red.400,pink.400)"} to="/login" >
+                  <Link
+                    as={RouterLink}
+                    bgClip="text"
+                    bgGradient={"linear(to-r, red.400,pink.400)"}
+                    to="/login"
+                  >
                     Login
                   </Link>
                 </HStack>

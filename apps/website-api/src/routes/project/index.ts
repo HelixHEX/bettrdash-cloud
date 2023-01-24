@@ -29,7 +29,7 @@ router.get("/all", async (req: express.Request, res: express.Response) => {
     res.status(200).json({ success: true, projects });
   } catch (e) {
     console.log(e);
-    res.status(200).json({ success: false, message: "An error has occurred" });
+    res.status(200).json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -42,15 +42,20 @@ router.get(
         where: {
           id: parseInt(req.params.projectId),
         },
-        include: { owner: { select: { id: true } }, websites: {
-          orderBy: {
-            url: "asc",
-          }
-        } },
+        include: {
+          owner: { select: { id: true } },
+          websites: {
+            orderBy: {
+              url: "asc",
+            },
+          },
+        },
       });
       if (project) {
         if (project.ownerId === req!.session!.user!.id) {
-          res.status(200).json({ success: true, project, websites: project.websites });
+          res
+            .status(200)
+            .json({ success: true, project, websites: project.websites });
         } else {
           res.status(200).json({ success: false, message: "Unauthorizedsss" });
         }
@@ -58,9 +63,7 @@ router.get(
         res.status(200).json({ success: false, message: "Project not found" });
       }
     } catch (e) {
-      res
-        .status(200)
-        .json({ success: false, message: "An error has occurred" });
+      res.status(200).json({ success: false, message: "Something went wrong" });
     }
   }
 );
@@ -73,12 +76,55 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
     language,
     description,
     active,
-    url,
-    environment,
     image_url,
   } = req.body;
   try {
-    const project = await prisma.project.create({
+    const user = await prisma.user.findUnique({
+      where: { id: req!.session!.user!.id },
+      include: { subscription: true, projects: true },
+    });
+    if (user) {
+      if (
+        user.projects.length >= 25 &&
+        user.subscription &&
+        user.subscription.plan === "Growth Plan"
+      ) {
+        res.status(500).json({
+          success: false,
+          message: "You can only create up to 25 projects",
+        });
+      } else {
+        const project = await prisma.project.create({
+          data: {
+            name,
+            github_url,
+            language,
+            description,
+            active,
+            image_url,
+            owner: {
+              connect: { id: user.id },
+            },
+          },
+        });
+        res.status(200).json({ success: true, project });
+      }
+    } else {
+      res.status(500).json({ success: false, message: "Unable to find user" });
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+});
+
+//update project
+router.post("/update", async (req: express.Request, res: express.Response) => {
+  const { id, name, github_url, language, description, active, image_url } =
+    req.body.project;
+  try {
+    const project = await prisma.project.update({
+      where: { id: parseInt(id) },
       data: {
         name,
         github_url,
@@ -86,68 +132,15 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
         description,
         active,
         image_url,
-        owner: {
-          connect: { id: req!.session!.user!.id },
-        },
       },
     });
 
-    if (url) {
-      await prisma.website.create({
-        data: {
-          url,
-          environment,
-          project: {
-            connect: {
-              id: project.id,
-            },
-          },
-          owner: {connect: {id: req!.session!.user!.id}}
-        },
-      });
-    }
     res.status(200).json({ success: true, project });
   } catch (e) {
     console.log(e);
-    res.status(500).json({ success: false, message: "An error has occurred" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 });
-
-//update project
-router.post(
-  "/update",
-  async (req: express.Request, res: express.Response) => {
-    const {
-      id,
-      name,
-      github_url,
-      language,
-      description,
-      active,
-      image_url,
-    } = req.body.project;
-    try {
-      const project = await prisma.project.update({
-        where: { id: parseInt(id) },
-        data: {
-          name,
-          github_url,
-          language,
-          description,
-          active,
-          image_url,
-        },
-      });
-
-      res.status(200).json({ success: true, project });
-    } catch (e) {
-      console.log(e);
-      res
-        .status(500)
-        .json({ success: false, message: "An error has occurred" });
-    }
-  }
-);
 
 //delete project
 router.post("/delete", async (req: express.Request, res: express.Response) => {
@@ -173,7 +166,7 @@ router.post("/delete", async (req: express.Request, res: express.Response) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(500).json({ success: false, message: "An error has occurred" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 });
 

@@ -62,7 +62,7 @@ const Projects = () => {
   }
 
   if (projectsStatus === "error") {
-    return <Text>An error has occurred</Text>;
+    return <Text>Something went wrong</Text>;
   }
 
   if (projectsData.message) {
@@ -70,6 +70,7 @@ const Projects = () => {
   }
 
   const projects = projectsData.projects;
+
   return (
     <>
       <Header
@@ -78,10 +79,16 @@ const Projects = () => {
         filter={filter}
         setFilter={setFilter}
       />
-      {display === "grid" ? (
-        <GridView projects={projects} />
+      {projects.length > 0 ? (
+        display === "grid" ? (
+          <GridView projects={projects} />
+        ) : (
+          <ListView projects={projects} />
+        )
       ) : (
-        <ListView projects={projects} />
+        <Text color='gray.500' textAlign={'center'}>
+          {"It's feeling a little empty, feel free to create a project"}
+        </Text>
       )}
     </>
   );
@@ -217,8 +224,6 @@ const ListView = ({ projects }: { projects: any }) => {
 const NewProject = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setName] = useState("");
-  const [url, setURL] = useState("");
-  const [environment, setEnvironment] = useState('production')
   const [github_url, setGithubUrl] = useState("");
   const [language, setLanguage] = useState("");
   const [description, setDescription] = useState("");
@@ -290,8 +295,6 @@ const NewProject = () => {
         github_url,
         language,
         active,
-        url,
-        environment,
         image_url,
       });
       onClose();
@@ -344,7 +347,7 @@ const NewProject = () => {
           backgroundColor={inputBg}
           borderColor={inputBg}
         />
-         <Heading color="gray.500" fontSize={12} mt={5}>
+        <Heading color="gray.500" fontSize={12} mt={5}>
           Description
         </Heading>
         <Textarea
@@ -376,36 +379,6 @@ const NewProject = () => {
           <option>C</option>
           <option>C#</option>
         </Select>
-        <HStack>
-          <Flex flexDir={'column'}>
-            <Heading color="gray.500" fontSize={12} mt={5}>
-             URL
-            </Heading>
-            <Input
-              name="url"
-              value={url}
-              onChange={(e) => setURL(e.target.value)}
-              placeholder="URL"
-              mt={3}
-              backgroundColor={inputBg}
-              borderColor={inputBg}
-            />
-          </Flex>
-          <Flex flexDir={'column'}>
-            <Heading color="gray.500" fontSize={12} mt={5}>
-              Environment
-            </Heading>
-            <Input
-              name="environment"
-              value={environment}
-              onChange={(e) => setEnvironment(e.target.value)}
-              placeholder="Environment"
-              mt={3}
-              backgroundColor={inputBg}
-              borderColor={inputBg}
-            />
-          </Flex>
-        </HStack>
         <Heading color="gray.500" fontSize={12} mt={5}>
           github_url
         </Heading>
@@ -430,9 +403,6 @@ const NewProject = () => {
           borderColor={inputBg}
           placeholder="Image URL"
         />
-        
-       
-        
       </ModalComp>
     </>
   );

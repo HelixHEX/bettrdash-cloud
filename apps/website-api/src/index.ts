@@ -6,10 +6,11 @@ import cors from "cors";
 //routes
 import auth from "./routes/auth";
 import project from "./routes/project";
-import apiAuth from "./routes/api/auth";
+import settings from "./routes/settings";
 import monitor from "./routes/monitor";
 import website from './routes/website';
 import analytics from './routes/analytics';
+import webhooks from './routes/webhooks'
 
 const session = require("express-session");
 const connectRedis = require("connect-redis");
@@ -40,8 +41,14 @@ const main = async () => {
       credentials: true,
     })
   );
-
-  app.use(express.json());
+  
+  app.use(express.json({
+    verify: (req, _res, buf) => {
+       if (buf && buf.length) {
+      req.rawBody = buf;
+    }
+    }
+  }));
 
   //redis
   app.use(
@@ -79,12 +86,14 @@ const main = async () => {
   app.get("/", (_, res: express.Response) => {
     res.send("Hello world");
   });
+  app.use('/webhooks', webhooks)
+
 
   app.use("/auth", auth);
 
   app.use(authenticate);
   app.use("/projects", project);
-  app.use("/api-settings", apiAuth);
+  app.use("/settings", settings);
   app.use("/monitor", monitor);
   app.use('/website', website)
   app.use('/analytics', analytics)

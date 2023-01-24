@@ -58,7 +58,7 @@ const WebsiteAnalytic = () => {
   }
 
   if (results[0].isError || results[1].isError || results[2].isError) {
-    return <Text>An error has occurred</Text>;
+    return <Text>Something went wrong</Text>;
   }
 
   if (

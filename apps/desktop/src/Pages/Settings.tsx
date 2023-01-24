@@ -47,7 +47,7 @@ const Settings = () => {
   }
 
   if (apiKeyStatus === "error" || apiSettingsStatus === "error") {
-    return <Text>An error has occurred</Text>;
+    return <Text>Something went wrong</Text>;
   }
 
   const copyToClipboard = (text: string) => {

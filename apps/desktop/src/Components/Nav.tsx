@@ -116,7 +116,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       .catch(() => {
         toast({
           title: "Error",
-          description: "An error has occurred",
+          description: "Something went wrong",
           status: "error",
           duration: 5000,
           isClosable: true,

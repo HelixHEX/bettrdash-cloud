@@ -34,8 +34,10 @@ import { Link as RouterLink } from "react-router-dom";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/700.css";
 import { ReactComponent as AnalyticsSVG } from "../assets/images/analytics.svg";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
+import { CHECKOUT_URL } from "../api/constants";
 
+declare const window: any;
 const Landing = () => {
   const dashboardImage = useColorModeValue(
     require("../assets/images/dashboard-light.png"),
@@ -46,6 +48,8 @@ const Landing = () => {
     require("../assets/images/monitor-dark.png")
   );
   const bodyTextColor = useColorModeValue("gray.600", "gray.300");
+
+  // useEffect(() => window.createLemonSqueezy(), []);
   return (
     <>
       <Flex
@@ -73,9 +77,9 @@ const Landing = () => {
           </Heading>
           <Flex>
             <Icon
-            alignSelf={'center'}
+              alignSelf={"center"}
               cursor={"pointer"}
-              _hover={{ color: "gray.200" }}
+              _hover={{ color: "gray.900" }}
               color="red.400"
               as={FaGithub}
               onClick={() =>
@@ -90,7 +94,7 @@ const Landing = () => {
               fontWeight={"bold"}
               fontSize={"xl"}
               cursor={"pointer"}
-              _hover={{ color: "gray.200" }}
+              _hover={{ color: "gray.900" }}
               as={RouterLink}
               to="/login"
               alignSelf={"center"}
@@ -104,6 +108,10 @@ const Landing = () => {
               w={{ base: 78, md: 120 }}
               h={{ base: 10, md: 12 }}
               fontSize={{ base: "sm", md: "md" }}
+              color="white"
+              _hover={{ bg: "gray.200", color: "gray.800" }}
+              as={RouterLink}
+              to="/signup"
             >
               Signup
             </Button>
@@ -132,7 +140,7 @@ const Landing = () => {
               alignSelf={{ base: "center", md: "start" }}
               h={65}
               rounded={"full"}
-              w={{base: 240, sm: 240, md: 300}}
+              w={{ base: 240, sm: 240, md: 300 }}
               color="white"
               _hover={{ bg: "gray.200", color: "gray.800" }}
             >
@@ -146,7 +154,7 @@ const Landing = () => {
             src={dashboardImage}
             alt="dashboard"
             w={{ base: "100%", md: 400, lg: 600 }}
-            h={{base: 300, sm: 400}}
+            h={{ base: 300, sm: 400 }}
           />
         </Flex>
         <Flex
@@ -168,7 +176,7 @@ const Landing = () => {
             <TabPanels>
               <TabPanel>
                 <Image
-                  w={{ base: 800, md: 800, lg:800 }}
+                  w={{ base: 800, md: 800, lg: 800 }}
                   h={{ base: 300, sm: 400, lg: 500 }}
                   alt="Code demo"
                   mt={12}
@@ -280,7 +288,7 @@ const Landing = () => {
             w={250}
             bg="red.400"
             color="white"
-            _hover={{ bg: "gray.200", color: "gray.800" }}
+            _hover={{ bg: "red.500" }}
           >
             Get Started
           </Button>
@@ -348,7 +356,7 @@ const Landing = () => {
             />
           </SimpleGrid>
         </Box>
-        {/* <Pricing /> */}
+        <Pricing />
       </Flex>
     </>
   );
@@ -364,11 +372,10 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
   return (
     <Stack>
       <Flex
-      
         w={16}
         h={16}
         align={"center"}
-        alignSelf={{ base: "center", md: "flex-start"}}
+        alignSelf={{ base: "center", md: "flex-start" }}
         justify={"center"}
         color={"white"}
         rounded={"full"}
@@ -377,8 +384,12 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
       >
         <Icon color="red.400" as={icon} w={10} h={10} />
       </Flex>
-      <Text alignSelf={{ base: "center", md: "flex-start"}} fontWeight={600}>{title}</Text>
-      <Text textAlign={{ base: "center", md: "start"}} color={"gray.600"}>{text}</Text>
+      <Text alignSelf={{ base: "center", md: "flex-start" }} fontWeight={600}>
+        {title}
+      </Text>
+      <Text textAlign={{ base: "center", md: "start" }} color={"gray.600"}>
+        {text}
+      </Text>
     </Stack>
   );
 };
@@ -432,7 +443,7 @@ const Pricing = () => {
             <List spacing={3} textAlign="start" px={12}>
               <ListItem>
                 <ListIcon as={FaCheckCircle} color="green.500" />
-                Unlimited projects
+                25 projects
               </ListItem>
               <ListItem>
                 <ListIcon as={FaCheckCircle} color="green.500" />
@@ -457,6 +468,8 @@ const Pricing = () => {
                 _hover={{ bg: "red.400", color: "white" }}
                 borderColor="red.400"
                 variant="outline"
+                as={RouterLink}
+                to="/login?plan=hobby"
               >
                 Get started for free
               </Button>
@@ -477,7 +490,7 @@ const Pricing = () => {
                 bg={useColorModeValue("red.300", "red.700")}
                 px={3}
                 py={1}
-                color={useColorModeValue("gray.900", "gray.300")}
+                color="white"
                 fontSize="sm"
                 fontWeight="600"
                 rounded="xl"
@@ -529,7 +542,14 @@ const Pricing = () => {
                 </ListItem>
               </List>
               <Box w="80%" pt={7}>
-                <Button w="full" bg="red.400">
+                <Button
+                  _hover={{ bg: "red.500" }}
+                  color="white"
+                  w="full"
+                  bg="red.400"
+                  as={RouterLink}
+                  to="/signup?plan=growth"
+                >
                   Select plan
                 </Button>
               </Box>

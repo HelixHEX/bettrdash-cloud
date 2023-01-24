@@ -88,7 +88,9 @@ const WebsitesTable = ({ websites }: { websites: WebsiteProps[] }) => {
           </Table>
         </TableContainer>
       ) : (
-        <Text mt={5}>No websites available. Feel free to create one!</Text>
+        <Text color="gray.500" textAlign={"center"} mt={5}>
+          No websites available. Feel free to create one!
+        </Text>
       )}
     </>
   );

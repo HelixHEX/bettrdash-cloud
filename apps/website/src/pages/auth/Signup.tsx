@@ -24,6 +24,8 @@ import { API_URL, CHECKOUT_URL } from "../../api/constants";
 import { ColorModeSwitcher } from "../../components/ColorModeSwitcher";
 import { useCustomSearchParams } from "../../utils/customSearchParams";
 
+declare const window: any;
+
 axios.defaults.withCredentials = false;
 
 const avatars = [
@@ -77,7 +79,6 @@ const Signup = () => {
         isClosable: true,
       });
     } else {
-      
       await axios
         .post(`${API_URL}/auth/signup`, {
           name,
@@ -88,17 +89,9 @@ const Signup = () => {
           if (res.data.success) {
             if (search && search.plan) {
               if (search.plan === "growth") {
-                console.log("im here");
-                let a = document.createElement("a");
-                a.className = "lemonsqueezy-button";
-                a.href = CHECKOUT_URL;
-                a.style.display = "none";
-                document.body.appendChild(a);
-                console.log(a);
-                a.click();
+                window.LemonSqueezy.Url.Open(CHECKOUT_URL);
               }
             }
-            navigate("/");
           } else {
             toast({
               title: "Error",
@@ -110,7 +103,7 @@ const Signup = () => {
           }
         })
         .catch((e) => {
-          console.log(e)
+          console.log(e);
           toast({
             title: "Error",
             description: "Something went wrong",

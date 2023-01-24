@@ -49,9 +49,7 @@ const Landing = () => {
   );
   const bodyTextColor = useColorModeValue("gray.600", "gray.300");
 
-  useEffect(() => {
-    window.createLemonSqueezy();
-  }, [])
+  // useEffect(() => window.createLemonSqueezy(), []);
   return (
     <>
       <Flex
@@ -113,7 +111,7 @@ const Landing = () => {
               color="white"
               _hover={{ bg: "gray.200", color: "gray.800" }}
               as={RouterLink}
-              to='/signup'
+              to="/signup"
             >
               Signup
             </Button>
@@ -290,7 +288,7 @@ const Landing = () => {
             w={250}
             bg="red.400"
             color="white"
-            _hover={{ bg: "red.500"}}
+            _hover={{ bg: "red.500" }}
           >
             Get Started
           </Button>
@@ -471,7 +469,7 @@ const Pricing = () => {
                 borderColor="red.400"
                 variant="outline"
                 as={RouterLink}
-                to='/login?plan=hobby'
+                to="/login?plan=hobby"
               >
                 Get started for free
               </Button>
@@ -550,7 +548,7 @@ const Pricing = () => {
                   w="full"
                   bg="red.400"
                   as={RouterLink}
-                  to='/signup?plan=growth'
+                  to="/signup?plan=growth"
                 >
                   Select plan
                 </Button>

@@ -35,6 +35,8 @@ router.post(
                     status: data.attributes.status,
                     plan: data.attributes.product_name,
                     user: { connect: { email: data.attributes.user_email } },
+                    renews_at: new Date(data.attributes.renews_at),
+                    ends_at: new Date(data.attributes.ends_at),
                   },
                 });
               } else {
@@ -46,7 +48,6 @@ router.post(
             break;
           case "subscription_cancelled":
           case "subscription_resumed":
-          case "subscription_expired":
           case "subscription_paused":
           case "subscription_unpaused":
             const subscription = await prisma.subscription.findUnique({
@@ -55,7 +56,28 @@ router.post(
             if (subscription) {
               await prisma.subscription.update({
                 where: { subscriptionId: subscription.subscriptionId },
-                data: { status: data.attributes.status },
+                data: {
+                  status: data.attributes.status,
+                  ends_at: new Date(new Date(data.attributes.ends_at)),
+                  renews_at: new Date(data.attributes.renews_at),
+                  plan: data.attributes.product_name,
+                },
+              });
+              console.log(req.body)
+              console.log(typeof subscription.ends_at);
+            } else {
+              console.log("Subscription not found");
+            }
+            break;
+          case "subscription_expired":
+            const expiredSubscription = await prisma.subscription.findUnique({
+              where: {
+                subscriptionId: data.id,
+              },
+            });
+            if (expiredSubscription) {
+              await prisma.subscription.delete({
+                where: { subscriptionId: expiredSubscription.subscriptionId },
               });
             } else {
               console.log("Subscription not found");
@@ -68,14 +90,19 @@ router.post(
             if (billingSubscription) {
               await prisma.subscription.update({
                 where: { subscriptionId: billingSubscription.subscriptionId },
-                data: { status: data.attributes.status },
+                data: {
+                  status: data.attributes.status,
+                  ends_at: new Date(data.attributes.ends_at),
+                  renews_at: new Date(data.attributes.renews_at),
+                  plan: data.attributes.product_name,
+                },
               });
             } else {
-              console.log("billingerror");
+              console.log("billing error");
             }
             break;
         }
-        console.log(req.body);
+        // console.log(req.body);
         res.status(200).json({ success: true });
       } else {
         console.log("invalid signature");

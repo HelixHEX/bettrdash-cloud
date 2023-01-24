@@ -8,5 +8,6 @@ declare namespace NodeJS {
     ANALYTICS_API: string;
     SIGNING_KEY: string;
     LEMONSQUEEZY_API_KEY: string;
+    LEMONSQUEEZY_API: string;
   }
 }

@@ -4,7 +4,7 @@ import express from "express";
 const morgan = require("morgan");
 
 //routes
-import apiNoAuth from "./routes/api/noauth";
+import api from "./routes/api";
 
 const session = require("express-session");
 const connectRedis = require("connect-redis");
@@ -65,7 +65,7 @@ const main = async () => {
 
 
 
-  app.use("/", apiNoAuth);
+  app.use("/", api);
 
   app.use((_, res: express.Response) => {
     res.status(404).json({ status: "404" });

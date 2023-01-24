@@ -224,8 +224,6 @@ const ListView = ({ projects }: { projects: any }) => {
 const NewProject = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setName] = useState("");
-  const [url, setURL] = useState("");
-  const [environment, setEnvironment] = useState("production");
   const [github_url, setGithubUrl] = useState("");
   const [language, setLanguage] = useState("");
   const [description, setDescription] = useState("");
@@ -297,8 +295,6 @@ const NewProject = () => {
         github_url,
         language,
         active,
-        url,
-        environment,
         image_url,
       });
       onClose();
@@ -383,36 +379,6 @@ const NewProject = () => {
           <option>C</option>
           <option>C#</option>
         </Select>
-        <HStack>
-          <Flex flexDir={"column"}>
-            <Heading color="gray.500" fontSize={12} mt={5}>
-              URL
-            </Heading>
-            <Input
-              name="url"
-              value={url}
-              onChange={(e) => setURL(e.target.value)}
-              placeholder="URL"
-              mt={3}
-              backgroundColor={inputBg}
-              borderColor={inputBg}
-            />
-          </Flex>
-          <Flex flexDir={"column"}>
-            <Heading color="gray.500" fontSize={12} mt={5}>
-              Environment
-            </Heading>
-            <Input
-              name="environment"
-              value={environment}
-              onChange={(e) => setEnvironment(e.target.value)}
-              placeholder="Environment"
-              mt={3}
-              backgroundColor={inputBg}
-              borderColor={inputBg}
-            />
-          </Flex>
-        </HStack>
         <Heading color="gray.500" fontSize={12} mt={5}>
           github_url
         </Heading>

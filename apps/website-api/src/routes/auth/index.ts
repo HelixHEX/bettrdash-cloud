@@ -1,6 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import { prisma } from "db";
+import { v1 } from "uuid";
 
 const router = express.Router();
 
@@ -103,6 +104,16 @@ router.post("/signup", async (req: express.Request, res: express.Response) => {
           // });
           */
           req.session.user = other;
+          await prisma.apikey.create({
+            data: {
+              key: v1(),
+              user: {
+                connect: {
+                  id: newUser.id,
+                },
+              },
+            },
+          });
           res.status(200).json({ success: true });
         });
       }

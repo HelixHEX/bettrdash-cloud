@@ -85,4 +85,6 @@ model Subscription {
   userId         Int      @unique
   status         String   @default("pending")
   plan           String   @default("hobby")
+  ends_at        DateTime?  
+  renews_at      DateTime?
 }

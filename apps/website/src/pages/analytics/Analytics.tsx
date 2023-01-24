@@ -106,7 +106,7 @@ const Analytics = () => {
             </Table>
           </TableContainer>
         ) : (
-          <Text mt={5}>
+          <Text textAlign={'center'} color='gray.500' mt={5}>
             No websites are being tracked. Feel free to track one!
           </Text>
         )}

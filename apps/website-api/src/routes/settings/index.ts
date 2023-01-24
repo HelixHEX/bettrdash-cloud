@@ -101,7 +101,7 @@ router.get(
       const subscription = await prisma.subscription.findUnique({
         where: { userId: req.session!.user!.id },
       });
-      if (subscription && subscription.subscriptionId !== "override") {
+      if (subscription && !subscription.subscriptionId.includes("override")) {
         let response = await axios.get(
           `${process.env.LEMONSQUEEZY_API}/subscriptions/${subscription.subscriptionId}`,
           {

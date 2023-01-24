@@ -27,15 +27,13 @@ import {
   FaNpm,
   FaCheckCircle,
   FaGithub,
-  FaGit,
 } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { Link as RouterLink } from "react-router-dom";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/700.css";
 import { ReactComponent as AnalyticsSVG } from "../assets/images/analytics.svg";
-import { ReactElement, ReactNode, useEffect } from "react";
-import { CHECKOUT_URL } from "../api/constants";
+import { ReactNode } from "react";
 
 declare const window: any;
 const Landing = () => {
@@ -143,6 +141,8 @@ const Landing = () => {
               w={{ base: 240, sm: 240, md: 300 }}
               color="white"
               _hover={{ bg: "gray.200", color: "gray.800" }}
+              as={RouterLink}
+              to="/signup?plan=hobby"
             >
               Get Started for free
             </Button>
@@ -289,6 +289,8 @@ const Landing = () => {
             bg="red.400"
             color="white"
             _hover={{ bg: "red.500" }}
+            as={RouterLink}
+            to="/signup?plan=hobby"
           >
             Get Started
           </Button>
@@ -469,7 +471,7 @@ const Pricing = () => {
                 borderColor="red.400"
                 variant="outline"
                 as={RouterLink}
-                to="/login?plan=hobby"
+                to="/signup?plan=hobby"
               >
                 Get started for free
               </Button>

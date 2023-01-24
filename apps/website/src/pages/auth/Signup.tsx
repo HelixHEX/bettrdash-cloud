@@ -87,10 +87,8 @@ const Signup = () => {
         })
         .then((res) => {
           if (res.data.success) {
-            if (search && search.plan) {
-              if (search.plan === "growth") {
+            if ((search && search.plan) && search.plan === "growth") {
                 window.LemonSqueezy.Url.Open(CHECKOUT_URL);
-              }
             }
           } else {
             toast({

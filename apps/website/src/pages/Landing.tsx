@@ -77,7 +77,7 @@ const Landing = () => {
             <Icon
               alignSelf={"center"}
               cursor={"pointer"}
-              _hover={{ color: "gray.900" }}
+              _hover={{ color: "gray.400" }}
               color="red.400"
               as={FaGithub}
               onClick={() =>
@@ -92,7 +92,7 @@ const Landing = () => {
               fontWeight={"bold"}
               fontSize={"xl"}
               cursor={"pointer"}
-              _hover={{ color: "gray.900" }}
+              _hover={{ color: "gray.400" }}
               as={RouterLink}
               to="/login"
               alignSelf={"center"}
@@ -188,8 +188,7 @@ const Landing = () => {
               <TabPanel flexDir={"column"}>
                 <Link
                   fontWeight="bold"
-                  to="https://www.npmjs.com/package/bettrdash-react"
-                  as={RouterLink}
+                  href="https://www.npmjs.com/package/bettrdash-react"
                   textAlign={"center"}
                 >
                   NPM Package
@@ -274,8 +273,7 @@ const Landing = () => {
             Our dashboard includes advanced, analytics capabilities powered by{" "}
             <Link
               textDecor={"underline"}
-              to="https://plausible.io"
-              as={RouterLink}
+              href="https://plausible.io"
             >
               plausible.io
             </Link>

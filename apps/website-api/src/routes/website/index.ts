@@ -348,37 +348,37 @@ router.post("/delete", async (req: express.Request, res: express.Response) => {
 });
 
 //migrate live_url to website
-router.post("/migrate", async (_req, res: express.Response) => {
-  try {
-    const projects = await prisma.project.findMany();
-    for (let i = 0; i < projects.length; i++) {
-      const project = projects[i];
-      if (project.live_url) {
-        if (project.live_url.length > 0) {
-          await prisma.website.create({
-            data: {
-              url: project.live_url,
-              environment: "production",
-              project: { connect: { id: project.id } },
-              owner: { connect: { id: project.ownerId } },
-              default: true,
-            },
-          });
-          await prisma.project.update({
-            where: { id: project.id },
-            data: {
-              live_url: null,
-              defaultWebsiteId: 2,
-            },
-          });
-        }
-      }
-    }
-    res.json({ success: true });
-  } catch (e) {
-    console.log(e);
-    res.status(200).json({ success: false, message: "Something went wrong" });
-  }
-});
+// router.post("/migrate", async (_req, res: express.Response) => {
+//   try {
+//     const projects = await prisma.project.findMany();
+//     for (let i = 0; i < projects.length; i++) {
+//       const project = projects[i];
+//       if (project.live_url) {
+//         if (project.live_url.length > 0) {
+//           await prisma.website.create({
+//             data: {
+//               url: project.live_url,
+//               environment: "production",
+//               project: { connect: { id: project.id } },
+//               owner: { connect: { id: project.ownerId } },
+//               default: true,
+//             },
+//           });
+//           await prisma.project.update({
+//             where: { id: project.id },
+//             data: {
+//               live_url: null,
+//               defaultWebsiteId: 2,
+//             },
+//           });
+//         }
+//       }
+//     }
+//     res.json({ success: true });
+//   } catch (e) {
+//     console.log(e);
+//     res.status(200).json({ success: false, message: "Something went wrong" });
+//   }
+// });
 
 export default router;

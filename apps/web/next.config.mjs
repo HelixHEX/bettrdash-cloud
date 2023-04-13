@@ -18,6 +18,10 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
-  transpilePackages: ['@web/api']
+  /** Enables hot reloading for local packages without a build step */
+  transpilePackages: ["@web/api", "db"],
+  /** We already do linting and typechecking as separate tasks in CI */
+  eslint: { ignoreDuringBuilds: !!process.env.CI },
+  typescript: { ignoreBuildErrors: !!process.env.CI },
 };
 export default config;

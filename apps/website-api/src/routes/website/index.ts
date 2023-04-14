@@ -63,15 +63,13 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
             if (project.ownerId === user.id) {
               const websiteProjects = await prisma.website.findMany({
                 where: {
-                  AND: [
-                    { ownerId: req!.session!.user!.id },
-                    { NOT: { projectId: null } },
-                  ],
+                  AND: [{ ownerId: req!.session!.user!.id }, { projectId }],
                 },
               });
               if (
                 user.subscription &&
-                user.subscription.plan === "Growth Plan"
+                (user.subscription.plan === "Growth Plan" ||
+                  user.subscription.subscriptionId.includes("override"))
               ) {
                 if (websiteProjects.length >= 10) {
                   res.status(200).json({
@@ -80,17 +78,15 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
                       "You can only add up to 10 websites that are associated to a project",
                   });
                 } else {
-                  if (websiteProjects.length < 3) {
-                    await prisma.website.create({
-                      data: {
-                        url,
-                        environment,
-                        owner: { connect: { id: req!.session!.user!.id } },
-                        project: { connect: { id: projectId } },
-                      },
-                    });
-                    res.status(200).json({ success: true });
-                  }
+                  await prisma.website.create({
+                    data: {
+                      url,
+                      environment,
+                      owner: { connect: { id: req!.session!.user!.id } },
+                      project: { connect: { id: projectId } },
+                    },
+                  });
+                  res.status(200).json({ success: true });
                 }
               } else {
                 if (websiteProjects.length >= 2) {
@@ -125,43 +121,32 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
               AND: [{ ownerId: req!.session!.user!.id }, { projectId: null }],
             },
           });
-          console.log(websites.length)
-
-          if (user.subscription && user.subscription.plan === "Growth Plan") {
-            if (websites.length >= 10) {
-              res.status(200).json({
-                success: false,
-                message:
-                  "You can only add up to 10 websites that aren't associated to a project",
-              });
-            } else {
-              await prisma.website.create({
-                data: {
-                  url,
-                  environment,
-                  owner: { connect: { id: req!.session!.user!.id } },
-                },
-              });
-              res.status(200).json({ success: true });
-            }
+          if (
+            user.subscription &&
+            (user.subscription.plan === "Growth Plan" ||
+              user.subscription.subscriptionId.includes("override")) &&
+            websites.length >= 10
+          ) {
+            res.status(200).json({
+              success: false,
+              message:
+                "You can only add up to 10 websites that aren't associated to a project",
+            });
+          } else if (websites.length >= 3) {
+            res.status(200).json({
+              success: false,
+              message:
+                "You can only add up to 3 websites that aren't associated to a project",
+            });
           } else {
-            console.log('im here')
-            if (websites.length >= 3) {
-              res.status(200).json({
-                success: false,
-                message:
-                  "You can only add up to 3 websites that aren't associated to a project",
-              });
-            } else {
-              await prisma.website.create({
-                data: {
-                  url,
-                  environment,
-                  owner: { connect: { id: req!.session!.user!.id } },
-                },
-              });
-              res.status(200).json({ success: true });
-            }
+            await prisma.website.create({
+              data: {
+                url,
+                environment,
+                owner: { connect: { id: req!.session!.user!.id } },
+              },
+            });
+            res.status(200).json({ success: true });
           }
         }
       } else {

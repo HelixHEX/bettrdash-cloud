@@ -3,9 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider     = "mysql"
   relationMode = "prisma"
-  url      = env("DATABASE_URL")
+  url          = env("DATABASE_URL")
 }
 
 model User {
@@ -28,18 +28,21 @@ model Project {
   id               Int       @id @default(autoincrement())
   createdAt        DateTime  @default(now()) @map("created_at")
   updatedAt        DateTime  @updatedAt @map("updated_at")
-  name             String    @db.Citext
+  name             String
   github_url       String?
   language         String?
   description      String?
   active           Boolean
   image_url        String    @default("https://res.cloudinary.com/practicaldev/image/fetch/s--qo_Wp38Z--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/e0nl7ziy1la7bpwj7rsp.png")
-  owner            User      @relation(fields: [ownerId], references: [id])
+  owner            User      @relation(references: [id], fields: [userId])
   ownerId          Int
   status           String    @default("pending")
   websites         Website[]
   defaultWebsiteId Int?
   live_url         String?
+  userId           Int
+
+  @@index([userId])
 }
 
 model Website {
@@ -52,19 +55,21 @@ model Website {
   projectId   Int?
   status      String   @default("pending")
   owner       User     @relation(fields: [ownerId], references: [id])
-  ownerId     Int
+  ownerId     Int    
   default     Boolean  @default(false)
   tracking    Boolean  @default(false)
+
+  @@index([projectId])
+  @@index([ownerId])
 }
 
 model Apikey {
-  id              Int      @id @default(autoincrement())
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
-  key             String   @unique
-  authorized_urls String[]
-  user            User     @relation(fields: [userId], references: [id])
-  userId          Int      @unique
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  key       String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int      @unique
 }
 
 model Service {
@@ -78,14 +83,14 @@ model Service {
 }
 
 model Subscription {
-  id             Int      @id @default(autoincrement())
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
-  subscriptionId String   @unique
-  user           User     @relation(fields: [userId], references: [id])
-  userId         Int      @unique
-  status         String   @default("pending")
-  plan           String   @default("hobby")
-  ends_at        DateTime?  
+  id             Int       @id @default(autoincrement())
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  subscriptionId String    @unique
+  user           User      @relation(fields: [userId], references: [id])
+  userId         Int       @unique
+  status         String    @default("pending")
+  plan           String    @default("hobby")
+  ends_at        DateTime?
   renews_at      DateTime?
 }

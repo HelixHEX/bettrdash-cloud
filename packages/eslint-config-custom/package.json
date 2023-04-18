@@ -1,11 +1,10 @@
 {
   "name": "eslint-config-custom",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "main": "index.js",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "eslint-config-next": "12.1.5",
     "eslint-config-prettier": "latest",
     "eslint-config-turbo": "latest",
     "eslint-plugin-react": "latest"

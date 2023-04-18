@@ -102,6 +102,7 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
             description,
             active,
             image_url,
+            ownerId: user.id,
             owner: {
               connect: { id: user.id },
             },

@@ -13,6 +13,10 @@
       "dependsOn": ["lint", "^db#db:pre-build",  "^build"],
       "outputs": ["dist/**"]
     },
+    "build:web": {
+      "dependsOn": ["lint"],
+      "outputs": ["build/**"]
+    },
     "desktop": {
       "dependsOn": ["db#db:generate"]
     },

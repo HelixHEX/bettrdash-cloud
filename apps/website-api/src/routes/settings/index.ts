@@ -64,6 +64,9 @@ router.get("/all", async (req, res) => {
         subscription: user.subscription,
       };
       res.status(200).json({ success: true, settings });
+    } else {
+      console.log('user not found')
+      res.status(200).json({success: false, message: 'User not found'})
     }
   } catch (e) {
     console.log(e);

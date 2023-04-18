@@ -25,7 +25,6 @@ router.get("/", async (req, res) => {
             name: "desc",
           },
           select: {
-            live_url: true,
             name: true,
             github_url: true,
             language: true,
@@ -53,7 +52,6 @@ router.get("/", async (req, res) => {
             },
             select: {
               name: true,
-              live_url: true,
               github_url: true,
               language: true,
               description: true,

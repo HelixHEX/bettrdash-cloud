@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import {
   apiKeyAPI,
+  checkAuth,
   queryClient,
   settingsApi,
   updatePaymentMethodLink,
@@ -9,7 +10,7 @@ import {
 } from "../api";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../api/constants";
+import { API_URL, CHECKOUT_URL } from "../api/constants";
 import {
   Text,
   Heading,
@@ -34,11 +35,13 @@ declare const window: any;
 axios.defaults.withCredentials = true;
 
 const Settings = () => {
-  const {isOpen, onOpen, onClose} = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { toggleColorMode, colorMode } = useColorMode();
   const toast = useToast();
   const bg = useColorModeValue("white", "gray.800");
-  const {mutate} = useCancelSubscription()
+  const { mutate } = useCancelSubscription();
+  const { data: userData, status: userStatus } = useQuery("session", checkAuth);
+
   const { data: apiKeyData, status: apiKeyStatus } = useQuery(
     "api_key",
     apiKeyAPI
@@ -59,7 +62,8 @@ const Settings = () => {
   if (
     apiKeyStatus === "loading" ||
     settingsStatus === "loading" ||
-    updatePaymentStatus === "loading"
+    updatePaymentStatus === "loading" ||
+    userStatus === "loading"
   ) {
     return <Loading />;
   }
@@ -67,7 +71,8 @@ const Settings = () => {
   if (
     apiKeyStatus === "error" ||
     settingsStatus === "error" ||
-    updatePaymentStatus === "error"
+    updatePaymentStatus === "error" ||
+    userStatus === "error"
   ) {
     return <Text>Something went wrong</Text>;
   }
@@ -209,7 +214,7 @@ const Settings = () => {
             <>
               <Flex mt={3}>
                 <Heading alignSelf={"center"} fontSize={15}>
-                  Current Subscription:{" "}
+                  Current Subscription:
                 </Heading>
                 <Text ml={2}>Growth Plan</Text>
               </Flex>
@@ -218,9 +223,9 @@ const Settings = () => {
                   {settingsData.settings.subscription.plan === "Growth Plan" ? (
                     <>
                       <Heading alignSelf={"center"} fontSize={15}>
-                        Renews
+                        Renews:
                       </Heading>
-                      <Text>
+                      <Text ml={2}>
                         {formatDate(
                           new Date(settingsData.settings.subscription.renews_at)
                         )}
@@ -229,9 +234,9 @@ const Settings = () => {
                   ) : (
                     <>
                       <Heading alignSelf={"center"} fontSize={15}>
-                        Expires
+                        Expires:
                       </Heading>
-                      <Text>
+                      <Text ml={2}>
                         {formatDate(
                           new Date(settingsData.settings.subscription.ends_at)
                         )}
@@ -240,35 +245,40 @@ const Settings = () => {
                   )}
                 </Flex>
               </Flex>
-              <Text
-                onClick={() =>
-                  window.LemonSqueezy.Url.Open(updatePaymentData.link)
-                }
-                mt={3}
-                w={319}
-                fontWeight={"bold"}
-                bgGradient="linear(to-r, red.400,pink.400)"
-                bgClip="text"
-                cursor={"pointer"}
-                _hover={{ color: "gray.900" }}
-              >
-                View and update your payment method
-              </Text>
-              <Text
-                
-                onClick={onOpen}
-                mt={3}
-                w={319}
-                fontWeight={"bold"}
-                bgGradient="linear(to-r, red.400,pink.400)"
-                bgClip="text"
-                cursor={"pointer"}
-                _hover={{ color: "gray.400" }}
-              >
-                {settingsData.settings.subscription.plan === "Growth Plan"
-                  ? "Cancel subscription"
-                  : "Resume Subscription"}
-              </Text>
+              {!settingsData.settings.subscription.subscriptionId.includes(
+                "override"
+              ) && (
+                <>
+                  <Text
+                    onClick={() =>
+                      window.LemonSqueezy.Url.Open(updatePaymentData.link)
+                    }
+                    mt={3}
+                    w={319}
+                    fontWeight={"bold"}
+                    bgGradient="linear(to-r, red.400,pink.400)"
+                    bgClip="text"
+                    cursor={"pointer"}
+                    _hover={{ color: "gray.900" }}
+                  >
+                    View and update your payment method
+                  </Text>
+                  <Text
+                    onClick={onOpen}
+                    mt={3}
+                    w={319}
+                    fontWeight={"bold"}
+                    bgGradient="linear(to-r, red.400,pink.400)"
+                    bgClip="text"
+                    cursor={"pointer"}
+                    _hover={{ color: "gray.400" }}
+                  >
+                    {settingsData.settings.subscription.plan === "Growth Plan"
+                      ? "Cancel subscription"
+                      : "Resume Subscription"}
+                  </Text>
+                </>
+              )}
             </>
           ) : (
             <>
@@ -279,9 +289,11 @@ const Settings = () => {
                 <Text ml={2}>Hobby Plan</Text>
               </Flex>
               <Text
-                // onClick={() =>
-                //   window.LemonSqueezy.Url.Open(updatePaymentData.link)
-                // }
+                onClick={() =>
+                  window.LemonSqueezy.Url.Open(
+                    `${CHECKOUT_URL}&email=${userData.user.email}`
+                  )
+                }
                 mt={3}
                 w={319}
                 fontWeight={"bold"}
@@ -297,13 +309,17 @@ const Settings = () => {
         </Flex>
       </VStack>
       <ModalComp
-      title='Sad to see you go :('
+        title="Sad to see you go :("
         isOpen={isOpen}
         onClose={onClose}
-        actionText='Cancel Subscription'
-        onAction={() => mutate({id: settingsData.settings.subscription.id})}
+        actionText="Cancel Subscription"
+        onAction={() => mutate({ id: settingsData.settings.subscription.id })}
       >
-      <Text>{'You will still have access until the end of your next billing date to use your subscription. You can still resume your subscription before your end date.'}</Text>
+        <Text>
+          {
+            "You will still have access until the end of your next billing date to use your subscription. You can still resume your subscription before your end date."
+          }
+        </Text>
       </ModalComp>
     </>
   );

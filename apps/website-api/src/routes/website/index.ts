@@ -124,29 +124,33 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
           if (
             user.subscription &&
             (user.subscription.plan === "Growth Plan" ||
-              user.subscription.subscriptionId.includes("override")) &&
-            websites.length >= 10
+              user.subscription.subscriptionId.includes("override"))
           ) {
-            res.status(200).json({
-              success: false,
-              message:
-                "You can only add up to 10 websites that aren't associated to a project",
-            });
-          } else if (websites.length >= 3) {
-            res.status(200).json({
-              success: false,
-              message:
-                "You can only add up to 3 websites that aren't associated to a project",
-            });
+            if (websites.length >= 10) {
+              res.status(200).json({
+                success: false,
+                message:
+                  "You can only add up to 10 websites that aren't associated to a project",
+              });
+            } else {
+            }
           } else {
-            await prisma.website.create({
-              data: {
-                url,
-                environment,
-                owner: { connect: { id: req!.session!.user!.id } },
-              },
-            });
-            res.status(200).json({ success: true });
+            if (websites.length >= 3) {
+              res.status(200).json({
+                success: false,
+                message:
+                  "You can only add up to 3 websites that aren't associated to a project",
+              });
+            } else {
+              await prisma.website.create({
+                data: {
+                  url,
+                  environment,
+                  owner: { connect: { id: req!.session!.user!.id } },
+                },
+              });
+              res.status(200).json({ success: true });
+            }
           }
         }
       } else {

@@ -19,7 +19,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:generate": "turbo run db:generate",
     "build:desktop": "turbo run build:desktop",
-    "build:web": "turbo run build:web"
+    "build:web": "turbo run build:web",
+    "start:web-api": "turbo run start --scope='website-api' --include-dependencies --no-deps"
   },
   "devDependencies": {
     "eslint-config-custom": "*",

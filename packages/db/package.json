@@ -7,7 +7,7 @@
   "scripts": {
     "db:migrate:dev": "yarn prisma migrate dev",
     "db:generate": "yarn prisma generate",
-    "db:pre-build": "yarn prisma migrate deploy && yarn db:generate"
+    "db:pre-build": "yarn db:generate"
   },
   "dependencies": {
     "@prisma/client": "^4.12.0",

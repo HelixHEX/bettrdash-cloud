@@ -5,6 +5,10 @@
       "dependsOn": ["lint", "^db#db:pre-build", "^build"],
       "outputs": ["dist/**"]
     },
+    "build:web": {
+      "dependsOn": ["lint"],
+      "outputs": ["build/**"]
+    },
     "build:desktop": {
       "dependsOn": ["lint", "^db#db:pre-build",  "^build"],
       "outputs": ["dist/**"]

@@ -17,7 +17,7 @@ const connectRedis = require("connect-redis");
 const redis = require("redis");
 
 const RedisStore = connectRedis(session);
-const redisClient = redis.createClient();
+const redisClient = redis.createClient(process.env.REDIS_URL);
 
 const main = async () => {
   const app = express();

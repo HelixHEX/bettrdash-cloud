@@ -9,5 +9,6 @@ declare namespace NodeJS {
     SIGNING_KEY: string;
     LEMONSQUEEZY_API_KEY: string;
     LEMONSQUEEZY_API: string;
+    REDIS_URL: string;
   }
 }

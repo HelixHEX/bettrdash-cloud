@@ -2,7 +2,7 @@
   "name": "website-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "watch": "tsc -w",
     "dev": "tsc-watch --onSuccess \"node ./dist/index.js\"",

@@ -4,13 +4,13 @@ import express from "express";
 import { Database, Resource } from "@adminjs/prisma";
 import { DMMFClass } from "@prisma/client/runtime";
 import { prisma } from "db";
-
-const session = require("express-session");
-const connectRedis = require("connect-redis");
-const redis = require("redis");
+import session from "express-session";
+import connectRedis from "connect-redis";
+import redis from "redis";
+import bcrypt from "bcrypt";
 
 const RedisStore = connectRedis(session);
-const redisClient = redis.createClient();
+const redisClient = redis.createClient(process.env.REDIS_URL);
 
 const PORT = process.env.PORT || 5090;
 
@@ -25,9 +25,17 @@ const authenticate = async (email: string, password: string) => {
       email,
     },
   });
-  if (admin && admin.password === password && admin.role === "admin") {
-    return admin;
+  if (admin) {
+    const match = await bcrypt.compare(password, admin.password!);
+    if (match) {
+      if (admin.role === "admin") {
+        return admin;
+      }
+    }
   }
+  // if (admin && admin.password === password && admin.role === "admin") {
+  //   return admin;
+  // }
   return null;
 };
 const start = async () => {

@@ -9,7 +9,7 @@
     "watch": "tsc -w",
     "dev": "tsc-watch --onSuccess \"node ./dist/index.js\"",
     "start:old": "node ./dist/index.js",
-    "start": "vercel dev",
+    "start": "node ./dist/index.js",
     "build": "tsc",
     "deploy": "vercel deploy --prod"
   },

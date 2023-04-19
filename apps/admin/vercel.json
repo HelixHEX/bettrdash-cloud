@@ -1,9 +1,4 @@
 {
   "version": 2,
-  "buildCommand": "npx turbo run build",
-  "functions": {
-    "api/index.ts": {
-      "runtime": "node@18.15.0"
-    }
-  }
+  "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
 }

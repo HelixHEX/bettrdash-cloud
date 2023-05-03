@@ -23,7 +23,7 @@
       "outputs": []
     },
     "dev": {
-      "dependsOn": ["db#db:generate"],
+      "dependsOn": ["db:generate"],
       "cache": false
     },
     "db:generate": {

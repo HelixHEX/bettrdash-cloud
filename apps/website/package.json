@@ -40,7 +40,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-qa": "env-cmd -f .env react-scripts build",
-    "build:web": "env-cmd -f .env react-scripts build"
+    "build:web": "react-scripts build"
   },
   "browserslist": {
     "production": [

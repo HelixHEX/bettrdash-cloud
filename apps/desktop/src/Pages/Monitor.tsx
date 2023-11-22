@@ -43,7 +43,7 @@ const Monitor = () => {
   }
 
   if (websiteMonitorStatus === "error") {
-    return <Text>Something went wrong</Text>;
+    return <Text>An error has occurred</Text>;
   }
 
   if (websiteMonitorData.message) {

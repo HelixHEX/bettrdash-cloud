@@ -37,19 +37,19 @@ import { AggregateProps, SourcesProps, TopPagesProps } from "../../utils/types";
 const WebsiteAnalytic = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const bg = useColorModeValue("white", "gray.800");
-  const { id } = useParams();
+  const { projectId } = useParams();
   const results = useQueries([
     {
       queryKey: "analyticsAggregate",
-      queryFn: () => analyticsAggregate({ id: id! }),
+      queryFn: () => analyticsAggregate({ id: projectId! }),
     },
     {
       queryKey: "analyticsSources",
-      queryFn: () => analyticsSources({ id: id! }),
+      queryFn: () => analyticsSources({ id: projectId! }),
     },
     {
       queryKey: "analyticsTopPages",
-      queryFn: () => analyticsTopPages({ id: id! }),
+      queryFn: () => analyticsTopPages({ id: projectId! }),
     },
   ]);
 
@@ -58,7 +58,7 @@ const WebsiteAnalytic = () => {
   }
 
   if (results[0].isError || results[1].isError || results[2].isError) {
-    return <Text>Something went wrong</Text>;
+    return <Text>An error has occurred</Text>;
   }
 
   if (

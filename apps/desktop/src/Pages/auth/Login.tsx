@@ -69,7 +69,7 @@ const Login = () => {
         .catch((e) => {
           toast({
             title: "Error",
-            description: "Something went wrong",
+            description: "An error has occurred",
             status: "error",
             duration: 5000,
             isClosable: true,

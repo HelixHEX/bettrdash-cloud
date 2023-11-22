@@ -1,16 +1,26 @@
-import { PrismaClient } from "@prisma/client";
-
+import "dotenv-safe/config";
 export * from "@prisma/client";
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+import { PrismaClient } from "@prisma/client";
 
-export const prisma =
-  globalForPrisma.prisma ||
-  new PrismaClient({
-    log:
-      process.env.NODE_ENV === "development"
-        ? ["query", "error", "warn"]
-        : ["error"],
-  });
+let prisma: PrismaClient;
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+declare global {
+  var __db: PrismaClient | undefined;
+}
+
+// this is needed because in development we don't want to restart
+// the server with every change, but we want to make sure we don't
+// create a new connection to the DB with every change either.
+if (process.env.NODE_ENV === "production") {
+  prisma = new PrismaClient({ log: ["error"] });
+  prisma.$connect();
+} else {
+  if (!global.__db) {
+    global.__db = new PrismaClient({ log: ["error", "warn"] });
+    global.__db.$connect();
+  }
+  prisma = global.__db;
+}
+
+export { prisma }; 

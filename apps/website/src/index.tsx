@@ -24,14 +24,14 @@ import Websites from "./pages/Websites";
 import Analytics from "./pages/analytics/Analytics";
 import WebsiteAnalytic from "./pages/analytics/WebsiteAnalytic";
 
-// Sentry.init({
-//   dsn: "https://af1db286b9844d3c852640f235b4ab2b@o4504119170105344.ingest.sentry.io/4504119172464640",
-//   integrations: [new BrowserTracing()],
-//   // Set tracesSampleRate to 1.0 to capture 100%
-//   // of transactions for performance monitoring.
-//   // We recommend adjusting this value in production
-//   tracesSampleRate: 1.0,
-// });
+Sentry.init({
+  dsn: "https://af1db286b9844d3c852640f235b4ab2b@o4504119170105344.ingest.sentry.io/4504119172464640",
+  integrations: [new BrowserTracing()],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 
 ReactDOM.render(
   <React.StrictMode>
@@ -42,13 +42,26 @@ ReactDOM.render(
           <Routes>
             <Route path="/" element={<App />}>
               <Route index element={<Projects />} />
-              <Route path="/monitor" element={<Monitor />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/analytics/:id" element={<WebsiteAnalytic />} />
-              <Route path="/projects/:id" element={<Project />} />
-              <Route path="/projects/:id/websites" element={<Websites />} />
+              <Route path="/projects/:projectId" element={<Project />} />
+              <Route
+                path="/projects/:projectId/monitor" 
+                element={<Monitor />}
+              />
+              <Route
+                path="/projects/:projectId/websites"
+                element={<Websites />}
+              />
+              {/* <Route
+                path="/projects/:projectId/analytics"
+                element={<Analytics />}
+              >
+                <Route
+                  path="/projects/:projectId/analytics/:id"
+                  element={<WebsiteAnalytic />}
+                />
+              </Route> */}
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

@@ -1,21 +1,21 @@
 {
   "name": "db",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "db:migrate:dev": "yarn prisma migrate dev",
     "db:generate": "yarn prisma generate",
-    "db:pre-build": "yarn db:generate"
+    "db:pre-build": "yarn prisma migrate deploy && yarn db:generate"
   },
   "dependencies": {
-    "@prisma/client": "4.13.0",
-    "dotenv-safe": "^8.2.0"
+    "@prisma/client": "4.16.2",
+    "dotenv-safe": "^8.2.0",
+    "prisma": "^4.8.1"
   },
   "devDependencies": {
     "config": "*",
-    "prisma": "^4.13.0",
     "tsconfig": "*",
     "typescript": "^4.5.3"
   }

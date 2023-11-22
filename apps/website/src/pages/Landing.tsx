@@ -27,15 +27,15 @@ import {
   FaNpm,
   FaCheckCircle,
   FaGithub,
+  FaGit,
 } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { Link as RouterLink } from "react-router-dom";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/700.css";
 import { ReactComponent as AnalyticsSVG } from "../assets/images/analytics.svg";
-import { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 
-declare const window: any;
 const Landing = () => {
   const dashboardImage = useColorModeValue(
     require("../assets/images/dashboard-light.png"),
@@ -46,8 +46,6 @@ const Landing = () => {
     require("../assets/images/monitor-dark.png")
   );
   const bodyTextColor = useColorModeValue("gray.600", "gray.300");
-
-  // useEffect(() => window.createLemonSqueezy(), []);
   return (
     <>
       <Flex
@@ -77,7 +75,7 @@ const Landing = () => {
             <Icon
               alignSelf={"center"}
               cursor={"pointer"}
-              _hover={{ color: "gray.400" }}
+              _hover={{ color: "gray.900" }}
               color="red.400"
               as={FaGithub}
               onClick={() =>
@@ -92,7 +90,7 @@ const Landing = () => {
               fontWeight={"bold"}
               fontSize={"xl"}
               cursor={"pointer"}
-              _hover={{ color: "gray.400" }}
+              _hover={{ color: "gray.900" }}
               as={RouterLink}
               to="/login"
               alignSelf={"center"}
@@ -108,8 +106,6 @@ const Landing = () => {
               fontSize={{ base: "sm", md: "md" }}
               color="white"
               _hover={{ bg: "gray.200", color: "gray.800" }}
-              as={RouterLink}
-              to="/signup"
             >
               Signup
             </Button>
@@ -141,8 +137,6 @@ const Landing = () => {
               w={{ base: 240, sm: 240, md: 300 }}
               color="white"
               _hover={{ bg: "gray.200", color: "gray.800" }}
-              as={RouterLink}
-              to="/signup?plan=hobby"
             >
               Get Started for free
             </Button>
@@ -188,7 +182,8 @@ const Landing = () => {
               <TabPanel flexDir={"column"}>
                 <Link
                   fontWeight="bold"
-                  href="https://www.npmjs.com/package/bettrdash-react"
+                  to="https://www.npmjs.com/package/bettrdash-react"
+                  as={RouterLink}
                   textAlign={"center"}
                 >
                   NPM Package
@@ -273,7 +268,8 @@ const Landing = () => {
             Our dashboard includes advanced, analytics capabilities powered by{" "}
             <Link
               textDecor={"underline"}
-              href="https://plausible.io"
+              to="https://plausible.io"
+              as={RouterLink}
             >
               plausible.io
             </Link>
@@ -286,9 +282,7 @@ const Landing = () => {
             w={250}
             bg="red.400"
             color="white"
-            _hover={{ bg: "red.500" }}
-            as={RouterLink}
-            to="/signup?plan=hobby"
+            _hover={{ bg: "red.500"}}
           >
             Get Started
           </Button>
@@ -468,8 +462,6 @@ const Pricing = () => {
                 _hover={{ bg: "red.400", color: "white" }}
                 borderColor="red.400"
                 variant="outline"
-                as={RouterLink}
-                to="/signup?plan=hobby"
               >
                 Get started for free
               </Button>
@@ -547,8 +539,6 @@ const Pricing = () => {
                   color="white"
                   w="full"
                   bg="red.400"
-                  as={RouterLink}
-                  to="/signup?plan=growth"
                 >
                   Select plan
                 </Button>

@@ -41,7 +41,7 @@ const Analytics = () => {
   }
 
   if (analyticsStatus === "error") {
-    return <Text>Something went wrong</Text>;
+    return <Text>An error has occurred</Text>;
   }
 
   if (analyticsData.message) {
@@ -106,7 +106,7 @@ const Analytics = () => {
             </Table>
           </TableContainer>
         ) : (
-          <Text textAlign={'center'} color='gray.500' mt={5}>
+          <Text mt={5}>
             No websites are being tracked. Feel free to track one!
           </Text>
         )}

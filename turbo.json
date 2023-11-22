@@ -6,24 +6,17 @@
       "outputs": ["dist/**"]
     },
     "build:desktop": {
-      "dependsOn": ["lint", "^db#db:pre-build", "^build"],
+      "dependsOn": ["lint", "^db#db:pre-build",  "^build"],
       "outputs": ["dist/**"]
-    },
-    "build:web": {
-      "dependsOn": ["lint"],
-      "outputs": ["build/**"]
     },
     "desktop": {
       "dependsOn": ["db#db:generate"]
-    },
-    "start": { 
-      "cache": false 
     },
     "lint": {
       "outputs": []
     },
     "dev": {
-      "dependsOn": ["db:generate"],
+      "dependsOn": ["db#db:generate"],
       "cache": false
     },
     "db:generate": {

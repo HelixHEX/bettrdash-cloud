@@ -13,7 +13,7 @@ This turborepo uses [Yarn](https://classic.yarnpkg.com/) as a package manager. I
 - `monitor`: an express (typescript) app to monitor the health of user's websites and services 
 - `website`: a react (typescript) app 
 - `website-api`: an express (typescript) app to handle requests from the website
-
+- `analytics`: coming soon...
 ### Packages
 
 - `db`: prisma client

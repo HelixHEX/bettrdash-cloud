@@ -2,7 +2,11 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["lint", "^db#db:pre-build", "^build"],
+      "dependsOn": ["lint"],
+      "outputs": ["dist/**"]
+    },
+    "build-api-gateway": {
+      "dependsOn": ["db-generate"],
       "outputs": ["dist/**"]
     },
     "build:desktop": {
@@ -22,7 +26,7 @@
       "dependsOn": ["db#db:generate"],
       "cache": false
     },
-    "db:generate": {
+    "db-generate": {
       "outputs": ["dist/**"],
       "cache": false
     },

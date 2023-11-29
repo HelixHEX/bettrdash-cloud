@@ -1,13 +1,13 @@
 {
-  "name": "db",
+  "name": "@bettrdash/db",
   "version": "0.0.1",
   "private": true,
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "db:migrate:dev": "yarn prisma migrate dev",
-    "db:generate": "yarn prisma generate",
-    "db:pre-build": "yarn prisma migrate deploy && yarn db:generate"
+    "db:pre-build": "yarn prisma migrate deploy && yarn db:generate",
+    "db-generate": "yarn prisma generate"
   },
   "dependencies": {
     "@prisma/client": "4.16.2",

@@ -1,8 +1,10 @@
 import "dotenv-safe/config";
 import "reflect-metadata";
 import express from "express";
-const morgan = require("morgan");
 import cors from "cors";
+// import {createClient} from 'redis'
+import Redis from 'ioredis'
+
 //routes
 import auth from "./routes/auth";
 import project from "./routes/project";
@@ -11,12 +13,13 @@ import monitor from "./routes/monitor";
 import website from "./routes/website";
 import analytics from "./routes/analytics";
 
+const morgan = require("morgan");
 const session = require("express-session");
 const connectRedis = require("connect-redis");
-const redis = require("redis");
-
 const RedisStore = connectRedis(session);
-const redisClient = redis.createClient();
+// const redisUrl = process.env.REDIS_URL
+const redisClient = new Redis(process.env.REDIS_URL)
+// const redisClient = createClient({url: "redis://default:18e1c90720df461e8aa455c68cdad860@usw1-measured-unicorn-34414.upstash.io:34414"});
 
 const main = async () => {
   const app = express();

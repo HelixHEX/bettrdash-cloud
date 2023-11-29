@@ -6,5 +6,6 @@ declare namespace NodeJS {
     NODE_ENV: "development" | "production";
     PLAUSIBLE_API_KEY: string;
     ANALYTICS_API: string;
+    REDIS_URL: string;
   }
 }

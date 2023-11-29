@@ -74,7 +74,7 @@ const Projects = () => {
     <>
       <Flex p={{base: 5, md: 32}} flexDir={"column"}>
         <Flex>
-          <Heading mr={4} alignSelf={"center"} color="gray.500">
+          <Heading mr={4} alignSelf={"center"} color={useColorModeValue('gray.900', 'gray.100')}>
             Projects
           </Heading>
           <NewProject />

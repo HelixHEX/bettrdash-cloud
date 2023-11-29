@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import {
   IconButton,
   Avatar,
@@ -131,7 +131,7 @@ const SidebarContent = ({ onClose, breadcrumbs, ...rest }: SidebarProps) => {
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
-      {...rest}
+      {...rest} 
     >
       <Flex h="20" alignItems="center" mx="4" justifyContent="space-between">
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
@@ -219,6 +219,7 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
     return location.pathname.split("/");
   };
   const toast = useToast();
+  const [hoverUserBanner, setHoverUserBanner] = useState<boolean>(false)
   const logout = async () => {
     await axios
       .post(`${API_URL}/auth/logout`, {}, { withCredentials: true })
@@ -280,9 +281,9 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
                   isCurrentPage={index === breadcrumbs.length - 1}
                   key={index}
                 >
-                  {index === 0 && <BreadcrumbSeparator color="gray.400" />}
+                  {index === 0 && <BreadcrumbSeparator color={useColorModeValue("gray.900", "gray.50")} />}
                   <BreadcrumbLink
-                    color={breadcrumb.color ? breadcrumb.color : "gray.400"}
+                    color={breadcrumb.color ? breadcrumb.color : useColorModeValue("gray.900", "gray.50")}
                     fontWeight={"semibold"}
                     href={breadcrumb.path}
                   >
@@ -314,8 +315,10 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
               py={2}
               transition="all 0.3s"
               _focus={{ boxShadow: "none" }}
+              onMouseLeave={() => setHoverUserBanner(false)} 
+              onMouseEnter={() =>setHoverUserBanner(true)}
             >
-              <HStack>
+              <HStack >
                 <Avatar size={"sm"} src={user.profile_img} />
                 <VStack
                   display={{ base: "none", md: "flex" }}
@@ -323,7 +326,11 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">{user.name}</Text>
+                  <Text 
+                  bgGradient={hoverUserBanner ? 'linear(to-l, red.400, pink.400)' : useColorModeValue('linear(to-l, gray.900, gray.900)', 'linear(to-l, white, white)')}
+                  bgClip='text'
+                  fontWeight='bold'
+                  fontSize="sm">{user.name}</Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
                   <FiChevronDown />

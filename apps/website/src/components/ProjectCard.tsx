@@ -39,16 +39,16 @@ const ProjectCard = (project: ProjectProps) => {
           translate: "0px  = -5px",
           boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.1)",
           borderImage: "linear-gradient(35deg, #F56565, #ED64A6) 1",
-          borderWidth: 2
+          borderWidth: 4
         }}
         onClick={() => navigate(`/projects/${project.id}`)}
         role={"group"}
         maxW={"100%"}
         w={"full"}
-        bgGradient='linear(to-br, #343C4C, gray.800)'
+        bgGradient={useColorModeValue('linear(to-br, white, gray.300)', 'linear(to-br, #343C4C, gray.800)')}
         h={250}
-        borderWidth={2}
-        borderColor={'gray.300'}
+        borderWidth={4}
+        borderColor={useColorModeValue('gray.700', 'gray.300')}
         p={4}
         justifyContent={"space-between"}
         flexDir={"column"}

@@ -38,19 +38,17 @@ const ProjectCard = (project: ProjectProps) => {
           cursor: "pointer",
           translate: "0px  = -5px",
           boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.1)",
+          borderImage: "linear-gradient(35deg, #F56565, #ED64A6) 1",
+          borderWidth: 2
         }}
         onClick={() => navigate(`/projects/${project.id}`)}
         role={"group"}
         maxW={"100%"}
         w={"full"}
-        bg={useColorModeValue("white", "gray.800")}
-        rounded={"lg"}
-        // pos={"relative"}
-        // zIndex={1}
+        bgGradient='linear(to-br, #343C4C, gray.800)'
         h={250}
         borderWidth={2}
-
-        borderColor={useColorModeValue('gray.200', 'gray.700')}
+        borderColor={'gray.300'}
         p={4}
         justifyContent={"space-between"}
         flexDir={"column"}

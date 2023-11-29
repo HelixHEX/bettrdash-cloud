@@ -66,6 +66,12 @@ const useSettingsPage = () => {
   return pathname === '/settings'
 }
 
+const useProfilePage = () => {
+  const location = useLocation()
+  const pathname = location.pathname
+  return pathname === '/profile'
+}
+
 interface NavProps {
   children: ReactNode;
   user: UserProps;
@@ -75,6 +81,7 @@ interface NavProps {
 const Nav = ({ children, user, breadcrumbs }: NavProps) => {
   const isHomePage = useHomePage();
   const isSettingsPage = useSettingsPage()
+  const isProfilePage = useProfilePage()
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -82,7 +89,7 @@ const Nav = ({ children, user, breadcrumbs }: NavProps) => {
       <SidebarContent
         breadcrumbs={breadcrumbs}
         onClose={() => onClose}
-        display={{ base: "none", md: isHomePage || isSettingsPage ? "none" : "block" }}
+        display={{ base: "none", md: isHomePage || isProfilePage || isSettingsPage ? "none" : "block" }}
       />
       <Drawer
         autoFocus={false}
@@ -99,7 +106,7 @@ const Nav = ({ children, user, breadcrumbs }: NavProps) => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav breadcrumbs={breadcrumbs} user={user} onOpen={onOpen} />
-      <Box mt={{ base: 0, md: 20 }} ml={{ base: 0, md: isHomePage || isSettingsPage ? 0 : 60 }}>
+      <Box mt={{ base: 0, md: 20 }} ml={{ base: 0, md: isHomePage || isProfilePage || isSettingsPage ? 0 : 60 }}>
         {children}
       </Box>
     </Box>
@@ -204,6 +211,9 @@ interface MobileProps extends FlexProps {
 }
 const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
   const isHomePage = useHomePage();
+  const isProfilePage = useProfilePage()
+  const isSettingsPage = useSettingsPage()
+
   const location = useLocation();
   const mapLocation = () => {
     return location.pathname.split("/");
@@ -259,7 +269,7 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
       />
       <HStack spacing={8}>
         <Logo />
-        {location.pathname !== '/settings' && (
+        {!isSettingsPage && !isProfilePage && (
           breadcrumbs.length > 0 && (
             <Breadcrumb
               alignSelf={"center"}

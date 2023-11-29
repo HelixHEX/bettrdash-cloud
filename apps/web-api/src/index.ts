@@ -30,12 +30,14 @@ const main = async () => {
       ":date[iso] :remote-addr :method :url :status :res[content-length] - :response-time ms"
     )
   );
+  console.log(process.env.NODE_ENV)
   app.use(
     cors({
       origin: [
-        process.env.NODE_ENV === "development"
-          ? "http://localhost:3000"
-          : false,
+        // process.env.NODE_ENV === "development"
+        //   ? "http://localhost:3000"
+        //   : false,
+        "http://localhost:3000",
         "https://dev.bettrdash.com",
         "https://bettrdash.com",
       ],

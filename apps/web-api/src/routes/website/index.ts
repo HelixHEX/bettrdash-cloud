@@ -32,7 +32,7 @@ router.get(
             projectName: project.name,
           });
         } else {
-          res.status(200).json({ success: false, message: "Unauthorized" });
+          res.status(200).json({ success: false, message: "Unauthorizedk" });
         }
       } else {
         res.status(200).json({ success: false, message: "Project not found" });
@@ -195,7 +195,7 @@ router.post("/delete", async (req: express.Request, res: express.Response) => {
         }
         res.status(200).json({ success: true });
       } else {
-        res.status(200).json({ success: false, message: "Unauthorized" });
+        res.status(200).json({ success: false, message: "Unauthorizedl" });
       }
     } else {
       res.status(200).json({ success: false, message: "Website not found" });

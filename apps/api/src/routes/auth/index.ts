@@ -1,6 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { prisma } from "db";
+import { prisma } from "@bettrdash/db";
 
 const router = express.Router();
 

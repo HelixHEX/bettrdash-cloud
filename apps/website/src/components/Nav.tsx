@@ -25,6 +25,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
   useToast,
+  Link
 } from "@chakra-ui/react";
 import {
   FiMenu,
@@ -323,11 +324,11 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>
-                <RouterLink to="/profile">Profile</RouterLink>
+              <MenuItem as={RouterLink} to="/profile">
+                <Text >Profile</Text>
               </MenuItem>
-              <MenuItem>
-                <RouterLink to="/settings">settings</RouterLink>
+              <MenuItem as={RouterLink} to="/settings">
+                <Text >Settings</Text>
               </MenuItem>
               {/* <RouterLink to="/billing">Billing</RouterLink> */}
               <MenuDivider />

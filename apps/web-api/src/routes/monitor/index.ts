@@ -7,7 +7,7 @@ router.get("/:projectId", async (req: express.Request, res: express.Response) =>
   const user = req!.session!.user!;
 const { projectId } = req.params
   if (!user) {
-    res.status(200).json({ success: false, message: "Unauthorized" });
+    res.status(200).json({ success: false, message: "Unauthorizedm" });
     return;
   }
   const websites = await prisma.website.findMany({

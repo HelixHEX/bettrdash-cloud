@@ -6,6 +6,7 @@ const port = parseInt(process.env.PORT) || 3000;
 
 const main = async () => {
   let services = await prisma.service.findMany();
+  console.log(services)
   const server = gateway({
     routes: services.map((service: any) => {
       return {

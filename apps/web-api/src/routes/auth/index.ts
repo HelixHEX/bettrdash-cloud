@@ -12,7 +12,7 @@ router.get(
     const user = req.session?.user;
     (req.session)
     if (!user) {
-      res.status(200).json({ success: false, message: "Unauthorized" });
+      res.status(200).json({ success: false, message: "Unauthorizeds" });
       return;
     }
     res.status(200).json({ success: true, user });

@@ -42,9 +42,9 @@ ReactDOM.render(
           <Routes>
             <Route path="/" element={<App />}>
               <Route index element={<Projects />} />
+              <Route path="/projects/:projectId" element={<Project />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/projects/:projectId" element={<Project />} />
               <Route
                 path="/projects/:projectId/monitor" 
                 element={<Monitor />}

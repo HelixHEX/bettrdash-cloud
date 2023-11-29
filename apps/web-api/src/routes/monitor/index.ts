@@ -10,6 +10,7 @@ const { projectId } = req.params
     res.status(200).json({ success: false, message: "Unauthorizedm" });
     return;
   }
+  
   const websites = await prisma.website.findMany({
     where: {
       projectId: parseInt(projectId)

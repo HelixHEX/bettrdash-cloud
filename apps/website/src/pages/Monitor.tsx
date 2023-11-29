@@ -26,6 +26,8 @@ import { ProjectProps } from "../utils/types";
 import WebsitesTable from "../components/WebsitesTable";
 import NewWebsite from "../components/NewWebsite";
 import { useParams } from "react-router-dom";
+import ProjectNameBanner from "../components/ProjectNameBanner";
+import { useOutlet } from "./App";
 
 type ProjectProp = {
   id: number;
@@ -39,6 +41,24 @@ const Monitor = () => {
     queryKey: "monitor",
     queryFn: () => projectMonitor({projectId: projectId!})
   })
+  const {setBreadcrumbs} =useOutlet();
+
+  const [projectName, setProjectName] = useState<string>('')
+  useEffect(() => {
+    if (websiteMonitorData) {
+      if (websiteMonitorData.projects) {
+        setBreadcrumbs([
+          { path: "/", label: "Projects" },
+          {
+            path: `/projects/${projectId}`,
+            label: websiteMonitorData.projects.filter((project:ProjectProps) => project.id === parseInt(projectId!))[0].name,
+            color: "red.400",
+          },
+        ]);
+        setProjectName(websiteMonitorData.projects.filter((project:ProjectProps) => project.id === parseInt(projectId!))[0].name)
+      }
+    }
+  }, [websiteMonitorData, setBreadcrumbs]);
 
   if (websiteMonitorStatus === "loading") {
     return <Loading />;
@@ -55,10 +75,9 @@ const Monitor = () => {
   const websites = websiteMonitorData.websites;
   const projects = websiteMonitorData.projects;
 
-
   return (
     <>
-      {/* <NewWebsite projects={projects} /> */}
+    <ProjectNameBanner name={projectName} />
       <Flex
         mt={3}
         h="100%"

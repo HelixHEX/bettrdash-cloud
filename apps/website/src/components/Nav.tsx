@@ -85,7 +85,7 @@ const Nav = ({ children, user, breadcrumbs }: NavProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box minH="100vh" bg={useColorModeValue("#F0F0F0", "gray.900")}>
       <SidebarContent
         breadcrumbs={breadcrumbs}
         onClose={() => onClose}
@@ -178,7 +178,7 @@ const NavItem = ({ originalPath, icon, children, ...rest }: NavItemProps) => {
         mx="4"
         mt={2}
         borderRadius="lg"
-        color={currentPath ? "white" : "gray.600"}
+        color={currentPath ? "white" : "gray.400"}
         role="group"
         cursor="pointer"
         fontWeight={currentPath ? "semibold" : "normal"}

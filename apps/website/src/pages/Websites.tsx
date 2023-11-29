@@ -16,20 +16,20 @@ import WebsitesTable from "../components/WebsitesTable";
 import { ProjectProps, WebsiteProps } from "../utils/types";
 
 const Websites = () => {
-  const { id } = useParams();
+  const { projectId } = useParams();
   const {
     data: projectData,
     isLoading,
     isError,
   } = useQuery({
     queryKey: "websites",
-    queryFn: () => projectApi(id!),
+    queryFn: () => projectApi(projectId!),
   });
   const bg = useColorModeValue("white", "gray.800");
 
   if (isLoading) return <Loading />;
 
-  if (isError) return <Text>Something went wrong</Text>;
+  if (isError) return <Text>An error has occurred</Text>;
 
   const websites = projectData.websites as WebsiteProps[];
   const project = projectData.project as ProjectProps;

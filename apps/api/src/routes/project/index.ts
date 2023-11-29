@@ -6,29 +6,18 @@ const router = express.Router();
 //get users projects
 router.get("/all", async (req: express.Request, res: express.Response) => {
   try {
-    const { filter } = req.query;
-    console.log(filter);
-    
     const projects = await prisma.project.findMany({
       where: {
         ownerId: req!.session!.user!.id,
       },
-      orderBy:
-        filter === "name"
-          ? { name: "asc" }
-          : filter === "active"
-          ? { active: "desc" }
-          : { status: "desc" },
-      include: {
-        websites: {
-          where: {
-            default: true,
-          },
-          // orderBy: {
-          //   environment: "asc",
-          // },
+      orderBy: [
+        {
+          active: "desc",
         },
-      },
+        {
+          name: "asc",
+        },
+      ],
     });
     res.status(200).json({ success: true, projects });
   } catch (e) {
@@ -46,20 +35,13 @@ router.get(
         where: {
           id: parseInt(req.params.projectId),
         },
-        include: {
-          owner: { select: { id: true } },
-          websites: {
-            orderBy: {
-              url: "asc",
-            },
-          },
-        },
+        include: { owner: { select: { id: true } } },
       });
       if (project) {
-        if (project.ownerId === req!.session!.user!.id) {
-          res
-            .status(200)
-            .json({ success: true, project, websites: project.websites });
+        if (
+          project.ownerId === req!.session!.user!.id
+        ) {
+          res.status(200).json({ success: true, project });
         } else {
           res.status(200).json({ success: false, message: "Unauthorizedsss" });
         }
@@ -82,13 +64,13 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
     language,
     description,
     active,
-    url,
-    environment,
+    live_url,
     image_url,
   } = req.body;
   try {
     const project = await prisma.project.create({
       data: {
+        live_url,
         name,
         github_url,
         language,
@@ -100,21 +82,6 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
         },
       },
     });
-
-    if (url) {
-      await prisma.website.create({
-        data: {
-          url,
-          environment,
-          project: {
-            connect: {
-              id: project.id,
-            },
-          },
-          owner: { connect: { id: req!.session!.user!.id } },
-        },
-      });
-    }
     res.status(200).json({ success: true, project });
   } catch (e) {
     console.log(e);
@@ -124,8 +91,16 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
 
 //update project
 router.post("/update", async (req: express.Request, res: express.Response) => {
-  const { id, name, github_url, language, description, active, image_url } =
-    req.body.project;
+  const {
+    id,
+    name,
+    github_url,
+    language,
+    description,
+    active,
+    live_url,
+    image_url,
+  } = req.body.project;
   try {
     const project = await prisma.project.update({
       where: { id: parseInt(id) },
@@ -135,10 +110,10 @@ router.post("/update", async (req: express.Request, res: express.Response) => {
         language,
         description,
         active,
+        live_url,
         image_url,
       },
     });
-
     res.status(200).json({ success: true, project });
   } catch (e) {
     console.log(e);
@@ -160,10 +135,12 @@ router.post("/delete", async (req: express.Request, res: express.Response) => {
         });
         res.status(200).json({ success: true });
       } else {
-        res.status(200).json({
-          success: false,
-          message: "You can only delete your own projects",
-        });
+        res
+          .status(200)
+          .json({
+            success: false,
+            message: "You can only delete your own projects",
+          });
       }
     } else {
       res.status(200).json({ success: false, message: "Project not found" });

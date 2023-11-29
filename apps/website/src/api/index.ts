@@ -7,11 +7,6 @@ axios.defaults.withCredentials = true;
 
 export const queryClient = new QueryClient();
 
-export const updatePaymentMethodLink = async () => {
-  const res = await axios.get(`${API_URL}/settings/update-payment-method-link`);
-  return res.data;
-};
-
 export const analyticsAggregate = async ({ id }: { id: string }) => {
   const res = await axios.get(`${API_URL}/analytics/website/${id}/aggregate`);
   return res.data;
@@ -41,8 +36,8 @@ export const projectWebsitesApi = async ({
   return res.data;
 };
 
-export const projectMonitor = async () => {
-  const res = await axios.get(`${API_URL}/monitor`);
+export const projectMonitor = async ({projectId}: {projectId: string}) => {
+  const res = await axios.get(`${API_URL}/monitor/${projectId}`);
   return res.data;
 };
 
@@ -62,12 +57,12 @@ export const projectApi = async (id: string) => {
 };
 
 export const apiKeyAPI = async () => {
-  const res = await axios.get(`${API_URL}/settings/key`);
+  const res = await axios.get(`${API_URL}/api-settings/key`);
   return res.data;
 };
 
-export const settingsApi = async () => {
-  const res = await axios.get(`${API_URL}/settings/all`);
+export const apiSettingsApi = async () => {
+  const res = await axios.get(`${API_URL}/api-settings/settings`);
   return res.data;
 };
 
@@ -193,7 +188,7 @@ export const useUpdateWebsite = ({ onClose }: { onClose: () => void }) => {
         });
         // queryClient.invalidateQueries(["monitor"]);
         // queryClient.invalidateQueries(["websites"]);
-        window.location.reload();
+        window.location.reload()
         onClose();
       }
     },
@@ -311,44 +306,6 @@ export const useRemoveTracking = () => {
           isClosable: true,
         });
         queryClient.invalidateQueries(["analytics"]);
-      }
-    },
-  });
-};
-
-const cancelSubscription = (id: { id: number }) => {
-  return axios.post(`${API_URL}/settings/cancel-subscription`, id);
-};
-
-export const useCancelSubscription = () => {
-  const toast = useToast();
-  return useMutation(cancelSubscription, {
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "There was an error removing the website tracking",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-    },
-    onSuccess: ({ data }) => {
-      if (data.message) {
-        toast({
-          title: "Error",
-          description: data.message,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          title: "Subscription cancelled",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        });
-        queryClient.invalidateQueries(["settings"]);
       }
     },
   });

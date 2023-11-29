@@ -47,12 +47,12 @@ const Projects = () => {
     return (
       <>
         <Flex flexDir={"column"} w="100%" h="100%">
-          {/* <Header
+          <Header
             setDisplay={setDisplay}
             display={display}
             filter={filter}
             setFilter={setFilter}
-          /> */}
+          />
           <Center w="100%" h="100%">
             <Loading />
           </Center>
@@ -62,7 +62,7 @@ const Projects = () => {
   }
 
   if (projectsStatus === "error") {
-    return <Text>Something went wrong</Text>;
+    return <Text>An error has occurred</Text>;
   }
 
   if (projectsData.message) {
@@ -70,26 +70,18 @@ const Projects = () => {
   }
 
   const projects = projectsData.projects;
-
   return (
     <>
-      {/* <Header
+      <Header
         setDisplay={setDisplay}
         display={display}
         filter={filter}
         setFilter={setFilter}
-      /> */}
-      <Text>No websites available. Feel free to create one!</Text>
-      {projects.length > 0 ? (
-        display === "grid" ? (
-          <GridView projects={projects} />
-        ) : (
-          <ListView projects={projects} />
-        )
+      />
+      {display === "grid" ? (
+        <GridView projects={projects} />
       ) : (
-        <Text>
-          {"It's looking a little empty, feel free to create a project"}
-        </Text>
+        <ListView projects={projects} />
       )}
     </>
   );
@@ -226,7 +218,7 @@ const NewProject = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setName] = useState("");
   const [url, setURL] = useState("");
-  const [environment, setEnvironment] = useState("production");
+  const [environment, setEnvironment] = useState('production')
   const [github_url, setGithubUrl] = useState("");
   const [language, setLanguage] = useState("");
   const [description, setDescription] = useState("");
@@ -352,7 +344,7 @@ const NewProject = () => {
           backgroundColor={inputBg}
           borderColor={inputBg}
         />
-        <Heading color="gray.500" fontSize={12} mt={5}>
+         <Heading color="gray.500" fontSize={12} mt={5}>
           Description
         </Heading>
         <Textarea
@@ -385,9 +377,9 @@ const NewProject = () => {
           <option>C#</option>
         </Select>
         <HStack>
-          <Flex flexDir={"column"}>
+          <Flex flexDir={'column'}>
             <Heading color="gray.500" fontSize={12} mt={5}>
-              URL
+             URL
             </Heading>
             <Input
               name="url"
@@ -399,7 +391,7 @@ const NewProject = () => {
               borderColor={inputBg}
             />
           </Flex>
-          <Flex flexDir={"column"}>
+          <Flex flexDir={'column'}>
             <Heading color="gray.500" fontSize={12} mt={5}>
               Environment
             </Heading>
@@ -438,6 +430,9 @@ const NewProject = () => {
           borderColor={inputBg}
           placeholder="Image URL"
         />
+        
+       
+        
       </ModalComp>
     </>
   );

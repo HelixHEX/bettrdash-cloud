@@ -4,24 +4,23 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  relationMode = "prisma"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id                     Int           @id @default(autoincrement())
-  createdAt              DateTime      @default(now()) @map("created_at")
-  updatedAt              DateTime      @updatedAt @map("updated_at")
-  email                  String        @unique
+  id                     Int       @id @default(autoincrement())
+  createdAt              DateTime  @default(now()) @map("created_at")
+  updatedAt              DateTime  @updatedAt @map("updated_at")
+  email                  String    @unique
   name                   String
   password               String
   profile_img            String?
-  show_inactive_projects Boolean       @default(false)
+  show_inactive_projects Boolean   @default(false)
   api_key                Apikey?
   projects               Project[]
-  role                   String        @default("user")
+  role                   String    @default("user")
   websites               Website[]
-  subscription           Subscription?
+  plan                   String    @default("hobby")
 }
 
 model Project {
@@ -46,7 +45,7 @@ model Website {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
-  url         String
+  url         String   @unique
   environment String?  @default("production")
   project     Project? @relation(fields: [projectId], references: [id])
   projectId   Int?
@@ -62,9 +61,9 @@ model Apikey {
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
   key             String   @unique
+  userId          Int      @unique
   authorized_urls String[]
   user            User     @relation(fields: [userId], references: [id])
-  userId          Int      @unique
 }
 
 model Service {
@@ -75,17 +74,4 @@ model Service {
   target    String
   name      String
   status    String   @default("pending")
-}
-
-model Subscription {
-  id             Int      @id @default(autoincrement())
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
-  subscriptionId String   @unique
-  user           User     @relation(fields: [userId], references: [id])
-  userId         Int      @unique
-  status         String   @default("pending")
-  plan           String   @default("hobby")
-  ends_at        DateTime?  
-  renews_at      DateTime?
 }

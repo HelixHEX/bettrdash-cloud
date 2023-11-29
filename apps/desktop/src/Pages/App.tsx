@@ -20,7 +20,7 @@ const App = () => {
   }
 
   if (status === "error") {
-    return <Text>Something went wrong</Text>;
+    return <Text>An error has occurred</Text>;
   }
 
   if (!data.success) return <Navigate replace to="/login" />;

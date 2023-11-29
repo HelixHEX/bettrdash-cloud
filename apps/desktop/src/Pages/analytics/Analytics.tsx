@@ -41,7 +41,7 @@ const Analytics = () => {
   }
 
   if (analyticsStatus === "error") {
-    return <Text>Something went wrong</Text>;
+    return <Text>An error has occurred</Text>;
   }
 
   if (analyticsData.message) {

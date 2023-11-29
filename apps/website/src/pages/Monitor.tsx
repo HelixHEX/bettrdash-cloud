@@ -25,6 +25,7 @@ import ModalComp from "../components/ModalComp";
 import { ProjectProps } from "../utils/types";
 import WebsitesTable from "../components/WebsitesTable";
 import NewWebsite from "../components/NewWebsite";
+import { useParams } from "react-router-dom";
 
 type ProjectProp = {
   id: number;
@@ -32,18 +33,19 @@ type ProjectProp = {
   live_url: string;
 };
 const Monitor = () => {
+  const {projectId} = useParams();
   const bg = useColorModeValue("white", "gray.800");
-  const { data: websiteMonitorData, status: websiteMonitorStatus } = useQuery(
-    "monitor",
-    projectMonitor
-  );
+  const { data: websiteMonitorData, status: websiteMonitorStatus } = useQuery({
+    queryKey: "monitor",
+    queryFn: () => projectMonitor({projectId: projectId!})
+  })
 
   if (websiteMonitorStatus === "loading") {
     return <Loading />;
   }
 
   if (websiteMonitorStatus === "error") {
-    return <Text>Something went wrong</Text>;
+    return <Text>An error has occurred</Text>;
   }
 
   if (websiteMonitorData.message) {

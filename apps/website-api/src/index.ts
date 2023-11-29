@@ -6,11 +6,10 @@ import cors from "cors";
 //routes
 import auth from "./routes/auth";
 import project from "./routes/project";
-import settings from "./routes/settings";
+import apiAuth from "./routes/api/auth";
 import monitor from "./routes/monitor";
-import website from './routes/website';
-import analytics from './routes/analytics';
-import webhooks from './routes/webhooks'
+import website from "./routes/website";
+import analytics from "./routes/analytics";
 
 const session = require("express-session");
 const connectRedis = require("connect-redis");
@@ -28,27 +27,20 @@ const main = async () => {
       ":date[iso] :remote-addr :method :url :status :res[content-length] - :response-time ms"
     )
   );
-
   app.use(
     cors({
       origin: [
-        process.env.NODE_ENV === 'development' ? "http://localhost:3000" : false,
-        process.env.NODE_ENV === 'development' ? "http://192.168.1.39:3000" : false,
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:3000"
+          : false,
         "https://dev.bettrdash.com",
         "https://bettrdash.com",
-        'http://192.168.1.39:3000'
       ],
       credentials: true,
     })
   );
-  
-  app.use(express.json({
-    verify: (req, _res, buf) => {
-       if (buf && buf.length) {
-      req.rawBody = buf;
-    }
-    }
-  }));
+
+  app.use(express.json());
 
   //redis
   app.use(
@@ -86,17 +78,15 @@ const main = async () => {
   app.get("/", (_, res: express.Response) => {
     res.send("Hello world");
   });
-  app.use('/webhooks', webhooks)
-
 
   app.use("/auth", auth);
 
   app.use(authenticate);
   app.use("/projects", project);
-  app.use("/settings", settings);
+  app.use("/api-settings", apiAuth);
   app.use("/monitor", monitor);
-  app.use('/website', website)
-  app.use('/analytics', analytics)
+  app.use("/website", website);
+  app.use("/analytics", analytics);
 
   app.use((_, res: express.Response) => {
     res.status(404).json({ status: "404" });

@@ -25,7 +25,7 @@ const styles = {
 const theme = extendTheme({ config, 
   colors: {
     gray: {
-
+      600: "#2C2C2C",
       700: '#1F1F1F',
       800: '#161616',
       900: '#131313'

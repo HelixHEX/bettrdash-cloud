@@ -8,10 +8,9 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProjectProps } from "../utils/types";
-
 // type Props = {
 //   project: {
 //     id: number;
@@ -31,29 +30,36 @@ const IMAGE =
 const ProjectCard = (project: ProjectProps) => {
   const navigate = useNavigate();
   const imageBG = useColorModeValue("gray.500", "gray.700");
+  const [hover, setHover] = useState<boolean>(false)
   return (
     <>
       <Flex
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        transition={'0.5s ease'}
         _hover={{ 
           cursor: "pointer",
-          translate: "0px  = -5px",
-          boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.1)",
-          borderImage: "linear-gradient(35deg, #F56565, #ED64A6) 1",
-          borderWidth: 4
+          // translate: "0px  = -5px",
+          borderWidth: 4,
+
+          borderColor: useColorModeValue('gray.900', 'white'),
+          transform: 'translate(10px, -10px)',
+          boxShadow: '-10px 10px 0px #ED64A6',
         }}
         onClick={() => navigate(`/projects/${project.id}`)}
         role={"group"}
         maxW={"100%"}
         w={"full"}
-        bgGradient={useColorModeValue('linear(to-br, white, gray.300)', 'linear(to-br, #343C4C, gray.800)')}
+        bgGradient={useColorModeValue('linear(to-br, white, gray.300)', 'linear(to-br, gray.600, gray.900)')}
         h={250}
         borderWidth={4}
-        borderColor={useColorModeValue('gray.700', 'gray.300')}
+        borderColor={useColorModeValue('gray.400', 'gray.500')}
         p={4}
         justifyContent={"space-between"}
         flexDir={"column"}
       >
-        <Heading fontSize={20}>{project.name}</Heading>
+ 
+        <Text   color={hover ? useColorModeValue('gray.900', 'white') : 'gray.400'} fontWeight={'bold'}  fontSize={'sm'}>{project.name}</Text>
         <HStack>
           {project.defaultWebsiteId && (
             <HStack>

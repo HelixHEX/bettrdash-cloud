@@ -75,7 +75,7 @@ const Landing = () => {
             <Icon
               alignSelf={"center"}
               cursor={"pointer"}
-              _hover={{ color: "gray.900" }}
+              _hover={{ color: useColorModeValue("gray.900", "gray.200") }}
               color="red.400"
               as={FaGithub}
               onClick={() =>
@@ -90,7 +90,7 @@ const Landing = () => {
               fontWeight={"bold"}
               fontSize={"xl"}
               cursor={"pointer"}
-              _hover={{ color: "gray.900" }}
+              _hover={{ color: useColorModeValue("gray.900", "gray.200") }}
               as={RouterLink}
               to="/login"
               alignSelf={"center"}
@@ -303,7 +303,7 @@ const Landing = () => {
             <Heading fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}>
               Monitoring
             </Heading>
-            <Text mt={10} w={{ base: "100%", md: 400 }} color={bodyTextColor}>
+            <Text fontSize='md' mt={10} w={{ base: "100%", md: 400 }} color={bodyTextColor}>
               Our built-in monitoring service ensures that you are always aware
               of the status of your site, so you can address any downtime
               quickly.
@@ -350,7 +350,7 @@ const Landing = () => {
             />
           </SimpleGrid>
         </Box>
-        <Pricing />
+        {/* <Pricing /> */}
       </Flex>
     </>
   );
@@ -381,7 +381,7 @@ const Feature = ({ title, text, icon }: FeatureProps) => {
       <Text alignSelf={{ base: "center", md: "flex-start" }} fontWeight={600}>
         {title}
       </Text>
-      <Text textAlign={{ base: "center", md: "start" }} color={"gray.600"}>
+      <Text fontSize='sm' textAlign={{ base: "center", md: "start" }} color={useColorModeValue("gray.600", "gray.300")}>
         {text}
       </Text>
     </Stack>

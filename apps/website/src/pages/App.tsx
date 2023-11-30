@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { Navigate, Outlet, useOutletContext } from "react-router-dom";
 import { checkAuth } from "../api";
@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <>
-      <Flex flexDir={"column"} w="100%" h="auto" minH="100vh">
+      <Flex flexDir={"column"} w="100%" h="100vh" minH="100vh" bg={useColorModeValue('white', 'gray.900')}>
         {data.user ? (
           <Nav breadcrumbs={breadcrumbs} user={data.user}>
             <Outlet

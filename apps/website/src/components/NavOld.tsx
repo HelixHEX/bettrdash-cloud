@@ -105,7 +105,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         if (res.data.success) {
           window.location.href = "/";
         } else {
-          toast({
+          toast({position: "bottom-right",
             title: "Error",
             description: res.data.message,
             status: "error",
@@ -115,7 +115,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         }
       })
       .catch(() => {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: "An error has occurred",
           status: "error",

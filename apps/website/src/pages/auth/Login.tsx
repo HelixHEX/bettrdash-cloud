@@ -34,7 +34,7 @@ const Login = () => {
     e.preventDefault();
     
     if (email === "" || password === "") {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "All fields are required",
         status: "error",
@@ -56,7 +56,7 @@ const Login = () => {
             navigate('/')
           } else {
             Sentry.captureMessage(res.data.message);
-            toast({
+            toast({position: "bottom-right",
               title: "Error",
               description: res.data.message,
               status: "error",
@@ -66,7 +66,7 @@ const Login = () => {
           }
         })
         .catch((e) => {
-          toast({
+          toast({position: "bottom-right",
             title: "Error",
             description: "An error has occurred",
             status: "error",

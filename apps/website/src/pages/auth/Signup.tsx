@@ -58,7 +58,7 @@ const Signup = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (name === "" || email === "" || password === "") {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "All fields are required",
         status: "error",
@@ -66,7 +66,7 @@ const Signup = () => {
         isClosable: true,
       });
     } else if (password !== repassword) {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "Passwords do not match",
         status: "error",
@@ -84,7 +84,7 @@ const Signup = () => {
           if (res.data.success) {
             window.location.href = "/";
           } else {
-            toast({
+            toast({position: "bottom-right",
               title: "Error",
               description: res.data.message,
               status: "error",
@@ -94,7 +94,7 @@ const Signup = () => {
           }
         })
         .catch((e) => {
-          toast({
+          toast({position: "bottom-right",
             title: "Error",
             description: "An error has occurred",
             status: "error",

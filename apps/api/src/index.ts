@@ -1,6 +1,7 @@
 import "dotenv-safe/config";
 import "reflect-metadata";
 import express from "express";
+import Redis from 'ioredis'
 const morgan = require("morgan");
 
 //routes
@@ -8,10 +9,9 @@ import apiNoAuth from "./routes/api/noauth";
 
 const session = require("express-session");
 const connectRedis = require("connect-redis");
-const redis = require("redis");
 
 const RedisStore = connectRedis(session);
-const redisClient = redis.createClient();
+const redisClient = new Redis(process.env.REDIS_URL)
 
 const main = async () => {
   const app = express();

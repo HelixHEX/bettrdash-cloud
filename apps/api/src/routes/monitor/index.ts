@@ -1,4 +1,4 @@
-import { prisma } from "db";
+import { prisma } from "@bettrdash/db";
 import express from "express";
 
 const router = express.Router();

@@ -32,6 +32,7 @@ import { API_URL } from "../../api/constants";
 import ModalComp from "../../components/ModalComp";
 import Loading from "../../components/Loading";
 import { useOutlet } from "../App";
+import ProjectNameBanner from "../../components/ProjectNameBanner";
 
 axios.defaults.withCredentials = true;
 const IMAGE =
@@ -108,11 +109,9 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
 
   const handleSave = async () => {
     if (
-      updatedProject.name === "" ||
-      updatedProject.description === "" ||
-      updatedProject.language === ""
+      updatedProject.name === "" 
     ) {
-      toast({
+      toast({position: "bottom-right", variant: 'subtle',
         title: "Error",
         description: "All fields are required",
         status: "error",
@@ -128,14 +127,14 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
           if (res.data.success) {
             setUnsaved(false);
             queryClient.invalidateQueries("project");
-            toast({
+            toast({position: "bottom-right",
               description: "Project updated successfully",
-              status: "success",
+              status: 'success',
               duration: 5000,
               isClosable: true,
             });
           } else {
-            toast({
+            toast({position: "bottom-right",
               title: "Error",
               description: res.data.message,
               status: "error",
@@ -146,16 +145,14 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
         });
     }
   };
+  const textColor = useColorModeValue('gray.900', 'gray.200')
   const inputBg = useColorModeValue("white", "gray.900");
   const bg = useColorModeValue("white", "gray.800");
   const imageBG = useColorModeValue("gray.400", "gray.900");
   return (
     <>
       <Flex w="100%" flexDir={"column"}>
-        <Flex p={10} bg={useColorModeValue('white', 'gray.900')}>
-          <Heading fontSize={30} color="gray.400">
-            {project.name}
-          </Heading>
+       <ProjectNameBanner name={project.name}>
           <Flex alignSelf={"center"} ml={4}>
             <Heading alignSelf={"center"} fontSize={15}>
               Active:{" "}
@@ -173,8 +170,8 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
               ml={3}
               alignSelf={"center"}
             />
-          </Flex>
         </Flex>
+       </ProjectNameBanner>
         <VStack bg={useColorModeValue('gray.100', 'gray.800')} spacing={8} py={4} px={10}>
           <Image
             rounded={10}
@@ -186,7 +183,7 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
             fallbackSrc={IMAGE}
             alignSelf={"start"}
           />
-          <Flex color="gray.500" w={"100%"} flexDir={"column"}>
+          <Flex color={textColor} w={"100%"} flexDir={"column"}>
             <Heading fontSize={15}>Name</Heading>
             <Input
               mt={2}
@@ -199,12 +196,13 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
               placeholder="Name"
             />
           </Flex>
-          <Flex color="gray.500" w={"100%"} flexDir={"column"}>
+          <Flex color={textColor} w={"100%"} flexDir={"column"}>
             <Heading fontSize={15}>Description: </Heading>
             <Textarea
               minH={92}
               w="100%"
               mt={2}
+              
               bg={inputBg}
               border="none"
               name="description"
@@ -213,7 +211,7 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
               onChange={handleChange}
             />
           </Flex>
-          <Flex color="gray.500" w={"100%"} flexDir={"column"}>
+          <Flex color={textColor} w={"100%"} flexDir={"column"}>
             <Heading fontSize={15}>Programming Language: </Heading>
             <Input
               mt={2}
@@ -226,7 +224,7 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
             />
           </Flex>
 
-          <Flex color="gray.500" w={"100%"} flexDir={"column"}>
+          <Flex color={textColor} w={"100%"} flexDir={"column"}>
             <Heading fontSize={15}>Github URL: </Heading>
             <Input
               mt={2}
@@ -238,7 +236,7 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
               placeholder="Github Url"
             />
           </Flex>
-          <Flex color="gray.500" w={"100%"} flexDir={"column"}>
+          <Flex color={textColor} w={"100%"} flexDir={"column"}>
             <Heading fontSize={15}>Image URL: </Heading>
             <Input
               mt={2}
@@ -433,7 +431,7 @@ const DeleteProject = ({ id }: { id: number }) => {
         queryClient.invalidateQueries("projects");
         navigate("/");
       } else {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: res.data.message,
           status: "error",

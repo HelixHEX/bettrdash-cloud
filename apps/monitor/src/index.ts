@@ -3,7 +3,7 @@ import cron from "cron";
 import "dotenv-safe/config";
 import axios from "axios";
 import { isURL } from "./utils/url";
-import { prisma } from "db";
+import { prisma } from "@bettrdash/db";
 
 const main = () => {
   const app = express();

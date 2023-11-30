@@ -49,7 +49,7 @@ const NewWebsite = ({
 
   useEffect(() => {
     if (isError) {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "There was an error adding the website",
         status: "error",
@@ -59,7 +59,7 @@ const NewWebsite = ({
     }
     if (isSuccess && !isLoading) {
       if (res.data.success) {
-        toast({
+        toast({position: "bottom-right",
           title: "Success",
           description: "Website created!",
           status: "success",
@@ -69,7 +69,7 @@ const NewWebsite = ({
         queryClient.invalidateQueries(["websites"]);
         queryClient.invalidateQueries(["monitor"]);
       } else {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: res.data.message,
           status: "error",
@@ -89,7 +89,7 @@ const NewWebsite = ({
 
   const hanldeAddWebsite = () => {
     if (!url) {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "URL field is required",
         status: "error",

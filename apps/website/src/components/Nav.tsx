@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import {
   IconButton,
   Avatar,
@@ -25,6 +25,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
   useToast,
+  Link
 } from "@chakra-ui/react";
 import {
   FiMenu,
@@ -65,6 +66,12 @@ const useSettingsPage = () => {
   return pathname === '/settings'
 }
 
+const useProfilePage = () => {
+  const location = useLocation()
+  const pathname = location.pathname
+  return pathname === '/profile'
+}
+
 interface NavProps {
   children: ReactNode;
   user: UserProps;
@@ -74,14 +81,15 @@ interface NavProps {
 const Nav = ({ children, user, breadcrumbs }: NavProps) => {
   const isHomePage = useHomePage();
   const isSettingsPage = useSettingsPage()
+  const isProfilePage = useProfilePage()
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box h="100vh" bg={useColorModeValue("#F0F0F0", "gray.900")}>
       <SidebarContent
         breadcrumbs={breadcrumbs}
         onClose={() => onClose}
-        display={{ base: "none", md: isHomePage || isSettingsPage ? "none" : "block" }}
+        display={{ base: "none", md: isHomePage || isProfilePage || isSettingsPage ? "none" : "block" }}
       />
       <Drawer
         autoFocus={false}
@@ -98,7 +106,10 @@ const Nav = ({ children, user, breadcrumbs }: NavProps) => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav breadcrumbs={breadcrumbs} user={user} onOpen={onOpen} />
-      <Box mt={{ base: 0, md: 20 }} ml={{ base: 0, md: isHomePage || isSettingsPage ? 0 : 60 }}>
+      {/* <Box bg='red' h='100%' mt={{ base: 0, md: 20 }} ml={{ base: 0, md: isHomePage || isProfilePage || isSettingsPage ? 0 : 60 }}>
+
+      </Box> */}
+      <Box mt={{ base: 0, md: 20 }} ml={{ base: 0, md: isHomePage || isProfilePage || isSettingsPage ? 0 : 60 }}>
         {children}
       </Box>
     </Box>
@@ -123,7 +134,7 @@ const SidebarContent = ({ onClose, breadcrumbs, ...rest }: SidebarProps) => {
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
-      {...rest}
+      {...rest} 
     >
       <Flex h="20" alignItems="center" mx="4" justifyContent="space-between">
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
@@ -170,7 +181,7 @@ const NavItem = ({ originalPath, icon, children, ...rest }: NavItemProps) => {
         mx="4"
         mt={2}
         borderRadius="lg"
-        color={currentPath ? "white" : "gray.600"}
+        color={currentPath ? "white" : "gray.400"}
         role="group"
         cursor="pointer"
         fontWeight={currentPath ? "semibold" : "normal"}
@@ -203,11 +214,15 @@ interface MobileProps extends FlexProps {
 }
 const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
   const isHomePage = useHomePage();
+  const isProfilePage = useProfilePage()
+  const isSettingsPage = useSettingsPage()
+
   const location = useLocation();
   const mapLocation = () => {
     return location.pathname.split("/");
   };
   const toast = useToast();
+  const [hoverUserBanner, setHoverUserBanner] = useState<boolean>(false)
   const logout = async () => {
     await axios
       .post(`${API_URL}/auth/logout`, {}, { withCredentials: true })
@@ -215,7 +230,7 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
         if (res.data.success) {
           window.location.href = "/";
         } else {
-          toast({
+          toast({position: "bottom-right",
             title: "Error",
             description: res.data.message,
             status: "error",
@@ -225,7 +240,7 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
         }
       })
       .catch(() => {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: "Something went wrong",
           status: "error",
@@ -258,7 +273,7 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
       />
       <HStack spacing={8}>
         <Logo />
-        {location.pathname !== '/settings' && (
+        {!isSettingsPage && !isProfilePage && (
           breadcrumbs.length > 0 && (
             <Breadcrumb
               alignSelf={"center"}
@@ -269,9 +284,9 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
                   isCurrentPage={index === breadcrumbs.length - 1}
                   key={index}
                 >
-                  {index === 0 && <BreadcrumbSeparator color="gray.400" />}
+                  {index === 0 && <BreadcrumbSeparator color={useColorModeValue("gray.900", "gray.50")} />}
                   <BreadcrumbLink
-                    color={breadcrumb.color ? breadcrumb.color : "gray.400"}
+                    color={breadcrumb.color ? breadcrumb.color : useColorModeValue("gray.900", "gray.50")}
                     fontWeight={"semibold"}
                     href={breadcrumb.path}
                   >
@@ -303,8 +318,10 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
               py={2}
               transition="all 0.3s"
               _focus={{ boxShadow: "none" }}
+              onMouseLeave={() => setHoverUserBanner(false)} 
+              onMouseEnter={() =>setHoverUserBanner(true)}
             >
-              <HStack>
+              <HStack >
                 <Avatar size={"sm"} src={user.profile_img} />
                 <VStack
                   display={{ base: "none", md: "flex" }}
@@ -312,7 +329,11 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">{user.name}</Text>
+                  <Text 
+                  bgGradient={hoverUserBanner ? 'linear(to-l, red.400, pink.400)' : useColorModeValue('linear(to-l, gray.900, gray.900)', 'linear(to-l, white, white)')}
+                  bgClip='text'
+                  fontWeight='bold'
+                  fontSize="sm">{user.name}</Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
                   <FiChevronDown />
@@ -323,11 +344,11 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>
-                <RouterLink to="/profile">Profile</RouterLink>
+              <MenuItem as={RouterLink} to="/profile">
+                <Text >Profile</Text>
               </MenuItem>
-              <MenuItem>
-                <RouterLink to="/settings">settings</RouterLink>
+              <MenuItem as={RouterLink} to="/settings">
+                <Text >Settings</Text>
               </MenuItem>
               {/* <RouterLink to="/billing">Billing</RouterLink> */}
               <MenuDivider />

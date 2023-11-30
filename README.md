@@ -12,7 +12,7 @@ This turborepo uses [Yarn](https://classic.yarnpkg.com/) as a package manager. I
 - `desktop`: an electron (typescript) app to run the app on a mac desktop
 - `monitor`: an express (typescript) app to monitor the health of user's websites and services 
 - `website`: a react (typescript) app 
-- `website-api`: an express (typescript) app to handle requests from the website
+- `web-api`: an express (typescript) app to handle requests from the website
 - `analytics`: coming soon...
 ### Packages
 

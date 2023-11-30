@@ -17,7 +17,7 @@ const cron_1 = __importDefault(require("cron"));
 require("dotenv-safe/config");
 const axios_1 = __importDefault(require("axios"));
 const url_1 = require("./utils/url");
-const db_1 = require("db");
+const db_1 = require("@bettrdash/db");
 const main = () => {
     const app = (0, express_1.default)();
     cron_1.default;

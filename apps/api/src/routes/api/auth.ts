@@ -1,5 +1,5 @@
 import express from "express";
-import { prisma } from "db";
+import { prisma } from "@bettrdash/db";
 import { v1 } from "uuid";
 
 const router = express.Router();

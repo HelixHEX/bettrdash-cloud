@@ -56,7 +56,7 @@ const Settings = () => {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    toast({
+    toast({position: "bottom-right",
       title: "Copied",
       description: "API key copied to clipboard",
       status: "success",
@@ -73,7 +73,7 @@ const Settings = () => {
       })
       .then((res) => {
         if (res.data.success) {
-          toast({
+          toast({position: "bottom-right",
             title: "Success",
             description: "Settings updated",
             status: "success",
@@ -82,7 +82,7 @@ const Settings = () => {
           });
           queryClient.invalidateQueries(["api_settings"]);
         } else {
-          toast({
+          toast({position: "bottom-right",
             title: "Error",
             description: res.data.message,
             status: "error",
@@ -212,7 +212,7 @@ const GenerateKey = () => {
       if (res.data.success) {
         queryClient.invalidateQueries(["api_key"]);
         onClose();
-        toast({
+        toast({position: "bottom-right",
           title: "Success",
           description: "API key generated",
           status: "success",
@@ -220,7 +220,7 @@ const GenerateKey = () => {
           isClosable: true,
         });
       } else {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: res.data.message,
           status: "error",

@@ -85,7 +85,7 @@ const Nav = ({ children, user, breadcrumbs }: NavProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("#F0F0F0", "gray.900")}>
+    <Box h="100vh" bg={useColorModeValue("#F0F0F0", "gray.900")}>
       <SidebarContent
         breadcrumbs={breadcrumbs}
         onClose={() => onClose}
@@ -106,6 +106,9 @@ const Nav = ({ children, user, breadcrumbs }: NavProps) => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav breadcrumbs={breadcrumbs} user={user} onOpen={onOpen} />
+      {/* <Box bg='red' h='100%' mt={{ base: 0, md: 20 }} ml={{ base: 0, md: isHomePage || isProfilePage || isSettingsPage ? 0 : 60 }}>
+
+      </Box> */}
       <Box mt={{ base: 0, md: 20 }} ml={{ base: 0, md: isHomePage || isProfilePage || isSettingsPage ? 0 : 60 }}>
         {children}
       </Box>
@@ -227,7 +230,7 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
         if (res.data.success) {
           window.location.href = "/";
         } else {
-          toast({
+          toast({position: "bottom-right",
             title: "Error",
             description: res.data.message,
             status: "error",
@@ -237,7 +240,7 @@ const MobileNav = ({ onOpen, user, breadcrumbs, ...rest }: MobileProps) => {
         }
       })
       .catch(() => {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: "Something went wrong",
           status: "error",

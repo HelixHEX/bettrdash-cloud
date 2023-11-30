@@ -190,7 +190,7 @@ const NewProject = () => {
 
   useEffect(() => {
     if (isError) {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "There was an error adding the upload",
         status: "error",
@@ -200,7 +200,7 @@ const NewProject = () => {
     }
     if (isSuccess && !isLoading) {
       if (res.data.success) {
-        toast({
+        toast({position: "bottom-right",
           title: "Success",
           description: "Project created!",
           status: "success",
@@ -208,7 +208,7 @@ const NewProject = () => {
           isClosable: true,
         });
       } else {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: res.data.message,
           status: "error",
@@ -228,7 +228,7 @@ const NewProject = () => {
 
   const addProject = () => {
     if (!name) {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "Name field is required",
         status: "error",

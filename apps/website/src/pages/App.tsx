@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <>
-      <Flex flexDir={"column"} w="100%" h="auto" minH="100vh" bg={useColorModeValue('white', 'gray.900')}>
+      <Flex flexDir={"column"} w="100%" h="100vh" minH="100vh" bg={useColorModeValue('white', 'gray.900')}>
         {data.user ? (
           <Nav breadcrumbs={breadcrumbs} user={data.user}>
             <Outlet

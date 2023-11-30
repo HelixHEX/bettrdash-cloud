@@ -109,11 +109,9 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
 
   const handleSave = async () => {
     if (
-      updatedProject.name === "" ||
-      updatedProject.description === "" ||
-      updatedProject.language === ""
+      updatedProject.name === "" 
     ) {
-      toast({
+      toast({position: "bottom-right", variant: 'subtle',
         title: "Error",
         description: "All fields are required",
         status: "error",
@@ -129,14 +127,14 @@ const EditMode = ({ project }: { project: ProjectProps }) => {
           if (res.data.success) {
             setUnsaved(false);
             queryClient.invalidateQueries("project");
-            toast({
+            toast({position: "bottom-right",
               description: "Project updated successfully",
-              status: "success",
+              status: 'success',
               duration: 5000,
               isClosable: true,
             });
           } else {
-            toast({
+            toast({position: "bottom-right",
               title: "Error",
               description: res.data.message,
               status: "error",
@@ -433,7 +431,7 @@ const DeleteProject = ({ id }: { id: number }) => {
         queryClient.invalidateQueries("projects");
         navigate("/");
       } else {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: res.data.message,
           status: "error",

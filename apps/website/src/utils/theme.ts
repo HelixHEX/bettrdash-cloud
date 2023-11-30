@@ -1,4 +1,4 @@
-import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
+import { extendTheme, theme as originalTheme, type ThemeConfig, ThemeComponents, ThemeComponentProps } from "@chakra-ui/react";
 import { mode } from '@chakra-ui/theme-tools';
 import type { StyleFunctionProps } from '@chakra-ui/styled-system';
 
@@ -8,21 +8,6 @@ const config: ThemeConfig = {
   useSystemColorMode: true,
 };
 const styles = {
-  global: (props: StyleFunctionProps) => ({
-    body: {
-      // sets a custom bg color for dark mode only
-      bg: mode(
-        // light mode value retrieved from theme
-        props.theme.semanticTokens.colors['chakra-body-bg']._light,
-        // your custom value for dark mode
-        '#252C32',
-      )(props),
-    },
-  }),
-};
-
-// 3. extend the theme
-const theme = extendTheme({ config, 
   colors: {
     gray: {
       600: "#2C2C2C",
@@ -30,7 +15,34 @@ const theme = extendTheme({ config,
       800: '#161616',
       900: '#131313'
     }
-  }
+  },
+};
+
+const components = {
+ components: {
+  Alert: {
+    variants: {
+      subtle: (props:any) => {
+        const {colorScheme} = props
+        if (colorScheme === 'green') {
+          return {
+            container: {
+              bg: `${colorScheme}.400`,
+              opacity: '0.1'
+            }
+          }
+        }
+        return originalTheme.components.Alert.variants?.subtle(props)
+      }
+    }
+   }
+ }
+}
+
+// 3. extend the theme
+const theme = extendTheme({ config, 
+  ...styles,
+  // ...components
 });
 
 export default theme;

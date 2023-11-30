@@ -76,7 +76,7 @@ const Monitor = () => {
   const projects = websiteMonitorData.projects;
 
   return (
-    <>
+    <Flex  flexDir={'column'}>
     <ProjectNameBanner name={projectName} />
       <Flex
         mt={3}
@@ -113,7 +113,7 @@ const Monitor = () => {
           </>
         ))} */}
       </Flex>
-    </>
+    </Flex>
   );
 };
 
@@ -134,7 +134,7 @@ const Monitor = () => {
 
 //   useEffect(() => {
 //     if (isError) {
-//       toast({
+//       toast({position: "bottom-right",
 //         title: "Error",
 //         description: "There was an error adding the website",
 //         status: "error",
@@ -144,7 +144,7 @@ const Monitor = () => {
 //     }
 //     if (isSuccess && !isLoading) {
 //       if (res.data.success) {
-//         toast({
+//         toast({position: "bottom-right",
 //           title: "Success",
 //           description: "Website created!",
 //           status: "success",
@@ -152,7 +152,7 @@ const Monitor = () => {
 //           isClosable: true,
 //         });
 //       } else {
-//         toast({
+//         toast({position: "bottom-right",
 //           title: "Error",
 //           description: res.data.message,
 //           status: "error",
@@ -172,7 +172,7 @@ const Monitor = () => {
 
 //   const hanldeAddWebsite = () => {
 //     if (!url) {
-//       toast({
+//       toast({position: "bottom-right",
 //         title: "Error",
 //         description: "URL field is required",
 //         status: "error",

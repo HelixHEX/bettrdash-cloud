@@ -85,7 +85,7 @@ export const useAddProject = () => {
   const toast = useToast();
   return useMutation(addProject, {
     onError: () => {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "There was an error adding the project",
         status: "error",
@@ -95,7 +95,7 @@ export const useAddProject = () => {
     },
     onSuccess: ({ data }) => {
       if (data.message) {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: data.message,
           status: "error",
@@ -123,7 +123,7 @@ export const useAddWebsite = () => {
   const toast = useToast();
   return useMutation(addWebsite, {
     onError: () => {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "There was an error adding the upload",
         status: "error",
@@ -133,7 +133,7 @@ export const useAddWebsite = () => {
     },
     onSuccess: ({ data }) => {
       if (data.message) {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: data.message,
           status: "error",
@@ -162,7 +162,7 @@ export const useUpdateWebsite = ({ onClose }: { onClose: () => void }) => {
   const toast = useToast();
   return useMutation(updateWebsite, {
     onError: () => {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "There was an error updating the website",
         status: "error",
@@ -172,7 +172,7 @@ export const useUpdateWebsite = ({ onClose }: { onClose: () => void }) => {
     },
     onSuccess: ({ data }) => {
       if (data.message) {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: data.message,
           status: "error",
@@ -180,7 +180,7 @@ export const useUpdateWebsite = ({ onClose }: { onClose: () => void }) => {
           isClosable: true,
         });
       } else {
-        toast({
+        toast({position: "bottom-right",
           title: "Website updated.",
           status: "success",
           duration: 5000,
@@ -203,7 +203,7 @@ export const useDeleteWebsite = () => {
   const toast = useToast();
   return useMutation(deleteWebsite, {
     onError: () => {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "There was an error deleting the website",
         status: "error",
@@ -213,7 +213,7 @@ export const useDeleteWebsite = () => {
     },
     onSuccess: ({ data }) => {
       if (data.message) {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: data.message,
           status: "error",
@@ -223,7 +223,7 @@ export const useDeleteWebsite = () => {
       } else {
         queryClient.invalidateQueries(["websites"]);
         queryClient.invalidateQueries(["monitor"]);
-        toast({
+        toast({position: "bottom-right",
           title: "Success",
           description: "Website deleted",
           status: "success",
@@ -243,7 +243,7 @@ export const useTrackWebsite = () => {
   const toast = useToast();
   return useMutation(trackWebsite, {
     onError: () => {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "There was an error tracking the website",
         status: "error",
@@ -253,7 +253,7 @@ export const useTrackWebsite = () => {
     },
     onSuccess: ({ data }) => {
       if (data.message) {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: data.message,
           status: "error",
@@ -261,7 +261,7 @@ export const useTrackWebsite = () => {
           isClosable: true,
         });
       } else {
-        toast({
+        toast({position: "bottom-right",
           title: "Website tracking setup.",
           status: "success",
           duration: 5000,
@@ -281,7 +281,7 @@ export const useRemoveTracking = () => {
   const toast = useToast();
   return useMutation(removeTracking, {
     onError: () => {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "There was an error removing the website tracking",
         status: "error",
@@ -291,7 +291,7 @@ export const useRemoveTracking = () => {
     },
     onSuccess: ({ data }) => {
       if (data.message) {
-        toast({
+        toast({position: "bottom-right",
           title: "Error",
           description: data.message,
           status: "error",
@@ -299,7 +299,7 @@ export const useRemoveTracking = () => {
           isClosable: true,
         });
       } else {
-        toast({
+        toast({position: "bottom-right",
           title: "Website tracking removed.",
           status: "success",
           duration: 5000,

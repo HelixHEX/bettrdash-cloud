@@ -34,7 +34,7 @@ const Profile = () => {
 
   const updateProfile = async (img: any) => {
     if (name === "" || email === "") {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "All fields are required",
         status: "error",
@@ -46,7 +46,7 @@ const Profile = () => {
       currentPassword === "" &&
       rePassword === ""
     ) {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "All fields are required",
         status: "error",
@@ -57,7 +57,7 @@ const Profile = () => {
       (newPassword.length > 0 || rePassword.length > 0) &&
       newPassword !== rePassword
     ) {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "Password do not match",
         status: "error",
@@ -65,7 +65,7 @@ const Profile = () => {
         isClosable: true,
       });
     } else if (newPassword.length < 6 && newPassword.length > 0) {
-      toast({
+      toast({position: "bottom-right",
         title: "Error",
         description: "Password must be at least 6 characters",
         status: "error",
@@ -90,7 +90,7 @@ const Profile = () => {
           setLoading(false);
           if (res.data.success) {
             setUnsaved(false);
-            toast({
+            toast({position: "bottom-right",
               title: "Success",
               description: "Profile updated",
               status: "success",
@@ -102,7 +102,7 @@ const Profile = () => {
             setRePassword("");
             queryClient.invalidateQueries(["session"]);
           } else {
-            toast({
+            toast({position: "bottom-right",
               title: "Error",
               description: res.data.message,
               status: "error",
@@ -112,7 +112,7 @@ const Profile = () => {
           }
         })
         .catch((e) => {
-          toast({
+          toast({position: "bottom-right",
             title: "Error",
             description: e.message,
             status: "error",

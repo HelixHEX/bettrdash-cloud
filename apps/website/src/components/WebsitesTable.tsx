@@ -111,7 +111,7 @@ const Edit = ({ website }: { website: WebsiteProps }) => {
     if (url) {
       mutate({ url, environment, default: makeDefault, id: website.id });
     } else {
-      toast({
+      toast({position: "bottom-right",
         title: "URL field is required.",
         status: "error",
         duration: 5000,

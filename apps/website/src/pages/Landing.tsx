@@ -79,7 +79,6 @@ const Landing = () => {
           <Flex>
             <ColorModeSwitcher />
             <Icon
-            display={{base: 'none', md: 'block'}}
               alignSelf={"center"}
               cursor={"pointer"}
               _hover={{ color: useColorModeValue("gray.900", "gray.200") }}
@@ -95,7 +94,7 @@ const Landing = () => {
               bgClip="text"
               fontFamily={"Poppins"}
               fontWeight={"bold"}
-              fontSize={"xl"}
+              fontSize={{base: "sm", md: "xl"}}
               cursor={"pointer"}
               _hover={{ color: useColorModeValue("gray.900", "gray.200") }}
               as={RouterLink}
@@ -110,7 +109,7 @@ const Landing = () => {
               ml={{ base: 2, md: 5 }}
               rounded="full"
               bgGradient="linear(to-r, red.400, pink.400)"
-              w={{ base: 78, md: 120 }}
+              w={{ base: 24, md: 120 }}
               h={{ base: 10, md: 12 }}
               fontSize={{ base: "sm", md: "md" }}
               color="white"
@@ -138,13 +137,17 @@ const Landing = () => {
               straightforward.
             </Heading>
             <Button
+            as={RouterLink}
+            to={'/signup'}
               bgGradient="linear(to-r, red.400, pink.400)"
               mt={10}
               alignSelf={{ base: "center", md: "start" }}
+              // size='lg'
               h={65}
               rounded={"full"}
-              w={{ base: 240, sm: 240, md: 300 }}
+              w={{ base: 200, sm: 240, md: 300 }}
               color="white"
+              fontSize={{base: 'sm', md: 'lg'}}
               _hover={{ bg: "gray.200", color: "gray.800" }}
             >
               Get Started for free
@@ -285,6 +288,8 @@ const Landing = () => {
             , allowing you to monitor user activity without relying on cookies.
           </Text>
           <Button
+          as={RouterLink}
+          to={'/signup'}
             h={55}
             mt={10}
             rounded={"full"}

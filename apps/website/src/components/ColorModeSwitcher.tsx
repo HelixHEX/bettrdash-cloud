@@ -17,7 +17,7 @@ export const ColorModeSwitcher: React.FC<ColorModeSwitcherProps> = (props) => {
     <IconButton
     _hover={{color: useColorModeValue('gray.900', 'white'), bg: 'none'}}
       size="md"
-      mr={5}
+      mr={{base: 0, md:5}}
       alignSelf={"center"}
       fontSize="lg"
       variant="ghost"

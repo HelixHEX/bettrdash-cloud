@@ -111,7 +111,7 @@ const Signup = () => {
         <Logo fontSize={{base: '2xl', md: '4xl'}} />
         <ColorModeSwitcher />
       </Flex>
-      <Box px={12} pt={20} position={"relative"}>
+      <Box px={{base: 4, md: 12}} pt={20} position={"relative"}>
         <Container
           as={SimpleGrid}
           maxW='100%'

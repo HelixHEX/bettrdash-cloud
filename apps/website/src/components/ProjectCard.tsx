@@ -50,16 +50,16 @@ const ProjectCard = (project: ProjectProps) => {
         role={"group"}
         maxW={"100%"}
         w={"full"}
-        bgGradient={useColorModeValue('linear(to-br, white, gray.300)', 'linear(to-br, gray.600, gray.900)')}
+        bgGradient={useColorModeValue('linear(to-br, white, gray.100)', 'linear(to-br, gray.600, gray.900)')}
         h={250}
         borderWidth={4}
-        borderColor={useColorModeValue('gray.400', 'gray.500')}
+        borderColor={useColorModeValue('#DFDFDF', '#3D3D3D')}
         p={4}
         justifyContent={"space-between"}
         flexDir={"column"}
       >
  
-        <Text   color={hover ? useColorModeValue('gray.900', 'white') : 'gray.400'} fontWeight={'bold'}  fontSize={'sm'}>{project.name}</Text>
+        <Text   color={hover ? useColorModeValue('gray.900', 'white') : 'gray.500'} fontWeight={'bold'}  fontSize={'sm'}>{project.name}</Text>
         <HStack>
           {project.defaultWebsiteId && (
             <HStack>

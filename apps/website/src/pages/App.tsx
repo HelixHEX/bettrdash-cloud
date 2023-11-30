@@ -20,14 +20,12 @@ const App = () => {
   const [breadcrumbs, setBreadcrumbs] = useState<BreadCrumbProps['breadcrumbs']>([{path: '/', label: 'Projects'}]);
   if (status === "loading") {
     return (
-      <Flex w="100%" h="100vh">
-        <Loading />
-      </Flex>
+      <Landing />
     );
   }
 
   if (status === "error") {
-    return <Text>An error has occurred</Text>;
+    return <Landing />
   }
 
   // if (!data.success) return <Navigate replace to="/login" />;

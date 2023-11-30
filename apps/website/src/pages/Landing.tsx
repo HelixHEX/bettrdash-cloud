@@ -131,7 +131,7 @@ const Landing = () => {
               textAlign={{ base: "center", md: "start" }}
               w={{ base: "100%", md: 300, lg: 700 }}
               fontWeight={"bold"}
-              fontSize={'3xl'}
+              fontSize={{base: 'lg', md: '3xl'}}
               // fontSize='xl'
             >
               Managing your personal projects should be effortless and

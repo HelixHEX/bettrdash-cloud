@@ -35,6 +35,8 @@ import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/700.css";
 import { ReactComponent as AnalyticsSVG } from "../assets/images/analytics.svg";
 import { ReactElement, ReactNode } from "react";
+import Logo from "../components/Logo";
+import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
 
 const Landing = () => {
   const dashboardImage = useColorModeValue(
@@ -49,6 +51,7 @@ const Landing = () => {
   return (
     <>
       <Flex
+      overflowX='hidden'
         fontFamily={"Poppins"}
         fontSize={"xl"}
         py={5}
@@ -57,9 +60,10 @@ const Landing = () => {
         w="100%"
         h="100%"
         minH="100vh"
+        bg={useColorModeValue('white', 'gray.800')}
       >
         <Flex w="100%" justify="space-between">
-          <Heading
+          {/* <Heading
             // left={{ base: "30%", md: "0%" }}
             // pos={{ base: "absolute", md: "relative" }}
             fontFamily="monospace"
@@ -70,9 +74,12 @@ const Landing = () => {
             fontSize={{ base: "2xl", md: "4xl" }}
           >
             BettrDash
-          </Heading>
+          </Heading> */}
+          <Logo  fontSize={{base: '2xl', md: '4xl'}} />
           <Flex>
+            <ColorModeSwitcher />
             <Icon
+            display={{base: 'none', md: 'block'}}
               alignSelf={"center"}
               cursor={"pointer"}
               _hover={{ color: useColorModeValue("gray.900", "gray.200") }}
@@ -98,6 +105,8 @@ const Landing = () => {
               Signin
             </Text>
             <Button
+            as={RouterLink}
+            to='/signup'
               ml={{ base: 2, md: 5 }}
               rounded="full"
               bgGradient="linear(to-r, red.400, pink.400)"
@@ -122,7 +131,7 @@ const Landing = () => {
               textAlign={{ base: "center", md: "start" }}
               w={{ base: "100%", md: 300, lg: 700 }}
               fontWeight={"bold"}
-              fontSize={{ base: "3xl", sm: "4xl", lg: "5xl" }}
+              fontSize={'3xl'}
               // fontSize='xl'
             >
               Managing your personal projects should be effortless and
@@ -313,7 +322,7 @@ const Landing = () => {
             mt={{ base: 10, md: 0 }}
             src={monitorImage}
             w={{ base: "100%", md: 400, lg: 700 }}
-            h={{ base: 110, md: 100, lg: 150 }}
+            h={{ base: 110, md: 100, lg: 110 }}
             alt="monitoring"
             rounded={5}
             boxShadow="2xl"

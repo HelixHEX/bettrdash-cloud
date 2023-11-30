@@ -22,6 +22,7 @@ import {Link as RouterLink} from 'react-router-dom'
 import { useState } from "react";
 import { API_URL } from "../../api/constants";
 import { ColorModeSwitcher } from "../../components/ColorModeSwitcher";
+import Logo from "../../components/Logo";
 
 axios.defaults.withCredentials = false;
 
@@ -106,26 +107,29 @@ const Signup = () => {
   };
   return (
     <>
-      <Flex zIndex={1} pos="absolute" right={5} top={5}>
+      <Flex zIndex={5} pos='absolute' py={5} px={{ base: 4, md: 12 }} w='100%' justify={'space-between'}>
+        <Logo fontSize={{base: '2xl', md: '4xl'}} />
         <ColorModeSwitcher />
       </Flex>
-      <Box position={"relative"}>
+      <Box px={12} pt={20} position={"relative"}>
         <Container
           as={SimpleGrid}
-          maxW={"7xl"}
+          maxW='100%'
+          // maxW={"7xl"}
           columns={{ base: 1, md: 2 }}
           spacing={{ base: 10, lg: 32 }}
           py={{ base: 10, sm: 20, lg: 32 }}
         >
           <Stack spacing={{ base: 10, md: 20 }}>
             <Heading
+            zIndex={2}
               lineHeight={1.1}
               fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
             >
               Built for all developers{" "}
             </Heading>
             <Stack direction={"row"} spacing={4} align={"center"}>
-              <AvatarGroup>
+              <AvatarGroup >
                 {avatars.map((avatar) => (
                   <Avatar
                     key={avatar.name}
@@ -149,15 +153,14 @@ const Signup = () => {
                 ))}
               </AvatarGroup>
               <Text
-                fontFamily={"heading"}
                 fontSize={{ base: "4xl", md: "6xl" }}
               >
                 +
               </Text>
               <Flex
+              
                 align={"center"}
                 justify={"center"}
-                fontFamily={"heading"}
                 fontSize={{ base: "sm", md: "lg" }}
                 bg={"gray.800"}
                 color={"white"}
@@ -267,7 +270,6 @@ const Signup = () => {
                 </HStack>
                 <Button
                   type="submit"
-                  fontFamily={"heading"}
                   mt={5}
                   w={"full"}
                   bgGradient="linear(to-r, red.400,pink.400)"
@@ -285,7 +287,7 @@ const Signup = () => {
         </Container>
         <Blur
           position={"absolute"}
-          top={-10}
+          top={44}
           left={-10}
           style={{ filter: "blur(70px)" }}
         />
@@ -297,6 +299,7 @@ const Signup = () => {
 export const Blur = (props: IconProps) => {
   return (
     <Icon
+    // style={{marginTop: 30}}
       width={useBreakpointValue({ base: "100%", md: "40vw", lg: "30vw" })}
       zIndex={useBreakpointValue({ base: -1, md: -1, lg: 0 })}
       height="560px"

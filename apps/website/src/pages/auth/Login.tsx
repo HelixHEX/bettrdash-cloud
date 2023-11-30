@@ -12,6 +12,7 @@ import {
   useColorModeValue,
   HStack,
   useToast,
+  Center,
 } from "@chakra-ui/react";
 import {Link as RouterLink} from 'react-router-dom'
 
@@ -21,6 +22,7 @@ import { API_URL } from "../../api/constants";
 import { ColorModeSwitcher } from "../../components/ColorModeSwitcher";
 import * as Sentry from '@sentry/react'
 import { useNavigate } from "react-router-dom";
+import Logo from "../../components/Logo";
 
 axios.defaults.withCredentials = false;
 
@@ -80,10 +82,11 @@ const Login = () => {
     <Flex
       minH={"100vh"}
       align={"center"}
-      justify={"center"}
+      flexDir={'column'}
       bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <Flex pos="absolute" right={5} top={5}>
+      <Flex py={5} px={{ base: 4, md: 12 }} w='100%' justify={'space-between'}>
+        <Logo fontSize={{base: '2xl', md: '4xl'}} />
         <ColorModeSwitcher />
       </Flex>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
@@ -123,7 +126,6 @@ const Login = () => {
                 </HStack>
                 <Button
                   type="submit"
-                  fontFamily={"heading"}
                   mt={8}
                   w={"full"}
                   bgGradient="linear(to-r, red.400,pink.400)"

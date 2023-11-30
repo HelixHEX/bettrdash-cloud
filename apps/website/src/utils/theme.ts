@@ -8,6 +8,10 @@ const config: ThemeConfig = {
   useSystemColorMode: true,
 };
 const styles = {
+  fonts: {
+    heading: 'Poppins',
+    body: 'Poppins'
+  },
   colors: {
     gray: {
       600: "#2C2C2C",

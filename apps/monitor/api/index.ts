@@ -7,7 +7,7 @@ const handler = async (_request: VercelRequest, _response: VercelResponse) => {
     if (isURL(website.url as string)) {
       let url = website.url;
       if (website.url.substring(0, 4) !== "http") {
-        url = `https://${website.url}`;
+        url = `https://${website.url}`
       }
       await axios
         .get(url)

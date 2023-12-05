@@ -1,8 +1,8 @@
 {
   "crons": [
     {
-      "path": "/monitor",
-      "schedule": "0 5 * * *"
+      "path": "/api/monitor",
+      "schedule": "0 10 * * *"
     }
   ]
 }

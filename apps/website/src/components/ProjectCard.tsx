@@ -41,10 +41,10 @@ const ProjectCard = (project: ProjectProps) => {
           cursor: "pointer",
           // translate: "0px  = -5px",
           borderWidth: 4,
-
-          borderColor: useColorModeValue('gray.900', 'white'),
+          // borderColor: useColorModeValue('gray.900', 'white'),
           transform: 'translate(10px, -10px)',
           boxShadow: '-10px 10px 0px #ED64A6',
+          borderImage: 'linear-gradient(45deg, white, white) 1' 
         }}
         onClick={() => navigate(`/projects/${project.id}`)}
         role={"group"}
@@ -53,7 +53,8 @@ const ProjectCard = (project: ProjectProps) => {
         bgGradient={useColorModeValue('linear(to-br, white, gray.100)', 'linear(to-br, gray.600, gray.900)')}
         h={250}
         borderWidth={4}
-        borderColor={useColorModeValue('#DFDFDF', '#3D3D3D')}
+        style={{borderImage: 'linear-gradient(45deg, #3D3D3D, #787878) 1'}}
+        // borderColor={useColorModeValue('#DFDFDF', '#3D3D3D')}
         p={4}
         justifyContent={"space-between"}
         flexDir={"column"}

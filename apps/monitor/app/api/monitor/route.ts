@@ -1,10 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 import {prisma} from '@bettrdash/db'
 import axios from 'axios';
 import { isURL } from '../../../utils/url';
 
-export const GET = async () => {
+export const GET = async (req: any, res: any) => {
+  if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
+    return res.status(401).end('Unauthorized');
+  }
   let websites = await prisma.website.findMany()
   websites.forEach(async website => {
     if (isURL(website.url as string)) {

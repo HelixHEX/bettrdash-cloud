@@ -1,9 +1,18 @@
 {
-  "extends": "tsconfig/server.json",
-  "include": ["api/**/*.tsx", "api/**/*.ts", "types.d.ts", ],
+  "extends": "tsconfig/nextjs.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "types": ["node"],
-    "typeRoots": ["api/types.d.ts", "../../node_modules/@types"]
-  }
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "next.config.js",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
 }

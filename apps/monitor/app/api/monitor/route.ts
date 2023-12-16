@@ -1,17 +1,16 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { prisma } from "@bettrdash/db";
-import { isURL } from "./utils/url";
-import axios from 'axios';
+import { NextResponse } from 'next/server';
 
-const handler = async (_request: VercelRequest, response: VercelResponse) => {
-  let websites = await prisma.website.findMany();
-  websites.forEach(async (website) => {
+import {prisma} from '@bettrdash/db'
+import axios from 'axios';
+import { isURL } from '../../../utils/url';
+
+export const GET = async () => {
+  let websites = await prisma.website.findMany()
+  websites.forEach(async website => {
     if (isURL(website.url as string)) {
       let url = website.url;
       if (website.url.substring(0, 4) !== "http") {
         url = `https://${website.url}`;
-        //PROD: postgresql://HelixHEX:PkZgcBQG6p5f@ep-patient-hall-78509768-pooler.us-west-2.aws.neon.tech/main_prod?sslmode=require
-
       }
       await axios
         .get(url)
@@ -63,8 +62,6 @@ const handler = async (_request: VercelRequest, response: VercelResponse) => {
         },
       });
     }
-  });
-  return response.json({success: true, message: 'Checked websites'});
-};
-
-export default handler;
+  })
+  return NextResponse.json({success: true, message: 'Checked websites'});
+}

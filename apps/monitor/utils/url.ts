@@ -7,4 +7,3 @@ export const isURL = (str: String) => {
   '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
 return !!pattern.test(str as string);
 };
-

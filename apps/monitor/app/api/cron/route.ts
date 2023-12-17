@@ -4,9 +4,9 @@ import {prisma} from '@bettrdash/db'
 import axios from 'axios';
 import { isURL } from '../../../utils/url';
 
-export const GET = async (req: any, res: any) => {
+export const GET = async (req: NextRequest) => {
   if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
-    return res.status(401).end('Unauthorized');
+    return NextResponse.json({message: 'Unauthorized'}, {status: 401})
   }
   let websites = await prisma.website.findMany()
   websites.forEach(async website => {

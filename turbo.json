@@ -2,8 +2,8 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["lint"],
-      "outputs": ["dist/**"]
+      "dependsOn": ["^build","lint"],
+      "outputs": [".next/**", "dist", "!.next/cache/**"]
     },
     "build-api-gateway": {
       "dependsOn": ["db-generate"],

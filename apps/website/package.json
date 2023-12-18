@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@chakra-ui/icons": "^1.1.7",
-    "@chakra-ui/react": "2.3.6",
+    "@chakra-ui/icons": "2.1.1",
+    "@chakra-ui/react": "2.8.2",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "@fontsource/poppins": "^4.5.10",
@@ -17,7 +17,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "18",
     "@types/react-dom": "^16.9.0",
-    "@uploadcare/react-widget": "^2.0.0",
+    "@uploadcare/react-widget": "2.4.5",
     "axios": "^0.26.1",
     "env-cmd": "^10.1.0",
     "eslint-config-custom": "*",
@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@chakra-ui/system": "^2.6.2",
     "@testing-library/dom": ">=7.21.4"
   }
 }

@@ -34,10 +34,9 @@ const main = async () => {
   app.use(
     cors({
       origin: [
-        // process.env.NODE_ENV === "development"
-        //   ? "http://localhost:3000"
-        //   : false,
-        "http://localhost:3000",
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:3002"
+          : false,
         "https://dev.bettrdash.com",
         "https://bettrdash.com",
       ],

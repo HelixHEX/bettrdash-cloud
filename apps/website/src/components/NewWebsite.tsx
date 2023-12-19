@@ -161,7 +161,7 @@ const NewWebsite = ({
           border='none'
           mt={3}
         />
-        {linkToProject && (
+        {/* {linkToProject && (
           <>
             <Heading color="gray.500" fontSize={12} mt={5}>
               Link to an existing project
@@ -183,7 +183,7 @@ const NewWebsite = ({
               ))}
             </Select>
           </>
-        )}
+        )} */}
       </ModalComp>
     </>
   );

@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { CopyBlock, dracula } from "react-code-blocks";
 import { useQueries } from "react-query";
-import { useParams } from "react-router-dom";
+import { useParams, Link as RouterLink } from "react-router-dom";
 import {
   analyticsAggregate,
   analyticsSources,
@@ -96,7 +96,7 @@ const WebsiteAnalytic = () => {
             alignSelf={{ base: "center", md: "start" }}
           >
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} to="/analytics">
+              <BreadcrumbLink as={RouterLink} to="/analytics">
                 Analytics
               </BreadcrumbLink>
             </BreadcrumbItem>

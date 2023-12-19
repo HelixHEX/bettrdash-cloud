@@ -31,15 +31,14 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.3.5",
-    "web-vitals": "^0.2.2",
-    "yarn": "^1.22.19"
+    "web-vitals": "^0.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build:desktop": "yarn electron:build && tsc -p electron && electron-builder -c.extraMetadata.main=build/electron/main.js",
-    "start:electron": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
+    "build:desktop": "npm run electron:build && tsc -p electron && electron-builder -c.extraMetadata.main=build/electron/main.js",
+    "start:electron": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
     "electron:build": "react-scripts build",
-    "desktop": "yarn start:electron",
+    "desktop": "npm run start:electron",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-qa": "env-cmd -f .env react-scripts build"

@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@bettrdash/db": "*",
+    "@bettrdash/db": "^0.0.1",
     "@trigger.dev/nextjs": "^2.3.6",
     "@trigger.dev/react": "^2.3.6",
     "@trigger.dev/sdk": "^2.3.6",

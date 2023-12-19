@@ -2,6 +2,7 @@ import { Job, cronTrigger } from "@trigger.dev/sdk";
 import { client } from "../utils/trigger";
 
 import { prisma } from "@bettrdash/db";
+// import { prisma } from "@bettrdash/db";
 import axios from "axios";
 import { isURL } from "../utils/url";
 
@@ -17,6 +18,7 @@ client.defineJob({
       payload,
     });
 
+    // console.log(await pris)
     let websites = await prisma.website.findMany();
     if (websites.length > 0) {
       websites.forEach(async (website) => {

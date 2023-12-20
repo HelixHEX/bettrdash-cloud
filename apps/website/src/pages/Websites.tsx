@@ -62,7 +62,7 @@ const Websites = () => {
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
-        <NewWebsite id={project.id} />
+        <NewWebsite projectId={project.id} />
         <WebsitesTable websites={websites} />
       </Flex>
     </>

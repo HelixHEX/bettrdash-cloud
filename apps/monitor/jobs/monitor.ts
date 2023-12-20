@@ -32,6 +32,7 @@ client.defineJob({
               await axios
                 .get(url)
                 .then(async (res) => {
+                  console.log(`${website.url} - ${res.status}`)
                   if (res.status === 200) {
                     console.log(`${website.url} is running`);
                     if (website.status !== "UP") {

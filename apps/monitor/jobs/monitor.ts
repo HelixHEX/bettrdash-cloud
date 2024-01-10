@@ -32,10 +32,14 @@ client.defineJob({
               if (website.url.substring(0, 4) !== "http") {
                 url = `https://${website.url}`;
               }
-              await io.logger.info(`starting fetch for - ${url}`)
-              const response = io.backgroundFetch(`fetch-${url}-${new Date().toISOString()}`, url, {
-                method: "GET",
-              });
+              await io.logger.info(`starting fetch for - ${url}`);
+              const response = await io.backgroundFetch(
+                `fetch-${url}-${new Date().toISOString()}`,
+                `${url}?timestamp=${new Date().toISOString()}`,
+                {
+                  method: "GET",
+                }
+              );
               await io.logger.info(`${response}`);
               return response;
 
@@ -88,7 +92,7 @@ client.defineJob({
               //     return;
               //   });
             } else {
-              await io.logger.info(`${website.url} is not a valid url`)
+              await io.logger.info(`${website.url} is not a valid url`);
               await prisma.website.update({
                 where: {
                   id: website.id,

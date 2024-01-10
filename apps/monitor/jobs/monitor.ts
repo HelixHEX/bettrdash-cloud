@@ -87,6 +87,7 @@ client.defineJob({
               //     return;
               //   });
             } else {
+              await io.logger.info(`${website.url} is not a valid url`)
               await prisma.website.update({
                 where: {
                   id: website.id,

@@ -32,6 +32,7 @@ client.defineJob({
               if (website.url.substring(0, 4) !== "http") {
                 url = `https://${website.url}`;
               }
+              await io.logger.info(`starting fetch for - ${url}`)
               const response = io.backgroundFetch(`fetch-${url}-${new Date().toISOString()}`, url, {
                 method: "GET",
               });

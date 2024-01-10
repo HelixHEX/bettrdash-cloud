@@ -32,7 +32,7 @@ client.defineJob({
               if (website.url.substring(0, 4) !== "http") {
                 url = `https://${website.url}`;
               }
-              const response = io.backgroundFetch(`fetch-${url}`, url, {
+              const response = io.backgroundFetch(`fetch-${url}-${new Date()}`, url, {
                 method: "GET",
               });
               await io.logger.info(`${response}`);

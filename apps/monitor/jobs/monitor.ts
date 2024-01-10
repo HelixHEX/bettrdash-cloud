@@ -26,7 +26,7 @@ client.defineJob({
         });
         if (websites.length > 0) {
           websites.forEach(async (website) => {
-            await io.logger.info(`Checking - ${website.url}`);
+            // await io.logger.info(`Checking - ${website.url}`);
             if (isURL(website.url as string)) {
               let url = website.url;
               if (website.url.substring(0, 4) !== "http") {

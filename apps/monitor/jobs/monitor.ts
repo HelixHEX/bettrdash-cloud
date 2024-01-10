@@ -5,6 +5,7 @@ import { prisma } from "@bettrdash/db";
 // import { prisma } from "@bettrdash/db";
 import axios from "axios";
 import { isURL } from "../utils/url";
+import { type AxiosResponse } from "axios";
 
 client.defineJob({
   id: "check website status'",
@@ -31,72 +32,60 @@ client.defineJob({
               if (website.url.substring(0, 4) !== "http") {
                 url = `https://${website.url}`;
               }
-              await io.runTask(
-                `ping-${website.url}`,
-                async () => {
-                  await axios
-                    .get(url)
-                    .then(async (res) => {
-                      console.log(`${website.url} - ${res.status}`);
-                      if (res.status === 200) {
-                        console.log(`${website.url} is running`);
-                        await io.logger.info(`${website.url} is running`);
-                        if (website.status !== "UP") {
-                          await prisma.website.update({
-                            where: {
-                              id: website.id,
-                            },
-                            data: {
-                              status: "UP",
-                            },
-                          });
-                        }
-                      } else {
-                        if (website.status !== "DOWN") {
-                          console.log(`${website.url} is down`);
-                          await io.logger.info(`${website.url} is down`);
-                          await prisma.website.update({
-                            where: {
-                              id: website.id,
-                            },
-                            data: {
-                              status: "DOWN",
-                            },
-                          });
-                        }
-                      }
-                      return;
-                    })
-                    .catch(async (e) => {
-                      await prisma.website.update({
-                        where: {
-                          id: website.id,
-                        },
-                        data: {
-                          status: "INVALID URL",
-                        },
-                      });
-                      console.log(`${website.url} --> ${e.message}`);
-                      await io.logger.info(`${website.url} -> ${e.message}`);
-                      console.log("----DOWN----");
-                      await io.logger.info("----DOWN----");
-                      return;
-                    });
-                },
-                {
-                  name: `Ping ${website.url}`,
-                  properties: [
-                    {
-                      label: "Website",
-                      text: website.url,
-                    },
-                    {
-                      label: "Project",
-                      text: website.project!.name,
-                    },
-                  ],
-                }
-              );
+              const response = io.backgroundFetch(`fetch-${url}`, url, {
+                method: "GET",
+              });
+              await io.logger.info(`${response}`);
+              return response;
+
+              // await axios
+              //   .get(url)
+              //   .then(async (res) => {
+              //     console.log(`${website.url} - ${res.status}`);
+              //     if (res.status === 200) {
+              //       console.log(`${website.url} is running`);
+              //       await io.logger.info(`${website.url} is running`);
+              //       if (website.status !== "UP") {
+              //         await prisma.website.update({
+              //           where: {
+              //             id: website.id,
+              //           },
+              //           data: {
+              //             status: "UP",
+              //           },
+              //         });
+              //       }
+              //     } else {
+              //       if (website.status !== "DOWN") {
+              //         console.log(`${website.url} is down`);
+              //         await io.logger.info(`${website.url} is down`);
+              //         await prisma.website.update({
+              //           where: {
+              //             id: website.id,
+              //           },
+              //           data: {
+              //             status: "DOWN",
+              //           },
+              //         });
+              //       }
+              //     }
+              //     return;
+              //   })
+              //   .catch(async (e) => {
+              //     await prisma.website.update({
+              //       where: {
+              //         id: website.id,
+              //       },
+              //       data: {
+              //         status: "INVALID URL",
+              //       },
+              //     });
+              //     console.log(`${website.url} --> ${e.message}`);
+              //     await io.logger.info(`${website.url} -> ${e.message}`);
+              //     console.log("----DOWN----");
+              //     await io.logger.info("----DOWN----");
+              //     return;
+              //   });
             } else {
               await prisma.website.update({
                 where: {

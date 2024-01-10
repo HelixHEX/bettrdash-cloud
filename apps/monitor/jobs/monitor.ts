@@ -20,7 +20,9 @@ client.defineJob({
           payload,
         });
 
-        let websites = await prisma.website.findMany();
+        let websites = await prisma.website.findMany({
+          include: { project: true },
+        });
         if (websites.length > 0) {
           websites.forEach(async (website) => {
             await io.logger.info(`Checking - ${website.url}`);
@@ -29,53 +31,72 @@ client.defineJob({
               if (website.url.substring(0, 4) !== "http") {
                 url = `https://${website.url}`;
               }
-              await axios
-                .get(url)
-                .then(async (res) => {
-                  console.log(`${website.url} - ${res.status}`);
-                  if (res.status === 200) {
-                    console.log(`${website.url} is running`);
-                    await io.logger.info(`${website.url} is running`);
-                    if (website.status !== "UP") {
+              await io.runTask(
+                `ping-${website.url}`,
+                async () => {
+                  await axios
+                    .get(url)
+                    .then(async (res) => {
+                      console.log(`${website.url} - ${res.status}`);
+                      if (res.status === 200) {
+                        console.log(`${website.url} is running`);
+                        await io.logger.info(`${website.url} is running`);
+                        if (website.status !== "UP") {
+                          await prisma.website.update({
+                            where: {
+                              id: website.id,
+                            },
+                            data: {
+                              status: "UP",
+                            },
+                          });
+                        }
+                      } else {
+                        if (website.status !== "DOWN") {
+                          console.log(`${website.url} is down`);
+                          await io.logger.info(`${website.url} is down`);
+                          await prisma.website.update({
+                            where: {
+                              id: website.id,
+                            },
+                            data: {
+                              status: "DOWN",
+                            },
+                          });
+                        }
+                      }
+                      return;
+                    })
+                    .catch(async (e) => {
                       await prisma.website.update({
                         where: {
                           id: website.id,
                         },
                         data: {
-                          status: "UP",
+                          status: "INVALID URL",
                         },
                       });
-                    }
-                  } else {
-                    if (website.status !== "DOWN") {
-                      console.log(`${website.url} is down`);
-                      await io.logger.info(`${website.url} is down`);
-                      await prisma.website.update({
-                        where: {
-                          id: website.id,
-                        },
-                        data: {
-                          status: "DOWN",
-                        },
-                      });
-                    }
-                  }
-                })
-                .catch(async (e) => {
-                  await prisma.website.update({
-                    where: {
-                      id: website.id,
+                      console.log(`${website.url} --> ${e.message}`);
+                      await io.logger.info(`${website.url} -> ${e.message}`);
+                      console.log("----DOWN----");
+                      await io.logger.info("----DOWN----");
+                      return;
+                    });
+                },
+                {
+                  name: `Ping ${website.url}`,
+                  properties: [
+                    {
+                      label: "Website",
+                      text: website.url,
                     },
-                    data: {
-                      status: "INVALID URL",
+                    {
+                      label: "Project",
+                      text: website.project!.name,
                     },
-                  });
-                  console.log(`${website.url} --> ${e.message}`);
-                  await io.logger.info(`${website.url} -> ${e.message}`);
-                  console.log("----DOWN----");
-                  await io.logger.info("----DOWN----");
-                  return;
-                });
+                  ],
+                }
+              );
             } else {
               await prisma.website.update({
                 where: {

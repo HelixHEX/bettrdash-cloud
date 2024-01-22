@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
             active: true,
           },
           orderBy: {
-            name: "desc",
+            name: "asc",
           },
           select: {
             live_url: true,

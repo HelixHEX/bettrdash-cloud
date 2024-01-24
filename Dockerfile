@@ -7,8 +7,8 @@ RUN apk add --no-cache libc6-compat
 
 # Setup yarn on the alpine base
 FROM alpine as base
-RUN npm install turbo --global
-RUN npm install yarn --global --force
+RUN npm install npm turbo --global
+RUN npm config set prefix ~/.npm
 
 
 # Prune projects
@@ -26,11 +26,11 @@ ARG PROJECT
 WORKDIR /app
 
 # Copy lockfile and package.json's of isolated subworkspace
-COPY --from=pruner /app/out/yarn.lock ./yarn.lock
-COPY --from=pruner /app/out/json/ .
+COPY --from=pruner /app/out/package-lock.json ./package-lock.json
+COPY --from=pruner /app/out/package.json .
 
 # First install the dependencies (as they change less often)
-RUN yarn install --production=false
+RUN npm install --production=false
 
 # Build prisma
 
@@ -39,7 +39,7 @@ COPY --from=pruner /app/out/full/ .
 
 RUN turbo run db-generate
 RUN turbo run build --scope=${PROJECT}
-RUN yarn install --production
+RUN npm prune --production
 RUN rm -rf ./**/*/src
 
 # Final image
@@ -51,7 +51,7 @@ RUN adduser --system --uid 1001 nodejs
 USER nodejs
 
 WORKDIR /app
-RUN yarn add debug
+# RUN yarn add debug
 COPY --from=builder --chown=nodejs:nodejs /app .
 WORKDIR /app/apps/${PROJECT}
 

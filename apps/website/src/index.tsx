@@ -46,22 +46,21 @@ ReactDOM.render(
               <Route path="/settings" element={<Settings />} />
               <Route path="/profile" element={<Profile />} />
               <Route
-                path="/projects/:projectId/monitor" 
+                path="/projects/:projectId/monitor"
                 element={<Monitor />}
               />
               <Route
                 path="/projects/:projectId/websites"
                 element={<Websites />}
               />
-              {/* <Route
+              <Route
                 path="/projects/:projectId/analytics"
                 element={<Analytics />}
-              >
-                <Route
-                  path="/projects/:projectId/analytics/:id"
-                  element={<WebsiteAnalytic />}
-                />
-              </Route> */}
+              />
+              <Route
+                path="/projects/:projectId/analytics/:id"
+                element={<WebsiteAnalytic />}
+              />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

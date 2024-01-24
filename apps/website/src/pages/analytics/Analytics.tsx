@@ -84,7 +84,7 @@ const Analytics = () => {
                         textDecoration: "underline",
                       }}
                       onClick={() =>
-                        navigate(`/analytics/${website.website.id}`)
+                        navigate(`/projects/${website.website.projectId}/analytics/${website.website.id}`)
                       }
                     >
                       {website.website.url}

@@ -32,6 +32,7 @@ import {
   FiChevronDown,
   FiActivity,
   FiBarChart,
+  FiBarChart2
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { ReactText } from "react";
@@ -50,7 +51,7 @@ interface LinkItemProps {
 const LinkItems: Array<LinkItemProps> = [
   // { name: "Overview", icon: FiBarChart, path: "" },
   { name: "Monitor", icon: FiActivity, path: "/monitor" },
-  // { name: "Analytics", icon: FiBarChart2, path: "/analytics" },
+  { name: "Analytics", icon: FiBarChart2, path: "/analytics" },
   // { name: "Settings", icon: FiSettings, path: "/settings" },
 ];
 
@@ -65,6 +66,7 @@ const useSettingsPage = () => {
   const pathname = location.pathname
   return pathname === '/settings'
 }
+
 
 const useProfilePage = () => {
   const location = useLocation()
@@ -139,7 +141,7 @@ const SidebarContent = ({ onClose, breadcrumbs, ...rest }: SidebarProps) => {
       <Flex h="20" alignItems="center" mx="4" justifyContent="space-between">
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      <NavItem originalPath={"/"} icon={FiBarChart}>
+      <NavItem originalPath={""} icon={FiBarChart}>
         Overview
       </NavItem>
       {LinkItems.map((link) => {
@@ -158,20 +160,27 @@ interface NavItemProps extends FlexProps {
   icon: IconType;
   children: ReactText;
   originalPath: string;
+  subpages?: Subpage[]
 }
+
+interface Subpage {
+  icon: IconType
+}
+
 const NavItem = ({ originalPath, icon, children, ...rest }: NavItemProps) => {
   const location = useLocation();
-  const { projectId } = useParams();
-  const path = `/projects/${projectId}${originalPath}`;
-  const currentPath =
-    location.pathname === path ||
-    (originalPath === "/" &&
-      parseInt(location.pathname.substring(location.pathname.length - 1)));
+  const { projectId, id } = useParams();
+  const path = `/projects/${projectId ? projectId : ""}${originalPath}/${id ? id : ""}`;
+  console.log(`${originalPath} - ${path}`)
+  const currentPath = location.pathname === path;
+    // location.pathname === path ||
+    // (originalPath === "/" &&
+    //   parseInt(location.pathname.substring(location.pathname.length - 1))) && (location.pathname.lastIndexOf('/'));
   // const currentPath =
   //   location.pathname === path ||
   //   (location.pathname !== path && originalPath === "/");
   return (
-    <RouterLink to={`${path}`} style={{ textDecoration: "none" }}>
+    <RouterLink to={`/projects/${projectId}${originalPath}/`} style={{ textDecoration: "none" }}>
       <Flex
         bgGradient={
           currentPath ? "linear(to-r, red.400,pink.400)" : "transparent"

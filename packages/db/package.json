@@ -10,12 +10,12 @@
     "db-generate": "prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "^5.8.0",
+    "@prisma/client": "^4.16.2",
     "dotenv-safe": "^8.2.0"
   },
   "devDependencies": {
     "config": "*",
-    "prisma": "^5.8.0",
+    "prisma": "^4.16.2",
     "tsconfig": "*",
     "typescript": "^4.5.3"
   }

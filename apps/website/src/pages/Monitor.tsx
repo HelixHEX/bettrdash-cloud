@@ -75,6 +75,7 @@ const Monitor = () => {
   const websites = websiteMonitorData.websites;
   const projects = websiteMonitorData.projects;
 
+  if (!projectId) return <Text>Project ID null</Text>
   return (
     <Flex  flexDir={'column'}>
     <ProjectNameBanner name={projectName} />
@@ -89,7 +90,7 @@ const Monitor = () => {
         p={5}
         bg={bg}
       >
-        <NewWebsite linkToProject={true} projects={projects} />
+        <NewWebsite projectId={parseInt(projectId)} projects={projects} />
         <WebsitesTable websites={websites} />
         {/* <Flex w="100%" justify={"space-between"}>
           <Heading fontSize={14}>URL</Heading>

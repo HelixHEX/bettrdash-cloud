@@ -21,24 +21,18 @@ import ModalComp from "./ModalComp";
 
 const NewWebsite = ({
   projects,
-  linkToProject = false,
-  id = null,
+  projectId = null,
 }: {
   projects?: ProjectProps[];
-  linkToProject?: boolean;
-  id?: number | null;
+  projectId?: number | null;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [url, setUrl] = useState("");
   const [environment, setEnvironment] = useState("production");
-  const [projectId, setProjectId] = useState<number | null>(id as number);
   const toast = useToast();
 
   const bg = useColorModeValue("gray.200", "gray.900");
 
-  useEffect(() => {
-    console.log(projectId);
-  }, [projectId])
   const {
     mutate: addWebsite,
     isSuccess,

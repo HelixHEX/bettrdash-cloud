@@ -37,19 +37,19 @@ import { AggregateProps, SourcesProps, TopPagesProps } from "../../utils/types";
 const WebsiteAnalytic = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const bg = useColorModeValue("white", "gray.800");
-  const { projectId } = useParams();
+  const { id } = useParams();
   const results = useQueries([
     {
       queryKey: "analyticsAggregate",
-      queryFn: () => analyticsAggregate({ id: projectId! }),
+      queryFn: () => analyticsAggregate({ id: id! }),
     },
     {
       queryKey: "analyticsSources",
-      queryFn: () => analyticsSources({ id: projectId! }),
+      queryFn: () => analyticsSources({ id: id! }),
     },
     {
       queryKey: "analyticsTopPages",
-      queryFn: () => analyticsTopPages({ id: projectId! }),
+      queryFn: () => analyticsTopPages({ id: id! }),
     },
   ]);
 

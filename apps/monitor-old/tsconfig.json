@@ -1,9 +1,0 @@
-{
-  "extends": "tsconfig/server.json",
-  "include": ["old/api/**/*.tsx", "old/api/**/*.ts", "types.d.ts", ],
-  "compilerOptions": {
-    "outDir": "old/dist",
-    "types": ["node"],
-    "typeRoots": ["old/api/types.d.ts", "../../node_modules/@types"]
-  }
-}

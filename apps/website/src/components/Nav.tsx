@@ -171,14 +171,7 @@ const NavItem = ({ originalPath, icon, children, ...rest }: NavItemProps) => {
   const location = useLocation();
   const { projectId, id } = useParams();
   const path = `/projects/${projectId ? projectId : ""}${originalPath}/${id ? id : ""}`;
-  console.log(`${originalPath} - ${path}`)
   const currentPath = location.pathname === path;
-    // location.pathname === path ||
-    // (originalPath === "/" &&
-    //   parseInt(location.pathname.substring(location.pathname.length - 1))) && (location.pathname.lastIndexOf('/'));
-  // const currentPath =
-  //   location.pathname === path ||
-  //   (location.pathname !== path && originalPath === "/");
   return (
     <RouterLink to={`/projects/${projectId}${originalPath}/`} style={{ textDecoration: "none" }}>
       <Flex

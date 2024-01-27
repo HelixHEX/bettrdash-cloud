@@ -37,11 +37,7 @@ const Analytics = () => {
     refetchInterval: 300000,
   });
 
-  useEffect(() => {
-    if (analyticsData && analyticsData.allWebsites) {
-      analyticsData.allWebsites.forEach((w:any) => console.log(w.projectId === parseInt(projectId!)))
-    }
-  }, [analyticsData]);
+  
   if (analyticsStatus === "loading") {
     return <Loading />;
   }
@@ -55,12 +51,6 @@ const Analytics = () => {
   }
 
   const websites = analyticsData.websites;
-  // const allWebsites2 =
-  //   analyticsData.allWebsites.length > 0
-  //     ? analyticsData.allWesbites.filter(
-  //         (website: any) => website.projecId === projectId!
-  //       )
-  //     : analyticsData.allWebsites;
 
   const allWebsites =
     analyticsData &&
@@ -70,7 +60,6 @@ const Analytics = () => {
           (website: any) => website.projectId === parseInt(projectId!)
         )
       : null;
-  // const allWebsites = analyticsData.allWebsites
 
   return (
     <>

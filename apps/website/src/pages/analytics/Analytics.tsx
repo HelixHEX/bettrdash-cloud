@@ -17,11 +17,11 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CopyBlock, dracula } from "react-code-blocks";
 import { FiTrash } from "react-icons/fi";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { analytics, useRemoveTracking, useTrackWebsite } from "../../api";
 import Loading from "../../components/Loading";
 import ModalComp from "../../components/ModalComp";
@@ -30,12 +30,14 @@ import { WebsiteProps } from "../../utils/types";
 const Analytics = () => {
   const navigate = useNavigate();
   const bg = useColorModeValue("white", "gray.800");
+  const { projectId } = useParams();
   const { data: analyticsData, status: analyticsStatus } = useQuery({
     queryKey: "analytics",
     queryFn: analytics,
     refetchInterval: 300000,
   });
 
+  
   if (analyticsStatus === "loading") {
     return <Loading />;
   }
@@ -49,7 +51,15 @@ const Analytics = () => {
   }
 
   const websites = analyticsData.websites;
-  const allWebsites = analyticsData.allWebsites;
+
+  const allWebsites =
+    analyticsData &&
+    analyticsData.allWebsites &&
+    analyticsData.allWebsites.length > 0
+      ? analyticsData.allWebsites.filter(
+          (website: any) => website.projectId === parseInt(projectId!)
+        )
+      : null;
 
   return (
     <>
@@ -64,7 +74,7 @@ const Analytics = () => {
         p={5}
         bg={bg}
       >
-        <TrackWebsite websites={allWebsites} />
+        {allWebsites && <TrackWebsite websites={allWebsites} />}
         {websites.length > 0 ? (
           <TableContainer mt={5}>
             <Table variant="simple">
@@ -84,7 +94,9 @@ const Analytics = () => {
                         textDecoration: "underline",
                       }}
                       onClick={() =>
-                        navigate(`/projects/${website.website.projectId}/analytics/${website.website.id}`)
+                        navigate(
+                          `/projects/${website.website.projectId}/analytics/${website.website.id}`
+                        )
                       }
                     >
                       {website.website.url}
@@ -107,7 +119,9 @@ const Analytics = () => {
           </TableContainer>
         ) : (
           <Text mt={5}>
-            No websites are being tracked. Feel free to track one!
+            {!allWebsites || allWebsites.length === 0
+              ? "Please create a website first in the monitor tab"
+              : "No websites are being tracked. Feel free to track one!"}
           </Text>
         )}
       </Flex>

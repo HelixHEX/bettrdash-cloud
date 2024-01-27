@@ -9,6 +9,8 @@ import { QueryClientProvider } from "react-query";
 import { queryClient } from "./api";
 import theme from "./utils/theme";
 import * as Sentry from "@sentry/react";
+import {SpeedInsights} from '@vercel/speed-insights/react';
+
 // import { BrowserTracing } from "@sentry/tracing";
 
 //pages
@@ -68,6 +70,7 @@ ReactDOM.render(
         </Router>
       </ChakraProvider>
     </QueryClientProvider>
+    <SpeedInsights />
   </React.StrictMode>,
   document.getElementById("root")
 );

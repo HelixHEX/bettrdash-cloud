@@ -18,6 +18,7 @@
     "@types/react": "18",
     "@types/react-dom": "^16.9.0",
     "@uploadcare/react-widget": "2.4.5",
+    "@vercel/speed-insights": "^1.0.8",
     "axios": "^0.26.1",
     "env-cmd": "^10.1.0",
     "eslint-config-custom": "*",

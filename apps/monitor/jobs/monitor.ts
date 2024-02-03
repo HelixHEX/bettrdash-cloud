@@ -35,7 +35,7 @@ client.defineJob({
               }
               await io.logger.info(`starting fetch for - ${url}`);
               const response = await io.backgroundFetch(
-                `fetch-${url}-${new Date().toISOString()}`,
+                `fetch-${url}-${new Date()}`,
                 `${url}?timestamp=${new Date().toISOString()}`,
                 {
                   method: "GET",

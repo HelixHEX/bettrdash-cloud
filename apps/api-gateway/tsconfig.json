@@ -1,9 +1,9 @@
 {
   "extends": "tsconfig/server.json",
-  "include": ["./src/**/*.tsx", "./src/**/*.ts", "types.d.ts", ],
+  "include": ["./src/**/*.tsx", "./src/**/*.ts", "./types.d.ts" ],
   "compilerOptions": {
     "outDir": "./dist",
     "types": ["node"],
-    "typeRoots": ["src/types.d.ts", "../../node_modules/@types"]
+    "typeRoots": ["src/express.d.ts", "../../node_modules/@types"]
   }
 }

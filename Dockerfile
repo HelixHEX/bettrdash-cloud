@@ -37,6 +37,10 @@ RUN npm install --production=false
 # Copy source code of isolated subworkspace
 COPY --from=pruner /app/out/full/ .
 
+WORKDIR /app/packages/db
+ENV DATABASE_URL=postgres://bettrdash:bettrdash@localhost:5432/bettrdash
+
+WORKDIR /app
 RUN turbo run db-generate
 RUN turbo run build --scope=${PROJECT}
 RUN npm install --production

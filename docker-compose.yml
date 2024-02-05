@@ -1,0 +1,43 @@
+version: '3.9'
+services: 
+  bettrdash_db:
+    restart: always
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - bettrdash_db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=bettrdash
+      - POSTGRES_USER=bettrdash
+      - POSTGRES_DB=bettrdash
+  bettrdash_cache:
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      -  bettrdash_cache:/data
+      
+  bettrdash_api:
+    restart: always
+    depends_on:
+      - bettrdash_db
+      - bettrdash_cache
+    ports:
+      - 5001:5001
+    environment: 
+      - SESSION_SECRET=secret
+      - COOKIE_DOMAIN=localhost
+      - REDIS_URL=redis://:@localhost:6379
+      - DATABASE_URL"=postgresql://bettrdash:bettrdash@localhost:5431/bettrdash"
+    build:
+      context: .
+      args: 
+          - PROJECT=api
+      dockerfile: Dockerfile
+volumes:
+  bettrdash_db-data:
+    driver: local
+  bettrdash_cache:
+    driver: local

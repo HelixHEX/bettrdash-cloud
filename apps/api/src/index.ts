@@ -72,7 +72,7 @@ const main = async () => {
   });
 
   app.listen(process.env.PORT, () => {
-    console.log(`🚀 Projects API ready at http://localhost:${process.env.PORT}`);
+    console.log(`🚀 Projects API is running on port ${process.env.PORT}`);
   });
 };
 

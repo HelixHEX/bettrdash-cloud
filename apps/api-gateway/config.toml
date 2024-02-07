@@ -28,6 +28,26 @@ url = "http://localhost:5001"
 environment = "production"
 url = "https://web.api.bettrdash.com"
 
+[[services]]
+name = "web api"
+prefix = "/web-server"
+[[services.environments]]
+environment = "development"
+url = "http://localhost:5001"
+[[services.environments]]
+environment = "production"
+url = "https://fly-monorepo-web.fly.io"
+
+[[services]]
+name = "hello world client"
+prefix = "/hello-world"
+[[services.environments]]
+environment = "development"
+url = "http://localhost:3000"
+[[services.environments]]
+environment = "production"
+url = "https://fly-monorepo-helloworld.fly.io"
+
 
 # [[services]]
 # name = "web api"

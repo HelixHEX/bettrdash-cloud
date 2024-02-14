@@ -1,9 +1,10 @@
 import AdminJS from "adminjs";
 import AdminJSExpress from "@adminjs/express";
 import express from "express";
+import { prisma } from "@bettrdash/db";
+
 import { Database, Resource } from "@adminjs/prisma";
 import { DMMFClass } from "@prisma/client/runtime";
-import { prisma } from "db";
 
 const session = require("express-session");
 const connectRedis = require("connect-redis");
@@ -33,7 +34,8 @@ const authenticate = async (email: string, password: string) => {
 const start = async () => {
   const app = express();
 
-  const dmmf = (prisma as any)._baseDmmf as DMMFClass;
+  const dmmf = ((prisma as any)._dmmf as DMMFClass)
+  console.log(dmmf.modelMap)
   const adminOptions = {
     resources: [
       {

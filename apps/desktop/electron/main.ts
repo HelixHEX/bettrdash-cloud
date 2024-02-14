@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
-import * as isDev from "electron-is-dev";
+// import * as isDev from "electron-is-dev";
 // import {url} from 'url';
 
 const createWindow = () => {
@@ -26,18 +26,18 @@ const createWindow = () => {
     // }))
     win.loadURL("http://localhost:3000");
     // Hot Reloading on 'node_modules/.bin/electronPath'
-    require("electron-reload")(__dirname, {
-      electron: path.join(
-        __dirname,
-        "..",
-        "..",
-        "node_modules",
-        ".bin",
-        "electron" + (process.platform === "win32" ? ".cmd" : ""),
-      ),
-      forceHardReset: true,
-      hardResetMethod: "exit",
-    });
+    // require("electron-reload")(__dirname, {
+    //   electron: path.join(
+    //     __dirname,
+    //     "..",
+    //     "..",
+    //     "node_modules",
+    //     ".bin",
+    //     // "electron" + (process.platform === "win32" ? ".cmd" : ""),
+    //   ),
+    //   forceHardReset: true,
+    //   hardResetMethod: "exit",
+    // });
   }
 };
 

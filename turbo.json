@@ -1,6 +1,13 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
+    "backend": {
+      "dependsOn": [
+        "@bettrdash/db#db-generate",
+        "api-gateway#dev",
+        "web-api#dev"
+      ]
+    },
     "build": {
       "dependsOn": ["^build", "lint"],
       "outputs": [".next/**", "dist", "!.next/cache/**"]

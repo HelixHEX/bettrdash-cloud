@@ -1,8 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Providers from "./lib/providers";
 import reportWebVitals from "./reportWebVitals";
+
+//Pages
+
+/* Auth */
+import Login from "./pages/auth/login";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -10,7 +15,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Providers>
-      <App />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </Router>
     </Providers>
   </React.StrictMode>,
 );

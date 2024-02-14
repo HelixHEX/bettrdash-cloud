@@ -35,7 +35,7 @@ const main = async () => {
         // process.env.NODE_ENV === "development"
         //   ? "http://localhost:3002"
         //   : false,
-        "http://localhost:3002",
+        "http://localhost:3000",
         "https://dev.bettrdash.com",
         "https://bettrdash.com",
       ],

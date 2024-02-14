@@ -1,5 +1,8 @@
 {
-  "extends": "tsconfig/desktop.json",
+  // "extends": "tsconfig/desktop.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "outDir": "./build"
+  }
 }

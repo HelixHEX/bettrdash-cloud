@@ -3,7 +3,7 @@ import "reflect-metadata";
 import express from "express";
 import cors from "cors";
 // import {createClient} from 'redis'
-import Redis from 'ioredis'
+import Redis from "ioredis";
 
 //routes
 import auth from "./routes/auth";
@@ -12,14 +12,12 @@ import apiAuth from "./routes/api/auth";
 import monitor from "./routes/monitor";
 import website from "./routes/website";
 import analytics from "./routes/analytics";
+import morgan from "morgan";
+import session from "express-session";
+import connectRedis from "connect-redis";
 
-const morgan = require("morgan");
-const session = require("express-session");
-const connectRedis = require("connect-redis");
 const RedisStore = connectRedis(session);
-// const redisUrl = process.env.REDIS_URL
-const redisClient = new Redis(process.env.REDIS_URL)
-// const redisClient = createClient({url: "redis://default:18e1c90720df461e8aa455c68cdad860@usw1-measured-unicorn-34414.upstash.io:34414"});
+const redisClient = new Redis(process.env.REDIS_URL);
 
 const main = async () => {
   const app = express();
@@ -27,22 +25,22 @@ const main = async () => {
   morgan.token("body", (req: express.Request) => JSON.stringify(req.body));
   app.use(
     morgan(
-      ":date[iso] :remote-addr :method :url :status :res[content-length] - :response-time ms"
-    )
+      ":date[iso] :remote-addr :method :url :status :res[content-length] - :response-time ms",
+    ),
   );
-  console.log(process.env.NODE_ENV)
+  console.log(process.env.NODE_ENV);
   app.use(
     cors({
       origin: [
         // process.env.NODE_ENV === "development"
         //   ? "http://localhost:3002"
         //   : false,
-        "http://localhost:3000",
+        "http://localhost:3002",
         "https://dev.bettrdash.com",
         "https://bettrdash.com",
       ],
       credentials: true,
-    })
+    }),
   );
 
   app.use(express.json());
@@ -64,13 +62,13 @@ const main = async () => {
         // to make sure that all cookies accept it
         // you should never use none anyway
       },
-    })
+    }),
   );
 
   const authenticate = (
     req: express.Request,
     res: express.Response,
-    next: express.NextFunction
+    next: express.NextFunction,
   ) => {
     if (!req.session || !req.session.user) {
       req;

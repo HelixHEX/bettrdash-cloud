@@ -1,0 +1,36 @@
+# Example
+# [[auth-api]] --> the name of your service
+#    name = "auth"
+#    prefix = "/auth"
+#    url = "http://auth.example.com"
+#    [[auth-api.]]
+# [[web-api]]
+#    name = "web"
+#    prefix = "/web"
+#    url = "http://api.example.com"
+[[services]]
+name = "projects api"
+prefix = "/projects"
+[[services.environments]]
+environment = "development"
+url = "http://localhost:5002"
+[[services.environments]]
+environment = "production"
+url = "https://projects.api.bettrdash.com"
+
+[[services]]
+name = "web api"
+prefix = "/web"
+[[services.environments]]
+environment = "development"
+url = "http://localhost:5001"
+[[services.environments]]
+environment = "production"
+url = "https://web.api.bettrdash.com"
+
+# [[services]]
+# name = "web api"
+# prefix = "/web"
+# [[services.environments]]
+# environment = 'development'
+# url = "http://localhost:5001"

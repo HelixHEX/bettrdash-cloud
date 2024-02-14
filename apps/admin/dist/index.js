@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const adminjs_1 = __importDefault(require("adminjs"));
 const express_1 = __importDefault(require("@adminjs/express"));
 const express_2 = __importDefault(require("express"));
+const db_1 = require("@bettrdash/db");
 const prisma_1 = require("@adminjs/prisma");
-const db_1 = require("db");
 const session = require("express-session");
 const connectRedis = require("connect-redis");
 const redis = require("redis");
@@ -40,7 +40,8 @@ const authenticate = (email, password) => __awaiter(void 0, void 0, void 0, func
 });
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     const app = (0, express_2.default)();
-    const dmmf = db_1.prisma._baseDmmf;
+    const dmmf = db_1.prisma._dmmf;
+    console.log(dmmf.modelMap);
     const adminOptions = {
         resources: [
             {

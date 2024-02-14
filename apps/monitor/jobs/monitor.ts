@@ -25,8 +25,9 @@ client.defineJob({
           include: { project: true },
         });
         if (websites.length > 0) {
-          websites.forEach(async (website) => {
-            // await io.logger.info(`Checking - ${website.url}`);
+          for (var i=0; i<websites.length; i++) {
+            const website = websites[i]
+            await io.logger.info(`Checking - ${website.url}`);
             if (isURL(website.url as string)) {
               let url = website.url;
               if (website.url.substring(0, 4) !== "http") {
@@ -34,63 +35,13 @@ client.defineJob({
               }
               await io.logger.info(`starting fetch for - ${url}`);
               const response = await io.backgroundFetch(
-                `fetch-${url}-${new Date().toISOString()}`,
+                `fetch-${url}-${new Date()}`,
                 `${url}?timestamp=${new Date().toISOString()}`,
                 {
                   method: "GET",
                 }
               );
               await io.logger.info(`${response}`);
-              return response;
-
-              // await axios
-              //   .get(url)
-              //   .then(async (res) => {
-              //     console.log(`${website.url} - ${res.status}`);
-              //     if (res.status === 200) {
-              //       console.log(`${website.url} is running`);
-              //       await io.logger.info(`${website.url} is running`);
-              //       if (website.status !== "UP") {
-              //         await prisma.website.update({
-              //           where: {
-              //             id: website.id,
-              //           },
-              //           data: {
-              //             status: "UP",
-              //           },
-              //         });
-              //       }
-              //     } else {
-              //       if (website.status !== "DOWN") {
-              //         console.log(`${website.url} is down`);
-              //         await io.logger.info(`${website.url} is down`);
-              //         await prisma.website.update({
-              //           where: {
-              //             id: website.id,
-              //           },
-              //           data: {
-              //             status: "DOWN",
-              //           },
-              //         });
-              //       }
-              //     }
-              //     return;
-              //   })
-              //   .catch(async (e) => {
-              //     await prisma.website.update({
-              //       where: {
-              //         id: website.id,
-              //       },
-              //       data: {
-              //         status: "INVALID URL",
-              //       },
-              //     });
-              //     console.log(`${website.url} --> ${e.message}`);
-              //     await io.logger.info(`${website.url} -> ${e.message}`);
-              //     console.log("----DOWN----");
-              //     await io.logger.info("----DOWN----");
-              //     return;
-              //   });
             } else {
               await io.logger.info(`${website.url} is not a valid url`);
               await prisma.website.update({
@@ -101,8 +52,9 @@ client.defineJob({
                   status: "INVALID_URL",
                 },
               });
+              return {message: `${website.url} is not a valid url`}
             }
-          });
+          };
         }
 
         return { message: "Checked websites" };

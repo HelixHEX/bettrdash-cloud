@@ -2,7 +2,9 @@
   "extends": "tsconfig/server.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"],
+  
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "target": "ES2015"
   }
 }

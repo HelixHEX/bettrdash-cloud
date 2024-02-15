@@ -13,23 +13,32 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.prisma = void 0;
-require("dotenv-safe/config");
-__exportStar(require("@prisma/client"), exports);
+exports.__esModule = true;
+exports.PrismaClient = exports.prisma = void 0;
 var client_1 = require("@prisma/client");
-var prisma;
-// this is needed because in development we don't want to restart
-// the server with every change, but we want to make sure we don't
-// create a new connection to the DB with every change either.
-if (process.env.NODE_ENV === "production") {
-    exports.prisma = prisma = new client_1.PrismaClient({ log: ["error"] });
-    prisma.$connect();
-}
-else {
-    if (!global.__db) {
-        global.__db = new client_1.PrismaClient({ log: ["error", "warn"] });
-        global.__db.$connect();
-    }
-    exports.prisma = prisma = global.__db;
-}
+exports.PrismaClient = client_1.PrismaClient;
+exports.prisma = global.prisma || new client_1.PrismaClient();
+if (process.env.NODE_ENV !== "production")
+    global.prisma = exports.prisma;
+__exportStar(require("@prisma/client"), exports);
+// import "dotenv-safe/config";
+// export * from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
+// let prisma: PrismaClient;
+// declare global {
+//   var __db: PrismaClient | undefined;
+// }
+// // this is needed because in development we don't want to restart
+// // the server with every change, but we want to make sure we don't
+// // create a new connection to the DB with every change either.
+// if (process.env.NODE_ENV === "production") {
+//   prisma = new PrismaClient({ log: ["error"] });
+//   prisma.$connect();
+// } else {
+//   if (!global.__db) {
+//     global.__db = new PrismaClient({ log: ["error", "warn"] });
+//     global.__db.$connect();
+//   }
+//   prisma = global.__db;
+// }
+// export { prisma };

@@ -11,6 +11,8 @@ model User {
   id                     Int       @id @default(autoincrement())
   createdAt              DateTime  @default(now()) @map("created_at")
   updatedAt              DateTime  @updatedAt @map("updated_at")
+  oauth_accounts         Oauth_account[]
+  session                Session[]
   email                  String    @unique
   name                   String
   password               String
@@ -22,6 +24,26 @@ model User {
   websites               Website[]
   plan                   String    @default("hobby")
 }
+
+model Oauth_account {
+  id                Int       @id @default(autoincrement())
+  expiresAt         DateTime?
+  provider_id       String
+  provider_user_id  String
+  provider_username String
+  user              User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  userId            Int
+}
+
+model Session {
+  id        String   @id
+  userId    Int
+  expiresAt DateTime
+  user      User?     @relation(references: [id], fields: [userId], onDelete: Cascade)
+
+  @@index([userId])
+}
+
 
 model Project {
   id               Int       @id @default(autoincrement())

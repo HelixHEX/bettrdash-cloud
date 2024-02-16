@@ -4,6 +4,7 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
+//for lucia
 interface BasicPrismaModel {
   fields: any;
   findUnique: any;

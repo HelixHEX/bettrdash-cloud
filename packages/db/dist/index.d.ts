@@ -1,9 +1,14 @@
-import "dotenv-safe/config";
-export * from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
-declare let prisma: PrismaClient;
 declare global {
-    var __db: PrismaClient | undefined;
+    var prisma: PrismaClient | undefined;
 }
-export { prisma };
+interface BasicPrismaModel {
+    fields: any;
+    findUnique: any;
+    findMany: any;
+}
+export declare const prisma: PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined, import("@prisma/client/runtime").DefaultArgs>;
+export { PrismaClient };
+export type { BasicPrismaModel };
+export * from "@prisma/client";
 //# sourceMappingURL=index.d.ts.map

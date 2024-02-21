@@ -29,7 +29,7 @@ export class PrismaAdapter<_PrismaClient extends PrismaClient>
     }
   }
 
-  public async deleteUserSessions(userId: string): Promise<void> {
+  public async deleteUserSessions(userId: string | number): Promise<void> {
     await this.sessionModel.deleteMany({
       where: {
         userId,
@@ -62,7 +62,9 @@ export class PrismaAdapter<_PrismaClient extends PrismaClient>
     ];
   }
 
-  public async getUserSessions(userId: string): Promise<DatabaseSession[]> {
+  public async getUserSessions(
+    userId: string | number,
+  ): Promise<DatabaseSession[]> {
     const result = await this.sessionModel.findMany({
       where: {
         userId,
@@ -75,7 +77,7 @@ export class PrismaAdapter<_PrismaClient extends PrismaClient>
     await this.sessionModel.create({
       data: {
         id: value.id,
-        userId: parseInt(value.userId),
+        userId: value.userId,
         expiresAt: value.expiresAt,
         ...value.attributes,
       },
@@ -137,7 +139,7 @@ interface UserSchema extends RegisteredDatabaseUserAttributes {
 
 interface SessionSchema extends RegisteredDatabaseSessionAttributes {
   id: string;
-  userId: any;
+  userId: string | number;
   expiresAt: Date;
 }
 

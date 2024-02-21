@@ -1,8 +1,9 @@
 {
   "extends": "tsconfig/desktop.json",
-  "include": ["./electron", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["./electron/**/*.ts", "./electron/**/*.tsx", "./types.d.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "rootDir": "./electron"
   }
 }

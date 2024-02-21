@@ -2,10 +2,7 @@
   "name": "@bettrdash/monorepo",
   "version": "0.0.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "homepage": "https://bettrdash.com",
   "repository": {
     "type": "git",
@@ -19,9 +16,13 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:generate": "turbo run db:generate",
     "build:desktop": "turbo run build:desktop",
-    "build-api-gateway": "cd apps/api-gateway && npm run build"
+    "build-api-gateway": "cd apps/api-gateway && npm run build",
+    "backend": "turbo run backend"
   },
   "devDependencies": {
+    "electron": "^28.2.2",
+    "electron-builder": "^24.9.1",
+    "electron-is-dev": "^3.0.1",
     "eslint-config-custom": "*",
     "prettier": "latest",
     "turbo": "1.10.6"

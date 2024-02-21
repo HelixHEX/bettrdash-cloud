@@ -3,16 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
-  "main": "./build/main.js",
+  "main": "./dist/main.js",
   "build": {
     "extends": null,
     "appId": "com.eliaswambugu.bettrdash",
-    "files": [
-      "build/**/*",
-      "node_modules/**/*",
-      "package.json",
-      "dist/**/*"
-    ],
+    "files": ["build/**/*", "node_modules/**/*", "package.json", "dist/**/*"],
     "directories": {
       "buildResources": "assets"
     }
@@ -41,26 +36,20 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "dev": "tsc",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron .",
-    "start:electron": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
+    "electron": "tsc && electron .",
+    "start:electron": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && tsc -w\" \"wait-on http://localhost:3000 && electron .\"",
     "desktop": "npm run start:electron"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",

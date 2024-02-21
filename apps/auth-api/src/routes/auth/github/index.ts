@@ -91,7 +91,7 @@ router.get("/callback", async (req: Request, res: Response) => {
           res.send("An error has occurred").status(500);
         }
       }
-      const session = await lucia.createSession(existingUser.id.toString(), {});
+      const session = await lucia.createSession(existingUser.id, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       console.log(sessionCookie);
       return res

@@ -7,7 +7,12 @@
   "build": {
     "extends": null,
     "appId": "com.eliaswambugu.bettrdash",
-    "files": ["build/**/*", "node_modules/**/*", "package.json", "dist/**/*"],
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json",
+      "dist/**/*"
+    ],
     "directories": {
       "buildResources": "assets"
     }
@@ -16,6 +21,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@fontsource/poppins": "^5.0.8",
     "@tanstack/react-query": "^5.20.5",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -46,10 +52,17 @@
     "desktop": "npm run start:electron"
   },
   "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",

@@ -4,6 +4,7 @@
   "exclude": ["node_modules"],
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./electron"
+    "rootDir": "./electron",
+    "typeRoots": ["../../node_modules/@types", "./types.d.ts"]
   }
 }

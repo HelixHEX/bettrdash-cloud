@@ -1,15 +1,11 @@
-import axios from "axios";
-import { useContext } from "react";
+import React, { useContext } from "react";
+import { Navigate } from "react-router-dom";
 import { UserContext } from "../../lib/providers/user";
-// import { useState } from "react";
-// import { useNavigate, Link as RouterLink } from "react-router-dom";
 
-axios.defaults.withCredentials = false;
-
-const Login = () => {
+export default function Login() {
   const { user } = useContext(UserContext);
 
-  return <>Login Page {user?.toString()}</>;
-};
+  if (user) return <Navigate to="/" />;
 
-export default Login;
+  return <>Login Pages</>;
+}

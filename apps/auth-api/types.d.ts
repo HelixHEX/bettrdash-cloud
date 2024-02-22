@@ -4,7 +4,7 @@ declare global {
   namespace Express {
     export interface Request {
       device: {
-        type?: string;
+        type?: "desktop" | "web";
       };
     }
   }

@@ -1,6 +1,7 @@
 import ChakraProvider from "./chakra";
 import QueryClientProvider from "./react-query";
 import { UserProvider } from "./user";
+import React from "react";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (

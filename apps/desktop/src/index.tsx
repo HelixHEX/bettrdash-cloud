@@ -4,23 +4,32 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Providers from "./lib/providers";
 import reportWebVitals from "./reportWebVitals";
 
-//Pages
+/* Pages */
+import Dashboard from "./pages/dashboard";
 
 /* Auth */
-import Login from "./pages/auth/login";
+import LoginPage from "./pages/auth/login";
+import SignupPage from "./pages/auth/signup";
+
+/* Layouts */
+import RootLayout from "./layouts";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
 root.render(
   <React.StrictMode>
-    <Providers>
-      <Router>
+    <Router>
+      <Providers>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<RootLayout />}>
+            <Route index element={<Dashboard />} />
+          </Route>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/Signup" element={<SignupPage />} />
         </Routes>
-      </Router>
-    </Providers>
+      </Providers>
+    </Router>
   </React.StrictMode>,
 );
 

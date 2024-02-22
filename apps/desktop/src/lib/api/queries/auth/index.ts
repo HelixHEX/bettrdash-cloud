@@ -1,10 +1,9 @@
-import { API_URL } from "../../constants";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { api } from "../..";
 
 const getSession = async () => {
-  const res = await axios.get(`${API_URL}/auth/session`, {});
-  console.log(res);
+  const res = await api.get("/auth/session", {});
+  console.log(res.data);
   return res.data;
 };
 
@@ -12,5 +11,6 @@ export const useSession = () => {
   return useQuery({
     queryKey: ["session"],
     queryFn: getSession,
+    retry: false,
   });
 };

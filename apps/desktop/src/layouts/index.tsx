@@ -48,7 +48,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Analytics", icon: FiBarChart2, path: "/analytics" },
 ];
 
-export default function RootLayout() {
+export default function () {
   const isHomePage = useHomePage();
   const isSettingsPage = useSettingsPage();
   const isProfilePage = useProfilePage();
@@ -126,7 +126,7 @@ function SidebarContent({ onClose, breadcrumbs, ...rest }: SidebarProps) {
       <Flex h="20" alignItems="center" mx="4" justifyContent="space-between">
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      <NavItem originalPath={""} icon={FiBarChart}>
+      <NavItem originalPath={"/"} icon={FiBarChart}>
         Overview
       </NavItem>
       {LinkItems.map((link) => {
@@ -154,12 +154,15 @@ interface Subpage {
 
 function NavItem({ originalPath, icon, children, ...rest }: NavItemProps) {
   const location = usePath();
-  const { projectId, id } = useParams();
-  const path = `#/projects/${projectId ?? ""}${originalPath}/${id ?? ""}`;
+  // const { projectId, id } = useParams();
+  const projectId = 1;
+  const id = 2;
+  const path = `/projects/${projectId ?? ""}${originalPath}/${id ?? ""}`;
   const currentPath = location === path;
 
   return (
-    <RouterLink to={`/projects/${projectId}${originalPath}/`}>
+    // <RouterLink to={`/projects/${projectId}${originalPath}/`}>
+    <RouterLink to={path}>
       <Flex
         bgGradient={
           currentPath ? "linear(to-r, red.400,pink.400)" : "transparent"

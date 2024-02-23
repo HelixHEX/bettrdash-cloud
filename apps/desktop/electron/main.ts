@@ -22,10 +22,6 @@ if (process.defaultApp) {
 
 const createWindow = () => {
   win = new BrowserWindow({
-    width: 1000,
-    height: 700,
-    minWidth: 800,
-    minHeight: 610,
     // titleBarStyle: "hiddenInset",
     title: "BettrDash",
     webPreferences: {
@@ -33,6 +29,8 @@ const createWindow = () => {
       preload: path.join(__dirname, "preload.js"),
     },
   });
+
+  win.maximize();
 
   if (app.isPackaged) {
     // win.loadURL(`file://${path.join(__dirname, "../index.html")}`);

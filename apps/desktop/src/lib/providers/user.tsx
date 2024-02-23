@@ -30,7 +30,12 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   if (user && authPage) return window.location.href = "#"
 
   return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user }}>
+      {/* <button onClick={() => (window.location.href = "#/")}>
+        {location.hash.toString()}
+      </button> */}
+      {children}
+    </UserContext.Provider>
   );
 };
 

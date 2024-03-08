@@ -1,8 +1,12 @@
+import { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 
 export function usePath(): string {
-  console.log(new URL(window.location.href));
-  return new URL(window.location.href).pathname;
+  useEffect(() => {
+    console.log(new URL(window.location.href));
+  }, []);
+  const url = new URL(window.location.href);
+  return url.hash || url.pathname;
 }
 
 export { useHomePage, useSettingsPage, useProfilePage } from "./pages";

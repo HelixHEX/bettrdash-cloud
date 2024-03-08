@@ -26,16 +26,17 @@ import {
 import React, { useContext, useState } from "react";
 import { IconType } from "react-icons";
 import Logo from "../components/logo";
-import { FiMenu, FiActivity, FiBarChart2, FiBarChart } from "react-icons/fi";
-import { Link as RouterLink, useParams, Outlet } from "react-router-dom";
+import { FiMenu, FiBarChart, FiActivity, FiBarChart2 } from "react-icons/fi";
+import { Link as RouterLink, Outlet, useParams } from "react-router-dom";
 import {
   useHomePage,
   usePath,
   useProfilePage,
   useSettingsPage,
 } from "../lib/hooks";
-import { Breadcrumbs } from "../types";
+import type { readcrumbProps, breadcrumb } from "../types.js";
 import { UserContext } from "../lib/providers/user";
+import { useEffect } from "react";
 
 interface LinkItemProps {
   name: string;
@@ -44,8 +45,8 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Monitor", icon: FiActivity, path: "/monitor" },
-  { name: "Analytics", icon: FiBarChart2, path: "/analytics" },
+  // { name: "Monitor", icon: FiActivity, path: "/monitor" },
+  // { name: "Analytics", icon: FiBarChart2, path: "/analytics" },
 ];
 
 export default function() {
@@ -53,8 +54,8 @@ export default function() {
   const isSettingsPage = useSettingsPage();
   const isProfilePage = useProfilePage();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumbs>([
-    { path: "/", label: "projects" },
+  const [breadcrumbs, setBreadcrumbs] = useState<breadcrumb>([
+    { path: "/", label: "Projects", color: 'red.400' },
   ]);
 
   return (
@@ -105,7 +106,7 @@ export default function() {
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
-  breadcrumbs: Breadcrumbs;
+  breadcrumbs: BreadcrumbProps["breadcrumbs"];
 }
 
 function SidebarContent({ onClose, breadcrumbs, ...rest }: SidebarProps) {
@@ -154,15 +155,15 @@ interface Subpage {
 
 function NavItem({ originalPath, icon, children, ...rest }: NavItemProps) {
   const location = usePath();
-  // const { projectId, id } = useParams();
-  const projectId = 1;
-  const id = 2;
-  const path = `/projects/${projectId ?? ""}${originalPath}/${id ?? ""}`;
-  const currentPath = location === path;
+  const { projectId, id } = useParams();
+  const path = `/projects/${projectId ?? ""}${originalPath}`;
+  const path2 = `/projects/${projectId} ?? ""${originalPath}`
+  useEffect(() => { console.log("original", originalPath) }, [])
+  const currentPath = originalPath !== "/" ? location.includes(originalPath) : location === `#/projects/${projectId}/`
 
   return (
     // <RouterLink to={`/projects/${projectId}${originalPath}/`}>
-    <RouterLink to={path}>
+    <RouterLink to={`/projects/${projectId}${originalPath}`}>
       <Flex
         bgGradient={
           currentPath ? "linear(to-r, red.400,pink.400)" : "transparent"
@@ -200,13 +201,12 @@ function NavItem({ originalPath, icon, children, ...rest }: NavItemProps) {
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
-  breadcrumbs: Breadcrumbs;
+  breadcrumbs: BreadcrumbProps["breadcrumbs"];
 }
 
 function MobileNav({ onOpen, breadcrumbs, ...rest }: MobileProps) {
   const { user } = useContext(UserContext);
   const [hoverUserBanner, setHoverUserBanner] = useState<boolean>(false);
-  // const toast = useToast();
   const isHomePage = useHomePage();
   const isProfilePage = useProfilePage();
   const isSettingsPage = useSettingsPage();
@@ -248,7 +248,7 @@ function MobileNav({ onOpen, breadcrumbs, ...rest }: MobileProps) {
             alignSelf={"center"}
             display={{ base: "none", md: "flex" }}
           >
-            {breadcrumbs.map((breadcrumb, index: number) => (
+            {breadcrumbs.map((breadcrumb: breadcrumb, index: number) => (
               <BreadcrumbItem
                 key={index}
                 isCurrentPage={index === breadcrumbs.length - 1}

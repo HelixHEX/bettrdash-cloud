@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 
 /* Pages */
 import Dashboard from "./pages/dashboard";
+import Monitor from './pages/monitor'
 
 /* Auth */
 import LoginPage from "./pages/auth/login";
@@ -26,6 +27,7 @@ root.render(
           <Route path="/" element={<RootLayout />}>
             <Route index element={<Dashboard />} />
             <Route path='/projects/:projectId' element={<Overview />} />
+            <Route path='/projects/:projectId/monitor' element={<Monitor />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/Signup" element={<SignupPage />} />

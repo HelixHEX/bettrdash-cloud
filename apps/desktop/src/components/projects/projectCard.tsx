@@ -24,7 +24,7 @@ const ProjectCard = (project: ProjectProps) => {
         boxShadow: '-10px 10px 0px #ED64A6',
         borderImage: 'linear-gradient(45deg, white, white) 1'
       }}
-      onClick={() => navigate(`/projects/${project.id}`)}
+      onClick={() => navigate(`/projects/${project.id}/`)}
       role={"group"}
       maxW={"100%"}
       w={"full"}

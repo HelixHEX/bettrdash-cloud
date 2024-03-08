@@ -208,9 +208,9 @@ const Project = ({ project }: { project: ProjectProps }) => {
             Save
           </Button>
           <Flex flexDir={"column"}>
-            <Heading fontSize={28} fontWeight={"bold"} color={"red.500"}>
+            {/* <Heading fontSize={28} fontWeight={"bold"} color={"red.500"}>
               DANGER ZONE
-            </Heading>
+            </Heading> */}
             {/* <DeleteProject id={project.id} /> */}
           </Flex>
         </VStack>

@@ -25,7 +25,7 @@ router.get("/key", async (req, res) => {
 router.post("/generate-key", async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: req.session!.user!.id },
+      where: { id: req.user.id },
       include: { api_key: true },
     });
     if (user && user.api_key) {
@@ -37,7 +37,7 @@ router.post("/generate-key", async (req, res) => {
         key: v1(),
         user: {
           connect: {
-            id: req.session!.user!.id,
+            id: req.user.id,
           },
         },
       },
@@ -53,7 +53,7 @@ router.post("/generate-key", async (req, res) => {
 router.get("/settings", async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: req.session!.user!.id },
+      where: { id: req.user.id },
       include: { api_key: true },
     });
     if (user) {
@@ -75,7 +75,7 @@ router.post("/settings/update", async (req, res) => {
   console.log(show_inactive_projects);
   try {
     const user = await prisma.user.findUnique({
-      where: { id: req.session!.user!.id },
+      where: { id: req.user.id },
       include: { api_key: true },
     });
     if (user) {

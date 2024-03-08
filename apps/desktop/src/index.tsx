@@ -7,7 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 /* Pages */
 import Dashboard from "./pages/dashboard";
 import Monitor from './pages/monitor'
-
+import Settings from './pages/settings'
 /* Auth */
 import LoginPage from "./pages/auth/login";
 import SignupPage from "./pages/auth/signup";
@@ -29,6 +29,7 @@ root.render(
             <Route path='/projects/:projectId' element={<Overview />} />
             <Route path='/projects/:projectId/monitor' element={<Monitor />} />
           </Route>
+          <Route path='/settings' element={<Settings />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/Signup" element={<SignupPage />} />
         </Routes>

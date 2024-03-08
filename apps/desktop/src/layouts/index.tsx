@@ -217,7 +217,8 @@ function MobileNav({ onOpen, breadcrumbs, ...rest }: MobileProps) {
     "linear(to-l, gray.900, gray.900)",
     "linear(to-l, white, white)",
   );
-  const bg = useColorModeValue("white", "gray.900")
+  const bg = useColorModeValue("white", "gray.800")
+  const menuBg = useColorModeValue("white", "gray.700")
   const borderColor = useColorModeValue("gray.200", "gray.700")
   if (!user) return null
   return (
@@ -225,6 +226,7 @@ function MobileNav({ onOpen, breadcrumbs, ...rest }: MobileProps) {
       w="100%"
       px={{ base: 4, md: 4 }}
       height="20"
+      boxShadow='2xl'
       alignItems="center"
       bg={bg}
       borderBottomWidth="1px"
@@ -300,12 +302,12 @@ function MobileNav({ onOpen, breadcrumbs, ...rest }: MobileProps) {
               </HStack>
             </MenuButton>
             <MenuList
-              bg={bg}
+              bg={menuBg}
               borderColor={borderColor}
             >
-              <MenuItem as={RouterLink} to="/profile">
+              {/* <MenuItem as={RouterLink} to="/profile">
                 Profile
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem as={RouterLink} to="/settings">
                 Settings
               </MenuItem>

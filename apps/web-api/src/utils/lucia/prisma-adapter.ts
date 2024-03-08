@@ -4,7 +4,7 @@ import type {
   RegisteredDatabaseSessionAttributes,
   DatabaseUser,
   RegisteredDatabaseUserAttributes,
-} from "@bettrdash/lucia-local";
+} from "lucia";
 
 export class PrismaAdapter<_PrismaClient extends PrismaClient>
   implements Adapter

@@ -8,17 +8,17 @@ router.get("/all", async (req: express.Request, res: express.Response) => {
   try {
     const { filter } = req.query;
     console.log(filter);
-    
+
     const projects = await prisma.project.findMany({
       where: {
-        ownerId: req!.session!.user!.id,
+        ownerId: req.user.id,
       },
       orderBy:
         filter === "name"
           ? { name: "asc" }
           : filter === "active"
-          ? { active: "desc" }
-          : { status: "desc" },
+            ? { active: "desc" }
+            : { status: "desc" },
       include: {
         websites: {
           where: {
@@ -56,7 +56,7 @@ router.get(
         },
       });
       if (project) {
-        if (project.ownerId === req!.session!.user!.id) {
+        if (project.ownerId === req.user.id) {
           res
             .status(200)
             .json({ success: true, project, websites: project.websites });
@@ -71,7 +71,7 @@ router.get(
         .status(200)
         .json({ success: false, message: "An error has occurred" });
     }
-  }
+  },
 );
 
 //new project
@@ -96,7 +96,7 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
         active,
         image_url,
         owner: {
-          connect: { id: req!.session!.user!.id },
+          connect: { id: req.user.id },
         },
       },
     });
@@ -111,7 +111,7 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
               id: project.id,
             },
           },
-          owner: { connect: { id: req!.session!.user!.id } },
+          owner: { connect: { id: req.user.id } },
         },
       });
     }
@@ -154,7 +154,7 @@ router.post("/delete", async (req: express.Request, res: express.Response) => {
       where: { id: parseInt(id) },
     });
     if (project) {
-      if (project.ownerId === req!.session!.user!.id) {
+      if (project.ownerId === req.user.id) {
         await prisma.project.delete({
           where: { id: parseInt(id) },
         });

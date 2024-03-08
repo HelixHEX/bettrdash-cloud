@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/all", async (req: express.Request, res: express.Response) => {
   try {
     const websites = await prisma.website.findMany({
-      where: { owner: { id: req!.session!.user!.id } },
+      where: { owner: { id: req.user.id } },
     });
 
     res.status(200).json({ success: true, websites });
@@ -25,7 +25,7 @@ router.get(
         include: { websites: { orderBy: { url: "asc" } } },
       });
       if (project) {
-        if (project?.ownerId === _req!.session!.user!.id) {
+        if (project?.ownerId === _req.user.id) {
           res.status(200).json({
             success: true,
             websites: project.websites,
@@ -43,22 +43,24 @@ router.get(
         .status(200)
         .json({ success: false, message: "An error has occurred" });
     }
-  }
+  },
 );
 
 router.post("/new", async (req: express.Request, res: express.Response) => {
   const { url, environment, projectId } = req.body;
   try {
     if (url) {
-      let website = await prisma.website.findUnique({where: {url}})
+      let website = await prisma.website.findUnique({ where: { url } });
       if (website) {
-        res.status(200).json({ success: false, message: "Website already exists" });
+        res
+          .status(200)
+          .json({ success: false, message: "Website already exists" });
       } else {
         website = await prisma.website.create({
           data: {
             url,
             environment,
-            owner: { connect: { id: req!.session!.user!.id } },
+            owner: { connect: { id: req.user.id } },
           },
         });
         if (projectId) {
@@ -70,7 +72,10 @@ router.post("/new", async (req: express.Request, res: express.Response) => {
             if (project.websites.length === 0) {
               await prisma.website.update({
                 where: { id: website.id },
-                data: { default: true, project: { connect: { id: project.id } } },
+                data: {
+                  default: true,
+                  project: { connect: { id: project.id } },
+                },
               });
               await prisma.project.update({
                 where: { id: project.id },
@@ -110,7 +115,7 @@ router.post("/update", async (req: express.Request, res: express.Response) => {
       include: { project: true },
     });
     if (website) {
-      if (website.ownerId === req!.session!.user!.id) {
+      if (website.ownerId === req.user.id) {
         const updatedWebsite = await prisma.website.update({
           where: { id: website.id },
           data: {
@@ -179,7 +184,7 @@ router.post("/delete", async (req: express.Request, res: express.Response) => {
       include: { project: true },
     });
     if (website) {
-      if (website.ownerId === req!.session!.user!.id) {
+      if (website.ownerId === req.user.id) {
         await prisma.website.delete({
           where: { id: website.id },
         });

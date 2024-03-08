@@ -2,8 +2,7 @@
   "name": "auth-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "type": "module",
+  "main": "dist/index.js",
   "scripts": {
     "watch": "tsc -w",
     "dev": "tsc-watch --onSuccess \"node ./dist/index.js\"",
@@ -15,7 +14,10 @@
   "author": "Elias",
   "license": "ISC",
   "dependencies": {
+    "@bettrdash/auth": "^0.0.1",
     "@bettrdash/db": "^0.0.1",
+    "@bettrdash/lucia": "^3.0.0",
+    "@bettrdash/lucia-local": "^3.0.0",
     "@lucia-auth/adapter-prisma": "^4.0.0",
     "arctic": "^1.1.5",
     "axios": "^1.6.7",
@@ -32,9 +34,12 @@
     "@types/cors": "^2.8.17",
     "@types/dotenv-safe": "^8.1.5",
     "@types/express": "^4.17.21",
+    "@types/ioredis": "^5.0.0",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.11.17",
     "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "tsc-watch": "^6.0.4",
     "typescript": "^5.3.3"
   }
 }

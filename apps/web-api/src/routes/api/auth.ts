@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/key", async (req, res) => {
   try {
     const apiKey = await prisma.apikey.findUnique({
-      where: { userId: req!.session!.user!.id },
+      where: { userId: req.user.id },
     });
     if (apiKey) {
       res.status(200).json({ success: true, apiKey: apiKey.key });
@@ -59,7 +59,7 @@ router.get("/settings", async (req, res) => {
     if (user) {
       const settings = {
         show_inactive_projects: user.show_inactive_projects,
-        authorized_urls: new Array('user.api_key.authorized_urls', 'fs')
+        authorized_urls: new Array("user.api_key.authorized_urls", "fs"),
       };
       res.status(200).json({ success: true, settings });
     }
@@ -72,7 +72,7 @@ router.get("/settings", async (req, res) => {
 //update api key settings
 router.post("/settings/update", async (req, res) => {
   const { show_inactive_projects } = req.body.settings;
-  console.log(show_inactive_projects)
+  console.log(show_inactive_projects);
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.session!.user!.id },
@@ -89,9 +89,8 @@ router.post("/settings/update", async (req, res) => {
     console.log(e);
     res.status(500).json({ success: false, message: "An error has occurred" });
   }
-}); 
+});
 
-//get projects with api key 
-
+//get projects with api key
 
 export default router;

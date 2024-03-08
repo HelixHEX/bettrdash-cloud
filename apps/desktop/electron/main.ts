@@ -102,8 +102,6 @@ app.on("open-url", (_event, url) => {
 
 app.on("ready", createWindow);
 
-console.log("app.isDefaultProtocolClient(bettrdash)");
-
 // const { app, BrowserWindow } = require('electron')
 // // Module with utilities for working with file and directory paths.
 // const path = require('path')

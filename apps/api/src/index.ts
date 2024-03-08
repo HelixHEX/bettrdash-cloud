@@ -1,17 +1,10 @@
 import "dotenv-safe/config";
 import "reflect-metadata";
 import express from "express";
-import Redis from 'ioredis'
-const morgan = require("morgan");
+import morgan from "morgan";
 
 //routes
 import apiNoAuth from "./routes/api/noauth";
-
-const session = require("express-session");
-const connectRedis = require("connect-redis");
-
-const RedisStore = connectRedis(session);
-const redisClient = new Redis(process.env.REDIS_URL)
 
 const main = async () => {
   const app = express();
@@ -19,26 +12,26 @@ const main = async () => {
   morgan.token("body", (req: express.Request) => JSON.stringify(req.body));
   app.use(
     morgan(
-      ":date[iso] :remote-addr :method :url :status :res[content-length] - :response-time ms"
-    )
+      ":date[iso] :remote-addr :method :url :status :res[content-length] - :response-time ms",
+    ),
   );
 
   app.use(
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       const origin = req.headers.origin || "";
       res.setHeader("Access-Control-Allow-Origin", origin as string);
       res.setHeader(
         "Access-Control-Allow-Methods",
-        "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+        "GET, POST, OPTIONS, PUT, PATCH, DELETE",
       );
       res.header("Access-Control-Allow-Headers", "Content-Type, Authorization"); //@ts-ignore
       res.setHeader("Access-Control-Allow-Credentials", "true");
       next();
-    }
+    },
   );
 
   app.use(express.json());
@@ -60,10 +53,8 @@ const main = async () => {
         // to make sure that all cookies accept it
         // you should never use none anyway
       },
-    })
+    }),
   );
-
-
 
   app.use("/", apiNoAuth);
 

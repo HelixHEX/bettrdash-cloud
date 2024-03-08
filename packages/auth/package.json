@@ -1,0 +1,17 @@
+{
+  "name": "@bettrdash/auth",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc-watch"
+  },
+  "dependencies": {
+    "@bettrdash/lucia": "^3.0.0"
+  },
+  "devDependencies": {
+    "tsconfig": "*",
+    "typescript": "^4.9.5"
+  }
+}

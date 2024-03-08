@@ -28,6 +28,13 @@ url = "http://localhost:5001"
 environment = "production"
 url = "https://web.api.bettrdash.com"
 
+[[services]]
+name = 'auth api'
+prefix = '/auth'
+[[services.environments]]
+environment = "development"
+url = "http://localhost:5004"
+
 # [[services]]
 # name = "web api"
 # prefix = "/web"

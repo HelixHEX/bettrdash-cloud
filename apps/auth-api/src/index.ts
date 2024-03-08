@@ -1,10 +1,10 @@
-import "dotenv-safe/config.js";
+import "dotenv-safe/config";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 
 //routes
-import auth from "./routes/auth/index.js";
+import auth from "./routes/auth";
 
 const main = () => {
   const app = express();
@@ -36,7 +36,7 @@ const main = () => {
     next();
   });
 
-  app.use("/auth", auth);
+  app.use("/", auth);
 
   app.use((_, res: express.Response) => {
     res.status(404).json({ status: "404" });

@@ -1,5 +1,4 @@
-import { Lucia } from "@bettrdash/lucia";
-import { PrismaAdapter } from "./adapter-prisma";
+import { Lucia, PrismaAdapter } from "@bettrdash/lucia";
 import {
   prisma,
   type PrismaClient,
@@ -20,7 +19,7 @@ export const lucia = new Lucia(adapter, {
       secure: env === "production",
     },
   },
-  getUserAttributes: (attributes) => {
+  getUserAttributes: (attributes: any) => {
     return {
       email: attributes.email,
       name: attributes.name,

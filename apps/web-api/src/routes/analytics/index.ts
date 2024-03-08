@@ -12,7 +12,7 @@ router.get("/all", async (req: express.Request, res: express.Response) => {
     let stats = [] as any;
     const websites = await prisma.website.findMany({
       where: {
-        ownerId: req!.session!.user!.id,
+        ownerId: req.user.id,
         tracking: true,
       },
       orderBy: {
@@ -22,7 +22,7 @@ router.get("/all", async (req: express.Request, res: express.Response) => {
     for (var i = 0; i < websites.length; i++) {
       await axios
         .get(
-          `${process.env.ANALYTICS_API}/stats/realtime/visitors?site_id=${websites[i].url}`
+          `${process.env.ANALYTICS_API}/stats/realtime/visitors?site_id=${websites[i].url}`,
         )
         .then((response) => {
           if (response.status === 200) {
@@ -34,7 +34,7 @@ router.get("/all", async (req: express.Request, res: express.Response) => {
         });
     }
     const allWebsites = await prisma.website.findMany({
-      where: { ownerId: req!.session!.user!.id, tracking: false },
+      where: { ownerId: req.user.id, tracking: false },
       orderBy: { url: "asc" },
     });
     res.status(200).json({ success: true, websites: stats, allWebsites });
@@ -49,7 +49,7 @@ router.post("/track", async (req: express.Request, res: express.Response) => {
   try {
     const website = await prisma.website.findUnique({ where: { id } });
     if (website) {
-      if (website.ownerId === req!.session!.user!.id) {
+      if (website.ownerId === req.user.id) {
         if (!website.tracking) {
           await axios
             .post(`${process.env.ANALYTICS_API}/sites`, {
@@ -62,7 +62,7 @@ router.post("/track", async (req: express.Request, res: express.Response) => {
               } else if (response.status === 400) {
                 if (
                   response.data.error.includes(
-                    "This domain has already been taken"
+                    "This domain has already been taken",
                   )
                 ) {
                   res.status(200).json({
@@ -106,7 +106,7 @@ router.post("/remove", async (req: express.Request, res: express.Response) => {
   try {
     const website = await prisma.website.findUnique({ where: { id } });
     if (website) {
-      if (website.ownerId === req!.session!.user!.id) {
+      if (website.ownerId === req.user.id) {
         if (website.tracking) {
           await prisma.website.update({
             where: { id },
@@ -159,21 +159,19 @@ router.get(
         where: { id: parseInt(id) },
       });
       if (website) {
-        if (website.ownerId === req!.session!.user!.id) {
+        if (website.ownerId === req.user.id) {
           if (website.tracking) {
             await axios
               .get(
-                `${process.env.ANALYTICS_API}/stats/breakdown?site_id=${website.url}&period=30d&property=visit:source&metrics=visitors&limit=10`
+                `${process.env.ANALYTICS_API}/stats/breakdown?site_id=${website.url}&period=30d&property=visit:source&metrics=visitors&limit=10`,
               )
               .then((response) => {
                 if (response.status === 200) {
-                  res
-                    .status(200)
-                    .json({
-                      success: true,
-                      sources: response.data,
-                      websiteUrl: website.url,
-                    });
+                  res.status(200).json({
+                    success: true,
+                    sources: response.data,
+                    websiteUrl: website.url,
+                  });
                 } else {
                   res
                     .status(200)
@@ -181,12 +179,10 @@ router.get(
                 }
               });
           } else {
-            res
-              .status(200)
-              .json({
-                success: false,
-                message: "Website is not being tracked",
-              });
+            res.status(200).json({
+              success: false,
+              message: "Website is not being tracked",
+            });
           }
         } else {
           res
@@ -202,7 +198,7 @@ router.get(
         .status(200)
         .json({ success: false, message: "An error has occurred" });
     }
-  }
+  },
 );
 
 router.get(
@@ -214,21 +210,19 @@ router.get(
         where: { id: parseInt(id) },
       });
       if (website) {
-        if (website.ownerId === req!.session!.user!.id) {
+        if (website.ownerId === req.user.id) {
           if (website.tracking) {
             await axios
               .get(
-                `${process.env.ANALYTICS_API}/stats/aggregate?site_id=${website.url}&period=30d&metrics=visitors,pageviews,bounce_rate,visit_duration`
+                `${process.env.ANALYTICS_API}/stats/aggregate?site_id=${website.url}&period=30d&metrics=visitors,pageviews,bounce_rate,visit_duration`,
               )
               .then((response) => {
                 if (response.status === 200) {
-                  res
-                    .status(200)
-                    .json({
-                      success: true,
-                      aggregate: response.data,
-                      websiteUrl: website.url,
-                    });
+                  res.status(200).json({
+                    success: true,
+                    aggregate: response.data,
+                    websiteUrl: website.url,
+                  });
                 } else {
                   console.log(response);
                   res
@@ -237,12 +231,10 @@ router.get(
                 }
               });
           } else {
-            res
-              .status(200)
-              .json({
-                success: false,
-                message: "Website is not being tracked",
-              });
+            res.status(200).json({
+              success: false,
+              message: "Website is not being tracked",
+            });
           }
         } else {
           res
@@ -258,7 +250,7 @@ router.get(
         .status(200)
         .json({ success: false, message: "An error has occurred" });
     }
-  }
+  },
 );
 
 router.get(
@@ -270,21 +262,19 @@ router.get(
         where: { id: parseInt(id) },
       });
       if (website) {
-        if (website.ownerId === req!.session!.user!.id) {
+        if (website.ownerId === req.user.id) {
           if (website.tracking) {
             await axios
               .get(
-                `${process.env.ANALYTICS_API}/stats/breakdown?site_id=${website.url}&period=30d&property=event:page&limit=10`
+                `${process.env.ANALYTICS_API}/stats/breakdown?site_id=${website.url}&period=30d&property=event:page&limit=10`,
               )
               .then((response) => {
                 if (response.status === 200) {
-                  res
-                    .status(200)
-                    .json({
-                      success: true,
-                      topPages: response.data,
-                      websiteUrl: website.url,
-                    });
+                  res.status(200).json({
+                    success: true,
+                    topPages: response.data,
+                    websiteUrl: website.url,
+                  });
                 } else {
                   res
                     .status(200)
@@ -292,12 +282,10 @@ router.get(
                 }
               });
           } else {
-            res
-              .status(200)
-              .json({
-                success: false,
-                message: "Website is not being tracked",
-              });
+            res.status(200).json({
+              success: false,
+              message: "Website is not being tracked",
+            });
           }
         } else {
           res
@@ -313,7 +301,7 @@ router.get(
         .status(200)
         .json({ success: false, message: "An error has occurred" });
     }
-  }
+  },
 );
 
 export default router;

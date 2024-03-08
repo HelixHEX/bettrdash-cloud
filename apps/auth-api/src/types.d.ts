@@ -1,4 +1,4 @@
-import { lucia } from "./src/utils/lucia";
+import { lucia } from "@bettrdash/lucia";
 
 declare global {
   namespace Express {
@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-declare module "lucia" {
+declare module "@bettrdash/lucia-local" {
   interface Register {
     Lucia: lucia;
     DatabaseUserAttributes: DatabaseUserAttributes;

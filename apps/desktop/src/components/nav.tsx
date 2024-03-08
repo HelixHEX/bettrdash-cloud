@@ -21,7 +21,7 @@ export default function RootLayout() {
   const isProfilePage = useProfilePage();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumbs>([
-    { path: "/", label: "porjects" },
+    { path: "/", label: "projects" },
   ]);
 
   return (

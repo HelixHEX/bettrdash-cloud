@@ -7,5 +7,7 @@ declare namespace NodeJS {
     PLAUSIBLE_API_KEY: string;
     ANALYTICS_API: string;
     REDIS_URL: string;
+    GITHUB_CLIENT_ID: string;
+    GITHUB_CLIENT_SECRET: string;
   }
 }

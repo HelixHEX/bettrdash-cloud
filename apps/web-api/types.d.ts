@@ -8,3 +8,15 @@ declare module "express-session" {
     };
   }
 }
+
+declare global {
+  namespace Express {
+    export interface Request {
+      user: any;
+      currentSession: any;
+      device: {
+        type?: "desktop" | "web";
+      };
+    }
+  }
+}

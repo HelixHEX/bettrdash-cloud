@@ -2,7 +2,7 @@ import { usePath } from "./index";
 
 export const useHomePage = () => {
   const path = usePath();
-  return path === "#/";
+  return path === "/";
 };
 
 export const useSettingsPage = () => {

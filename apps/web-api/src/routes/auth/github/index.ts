@@ -1,14 +1,10 @@
 import express, { type Request, type Response } from "express";
-import { github } from "../../../utils/oauth/github";
+import { generateState, OAuth2RequestError } from "arctic";
+import { github } from "../../../utils/lucia/github.js";
+import { serializeCookie, parseCookies } from "oslo/cookie";
 import axios from "axios";
 import { prisma } from "@bettrdash/db";
-import { lucia } from "@bettrdash/auth";
-import {
-  serializeCookie,
-  parseCookies,
-  generateState,
-  OAuth2RequestError,
-} from "@bettrdash/lucia";
+import { lucia } from "../../../utils/lucia/index.js";
 
 const router = express.Router();
 const env = process.env.NODE_ENV;
@@ -95,7 +91,7 @@ router.get("/callback", async (req: Request, res: Response) => {
           res.send("An error has occurred").status(500);
         }
       }
-      const session = await lucia.createSession(existingUser.id, {});
+      const session = await lucia.createSession(existingUser.id as any, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       console.log(sessionCookie);
       return res

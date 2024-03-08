@@ -1,8 +1,9 @@
 import { Router } from "express";
-import github from "./github/index.js";
+import github from "./github";
 import { prisma } from "@bettrdash/db";
 import bcrypt from "bcrypt";
-import { lucia } from "../../utils/lucia.js";
+import luciaPkg from "@bettrdash/auth";
+const { lucia } = luciaPkg;
 
 const router = Router();
 

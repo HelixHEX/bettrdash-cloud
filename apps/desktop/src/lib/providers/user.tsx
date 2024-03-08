@@ -1,7 +1,7 @@
 import { Heading } from "@chakra-ui/react";
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
-import { auth } from "../api/queries";
+import { useSession } from "../api/queries";
 
 interface UserContextProps {
   user: User | null;
@@ -12,18 +12,23 @@ const UserContext = createContext<UserContextProps>({
 });
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data, isError, isLoading: loading } = auth.useSession();
+  const { data, isError, isLoading: loading } = useSession();
   let user = data?.user;
 
+  useEffect(() => {
+    console.log(user);
+  }, [user])
   const authPage =
     window.location.href.includes("login") ||
     window.location.href.includes("signup");
 
-  if (loading && !user) return <Heading>Loading...</Heading>;
 
-  if (isError && !authPage) return (window.location.href = "#/login");
+  if (loading) return <Heading>Loading...</Heading>;
 
-  if (user && authPage) return window.location.replace("/");
+  if (!user && !authPage) return window.location.href = "#/login"
+
+  if (user && authPage) return window.location.href = "#"
+
   return (
     <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
   );

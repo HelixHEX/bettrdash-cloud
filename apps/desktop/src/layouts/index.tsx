@@ -14,28 +14,20 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbSeparator,
-  useColorMode,
   BreadcrumbLink,
   Menu,
   MenuList,
   MenuButton,
   MenuItem,
-  Avatar,
   Text,
   MenuDivider,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { IconType } from "react-icons";
 import Logo from "../components/logo";
 import { FiMenu, FiActivity, FiBarChart2, FiBarChart } from "react-icons/fi";
-import {
-  Link as RouterLink,
-  useLocation,
-  useParams,
-  Outlet,
-} from "react-router-dom";
+import { Link as RouterLink, useParams, Outlet } from "react-router-dom";
 import {
   useHomePage,
   usePath,
@@ -61,8 +53,8 @@ export default function RootLayout() {
   const isSettingsPage = useSettingsPage();
   const isProfilePage = useProfilePage();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumbs>([
-    { path: "/", label: "porjects" },
+  const [breadcrumbs] = useState<Breadcrumbs>([
+    { path: "/", label: "projects" },
   ]);
 
   return (
@@ -117,7 +109,7 @@ interface SidebarProps extends BoxProps {
 }
 
 function SidebarContent({ onClose, breadcrumbs, ...rest }: SidebarProps) {
-  const { projectId } = useParams();
+  // const { projectId } = useParams();
 
   return (
     <Box
@@ -138,7 +130,7 @@ function SidebarContent({ onClose, breadcrumbs, ...rest }: SidebarProps) {
         Overview
       </NavItem>
       {LinkItems.map((link) => {
-        const lastItemPath = breadcrumbs.slice(-1)[0].path;
+        // const lastItemPath = breadcrumbs.slice(-1)[0].path;
         return (
           <NavItem originalPath={link.path} key={link.name} icon={link.icon}>
             {link.name}
@@ -211,32 +203,29 @@ interface MobileProps extends FlexProps {
 function MobileNav({ onOpen, breadcrumbs, ...rest }: MobileProps) {
   const { user } = useContext(UserContext);
   const [hoverUserBanner, setHoverUserBanner] = useState<boolean>(false);
-  const toast = useToast();
+  // const toast = useToast();
   const isHomePage = useHomePage();
   const isProfilePage = useProfilePage();
   const isSettingsPage = useSettingsPage();
-
-  const path = usePath();
-  const mapPath = () => {
-    return path.split("/");
-  };
-
-  const logout = () => {};
+  const logout = () => { };
 
   const color = useColorModeValue("gray.900", "gray.50");
   const textGradientColor = useColorModeValue(
     "linear(to-l, gray.900, gray.900)",
     "linear(to-l, white, white)",
   );
+  const bg = useColorModeValue("white", "gray.900")
+  const borderColor = useColorModeValue("gray.200", "gray.700")
+  if (!user) return null
   return (
     <Flex
       w="100%"
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
+      bg={bg}
       borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
+      borderBottomColor={borderColor}
       justifyContent={{ base: "space-between", md: "space-between" }}
       {...rest}
       pos={{ base: "relative", md: "fixed" }}
@@ -308,8 +297,8 @@ function MobileNav({ onOpen, breadcrumbs, ...rest }: MobileProps) {
               </HStack>
             </MenuButton>
             <MenuList
-              bg={useColorModeValue("white", "gray.900")}
-              borderColor={useColorModeValue("gray.200", "gray.700")}
+              bg={bg}
+              borderColor={borderColor}
             >
               <MenuItem as={RouterLink} to="/profile">
                 Profile

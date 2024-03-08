@@ -1,8 +1,11 @@
 import { Flex, Heading, useColorModeValue } from "@chakra-ui/react";
+import NewProjectModal from "../components/projects/newProjectModal";
+import React from "react";
+import Projects from "../components/projects";
 
 export default function Dashboard() {
   return (
-    <Flex p={{ base: 5, md: 32 }} flexDir={"col"}>
+    <Flex p={{ base: 5, md: 32 }} flexDir={"column"}>
       <Flex>
         <Heading
           mr={4}
@@ -11,7 +14,9 @@ export default function Dashboard() {
         >
           Projects
         </Heading>
+        <NewProjectModal />
       </Flex>
+      <Projects />
     </Flex>
   );
 }

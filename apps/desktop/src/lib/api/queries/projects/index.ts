@@ -12,3 +12,15 @@ export const useProjects = (filter: string) => {
     queryFn: () => getProjects({ filter }),
   });
 };
+
+export const getProject = async (id: string) => {
+  const res = await api.get(`/web/projects/single/${id}`);
+  return res.data;
+};
+
+export const useProject = (id: string) => {
+  return useQuery({
+    queryKey: ["project", id],
+    queryFn: () => getProject(id),
+  });
+};

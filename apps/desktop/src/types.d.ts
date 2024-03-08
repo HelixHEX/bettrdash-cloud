@@ -15,3 +15,8 @@ type BreadcrumbProps = {
   breadcrumbs: Array<Breadcrumb>;
   setBreadcrumbs: React.Dispatch<React.SetStateAction<Array<Breadcrumb>>>;
 };
+
+type OutletContext = {
+  breadcrumbs: BreadcrumbProps["breadcrumbs"];
+  setBreadcrumbs: BreadcrumbProps["setBreadcrumbs"];
+};

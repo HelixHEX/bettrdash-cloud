@@ -13,6 +13,7 @@ import SignupPage from "./pages/auth/signup";
 
 /* Layouts */
 import RootLayout from "./layouts";
+import Overview from "./pages/overview";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -24,6 +25,7 @@ root.render(
         <Routes>
           <Route path="/" element={<RootLayout />}>
             <Route index element={<Dashboard />} />
+            <Route path='/projects/:projectId' element={<Overview />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/Signup" element={<SignupPage />} />

@@ -40,3 +40,45 @@ export const useCreateProject = () => {
     },
   });
 };
+
+const updateProject = async (project: ProjectProps) => {
+  const res = await api.post("/web/projects/update", { project });
+  return res.data;
+};
+
+export const useUpdateProject = () => {
+  const toast = useToast();
+  return useMutation({
+    mutationFn: updateProject,
+    onSuccess: (data) => {
+      if (data.message) {
+        toast({
+          position: "bottom-right",
+          title: "Error",
+          description: data.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          position: "bottom-right",
+          description: "Project updated successfully",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        window.location.reload();
+      }
+    },
+    onError: () => {
+      toast({
+        position: "bottom-right",
+        description: "An error has occurred",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+  });
+};

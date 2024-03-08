@@ -23,7 +23,7 @@ import {
   MenuDivider,
   VStack,
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { IconType } from "react-icons";
 import Logo from "../components/logo";
 import { FiMenu, FiActivity, FiBarChart2, FiBarChart } from "react-icons/fi";
@@ -48,12 +48,12 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Analytics", icon: FiBarChart2, path: "/analytics" },
 ];
 
-export default function () {
+export default function() {
   const isHomePage = useHomePage();
   const isSettingsPage = useSettingsPage();
   const isProfilePage = useProfilePage();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [breadcrumbs] = useState<Breadcrumbs>([
+  const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumbs>([
     { path: "/", label: "projects" },
   ]);
 
@@ -96,7 +96,7 @@ export default function () {
             md: isHomePage || isProfilePage || isSettingsPage ? 0 : 60,
           }}
         >
-          <Outlet />
+          <Outlet context={{ breadcrumbs, setBreadcrumbs }} />
         </Box>
       </Box>
     </Flex>

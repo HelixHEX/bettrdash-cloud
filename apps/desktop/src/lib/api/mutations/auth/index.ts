@@ -4,6 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../..";
 import type { LoginProps } from "../../types";
 
+const logout = async () => {
+  const res = await api.post("/web/auth/logout");
+  return res.data;
+};
+
+export const useLogout = () => {
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      localStorage.removeItem("sessionId");
+      window.location.reload();
+    },
+  });
+};
+
 const login = async (login: LoginProps) => {
   const res = await api.post("/web/auth/login", login);
   return res.data;

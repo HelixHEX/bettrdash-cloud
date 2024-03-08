@@ -143,6 +143,21 @@ router.post("/signup", async (req: express.Request, res: express.Response) => {
   }
 });
 
+router.post("/logout", async (req, res) => {
+  const authorizationHeader = req.headers["authorization"];
+  const sessionId = lucia.readBearerToken(authorizationHeader ?? "");
+  console.log(sessionId);
+  await lucia.invalidateSession(sessionId!);
+  req.currentSession = null;
+  req.user = null;
+  if (req.device.type === "web") {
+    return res
+      .setHeader("Set-Cookie", lucia.createBlankSessionCookie().serialize())
+      .redirect("/login");
+  }
+  return res.end();
+});
+
 // router.post("/signup", async (req: express.Request, res: express.Response) => {
 //   const { name, email, password } = req.body;
 //   try {

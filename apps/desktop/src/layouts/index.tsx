@@ -37,6 +37,7 @@ import {
 import type { readcrumbProps, breadcrumb } from "../types.js";
 import { UserContext } from "../lib/providers/user";
 import { useEffect } from "react";
+import { useLogout } from "../lib/api/mutations";
 
 interface LinkItemProps {
   name: string;
@@ -210,8 +211,7 @@ function MobileNav({ onOpen, breadcrumbs, ...rest }: MobileProps) {
   const isHomePage = useHomePage();
   const isProfilePage = useProfilePage();
   const isSettingsPage = useSettingsPage();
-  const logout = () => { };
-
+  const { mutate: logout } = useLogout()
   const color = useColorModeValue("gray.900", "gray.50");
   const textGradientColor = useColorModeValue(
     "linear(to-l, gray.900, gray.900)",
@@ -310,7 +310,7 @@ function MobileNav({ onOpen, breadcrumbs, ...rest }: MobileProps) {
                 Settings
               </MenuItem>
               <MenuDivider />
-              <MenuItem onClick={logout}>Logout</MenuItem>
+              <MenuItem onClick={() => logout()}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
